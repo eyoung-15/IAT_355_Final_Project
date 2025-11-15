@@ -1,0 +1,9 @@
+body {
+    background-color: #5A8D4A;
+}
+
+.title-img {
+    display: block;
+    margin: 8rem auto;
+    width: 100%;
+}
