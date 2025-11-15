@@ -1,9 +1,40 @@
-body {
-    background-color: #5A8D4A;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.container {
+    width: 100%;
+    height: 100vh;
+    overflow-y: scroll;
+    scroll-snap-type: y mandatory;
+}
+
+.slides {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 50px;
+    scroll-snap-align: start;
 }
 
 .title-img {
-    display: block;
     margin: 8rem auto;
+    padding: 2rem;
     width: 100%;
+}
+
+.slide1 {
+    background-color: #5A8D4A;
+}
+
+.slide2 {
+    background-color: black;
+}
+
+.slide3 {
+    background-color: black;
 }
