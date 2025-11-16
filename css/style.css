@@ -44,7 +44,6 @@ h1 {
     align-items: center;
 }
 
-
 .slide2 {
     background-color: black;
 }
@@ -114,10 +113,21 @@ h1 {
 
 .slide8 h1 {
     margin-left: 9rem;
-    margin-top: 6rem;
+    margin-top: 3rem;
 }
 
 .slide9 h1 {
     margin-left: 9rem;
     margin-top: 6rem;
+}
+
+#alltime-chart {
+    width: 100%;
+    height: 80vh;
+    padding: 2rem;
+}
+
+.slide8 {
+    display: grid;
+    grid-template-columns: 1fr;
 }
