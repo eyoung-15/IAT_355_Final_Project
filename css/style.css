@@ -28,6 +28,14 @@
     width: 100%;
 }
 
+h1 {
+    color: #5DDC6E;
+}
+
+.whitetext {
+    color: white;
+}
+
 .slide1 {
     background-color: #5A8D4A;
 }
@@ -57,5 +65,9 @@
 }
 
 .slide8 {
+    background-color: black;
+}
+
+.slide9 {
     background-color: black;
 }
