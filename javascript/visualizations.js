@@ -123,6 +123,35 @@ drawVis();
 
 
 
+async function render(){
+    const data = await d3.csv("..datasets/Concert_Dataset_2.csv");
+
+    const vlSpec = vl
+        .markBar()
+        .data(data)
+        .transform([
+             { calculate: "toNumber(datum.Year_End)", as: "YearNum" },
+    { calculate: "toNumber(datum.Actual_Gross_Income_USD)", as: "GrossNum" },
+    {
+      filter: "datum.Category === 'Concert' && datum.YearNum >= 1980 && datum.YearNum <= 1989"
+    }
+        ])
+        .encode(
+            vl.x().fieldN("Tour_Name"),
+            vl.y().fieldQ("GrossNum")
+        )
+        .width("1400")
+        .height("600")
+        .toSpec();
+
+    await vegaEmbed("eighties_chart", vlSpec)
+}
+
+
+
+
+
+
 
 
 
