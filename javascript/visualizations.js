@@ -125,7 +125,6 @@ drawVis();
 
 async function render(){
     const concertData = await d3.csv("datasets/Concert_Dataset_2.csv");
-    const margin = { top: 30, right: 30, bottom: 200, left: 250 };
 
     const vlSpec = vl
         .markBar()
@@ -135,9 +134,10 @@ async function render(){
    
         .encode(
             vl.x().fieldN("Tour_Name").title("Tour"),
-            vl.y().fieldQ("Actual_Gross_Income_USD")
+            vl.y().fieldQ("Actual_Gross_Income_USD").title("Actual Gross Income"),
+            vl.color().field("Tour_Name")
         )
-        .width("1000")
+        .width("800")
         .height("300")
         .toSpec();
 
