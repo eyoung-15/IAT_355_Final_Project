@@ -122,7 +122,7 @@ drawVis();
 
 
 
-
+//80s chart
 async function render(){
     const concertData = await d3.csv("datasets/Concert_Dataset_2.csv");
 
@@ -133,7 +133,7 @@ async function render(){
          .transform([{filter: "(datum.Year_End >= 1980) && (datum.Year_End <= 1989)"}])
    
         .encode(
-            vl.x().fieldN("Tour_Name").title("Tour"),
+            vl.x().fieldN("Tour_Name").title("Tour").sort("-y"),
             vl.y().fieldQ("Actual_Gross_Income_USD").title("Actual Gross Income"),
             vl.color().field("Tour_Name")
         )
@@ -142,6 +142,25 @@ async function render(){
         .toSpec();
 
     await vegaEmbed("#eighties-chart", vlSpec)
+
+
+    //greedy artist chart
+    const vlSpec2 = vl
+        .markBar()
+        .data(concertData)
+
+         .transform([{filter: "(datum.Average_Ticket_Price >= 148.5) && (datum.Average_Ticket_Price <= 300)"}])
+   
+        .encode(
+            vl.x().fieldN("Artist_Name ").title("Artist").sort("-y"),
+            vl.y().fieldQ("Average_Ticket_Price").title("Average Cost Per Ticket (USD)"),
+            vl.color().field("Artist_Name ")
+        )
+        .width("800")
+        .height("300")
+        .toSpec();
+
+    await vegaEmbed("#greedy_artist_chart", vlSpec2)
 }
 
 render();

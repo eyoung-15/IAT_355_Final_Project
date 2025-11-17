@@ -136,3 +136,9 @@ h1 {
     display: grid;
     grid-template-columns: 1fr;
 }
+
+#greedy_artist_chart{
+    width: 100%;
+    height: 100%;
+    margin-left: 9rem;
+}
