@@ -94,6 +94,7 @@ h1 {
 #eighties-chart{
     width: 100;
     height: 100;
+    justify-content: center;
 }
 
 .slide4 h1 {

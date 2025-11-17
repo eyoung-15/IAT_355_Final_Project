@@ -124,29 +124,27 @@ drawVis();
 
 
 async function render(){
-    const data = await d3.csv("..datasets/Concert_Dataset_2.csv");
+    const concertData = await d3.csv("datasets/Concert_Dataset_2.csv");
+    const margin = { top: 30, right: 30, bottom: 200, left: 250 };
 
     const vlSpec = vl
         .markBar()
-        .data(data)
-        .transform([
-             { calculate: "toNumber(datum.Year_End)", as: "YearNum" },
-    { calculate: "toNumber(datum.Actual_Gross_Income_USD)", as: "GrossNum" },
-    {
-      filter: "datum.Category === 'Concert' && datum.YearNum >= 1980 && datum.YearNum <= 1989"
-    }
-        ])
+        .data(concertData)
+
+         .transform([{filter: "(datum.Year_End >= 1980) && (datum.Year_End <= 1989)"}])
+   
         .encode(
-            vl.x().fieldN("Tour_Name"),
-            vl.y().fieldQ("GrossNum")
+            vl.x().fieldN("Tour_Name").title("Tour"),
+            vl.y().fieldQ("Actual_Gross_Income_USD")
         )
-        .width("1400")
-        .height("600")
+        .width("1000")
+        .height("300")
         .toSpec();
 
-    await vegaEmbed("eighties_chart", vlSpec)
+    await vegaEmbed("#eighties-chart", vlSpec)
 }
 
+render();
 
 
 
@@ -156,61 +154,62 @@ async function render(){
 
 
 
-async function drawVis2() {
+
+// async function drawVis2() {
  
-    const dataset = await d3.csv("../datasets/Concert_Dataset_2.csv", d3.autoType);
-    const width = 1400;
-    const height = 600;
-    const marginTop = 30;
-    const marginRight = 30;
-    const marginBottom = 200;
-    const marginLeft = 250;
+//     const dataset = await d3.csv("../datasets/Concert_Dataset_2.csv", d3.autoType);
+//     const width = 1400;
+//     const height = 600;
+//     const marginTop = 30;
+//     const marginRight = 30;
+//     const marginBottom = 200;
+//     const marginLeft = 250;
 
     
 
-    const x = d3.scaleBand()
-    .domain(d3.groupSort(dataset, ([d]) => -d.Actual_Gross_Income_USD, (d) => d.Tour_Name))
-    .range([marginLeft, width - marginRight])
-    .padding(0.1);
+//     const x = d3.scaleBand()
+//     .domain(d3.groupSort(dataset, ([d]) => -d.Actual_Gross_Income_USD, (d) => d.Tour_Name))
+//     .range([marginLeft, width - marginRight])
+//     .padding(0.1);
 
-    const y = d3.scaleLinear()
-    .domain([0, d3.max(dataset, (d) => d.Actual_Gross_Income_USD)])
-    .range([height - marginBottom, marginTop]);
+//     const y = d3.scaleLinear()
+//     .domain([0, d3.max(dataset, (d) => d.Actual_Gross_Income_USD)])
+//     .range([height - marginBottom, marginTop]);
 
-    const svg = d3.select("#eighties_chart")
-        .append("svg")
-        .attr("width", width)
-        .attr("height", height);
+//     const svg = d3.select("#eighties_chart")
+//         .append("svg")
+//         .attr("width", width)
+//         .attr("height", height);
 
-    svg.append("g")
-        .attr("fill", "steelBlue")
-        .selectAll()
-        .data(dataset)
-        .join("rect")
-            .attr("x", (d) => x(d.Tour_Name))
-            .attr("y", (d) => y(d.Actual_Gross_Income_USD))
-            .attr("height", (d) => y(0) - y(d.Actual_Gross_Income_USD))
-            .attr("width", x.bandWidth());
+//     svg.append("g")
+//         .attr("fill", "steelBlue")
+//         .selectAll()
+//         .data(dataset)
+//         .join("rect")
+//             .attr("x", (d) => x(d.Tour_Name))
+//             .attr("y", (d) => y(d.Actual_Gross_Income_USD))
+//             .attr("height", (d) => y(0) - y(d.Actual_Gross_Income_USD))
+//             .attr("width", x.bandWidth());
 
-    svg.append("g")
-        .attr("transform", `translate(0,${height - marginBottom})`)
-        .call(d3.axisBottom(x).tickSizeOuter(0));
+//     svg.append("g")
+//         .attr("transform", `translate(0,${height - marginBottom})`)
+//         .call(d3.axisBottom(x).tickSizeOuter(0));
 
-    svg.append("g")
-        .attr("transform", `translate(${marginLeft},0)`)
-        .call(d3.axisLeft(y).tickFormat((y) => (y*100).toFixed()))
-        .call(g => g.select(".domain").remove())
-        .call(g => g.append("text")
-    .attr("x", -marginLeft)
-    .attr("y", 10)
-    .attr("fill", "currentColor")
-    .attr("text-anchor", "start")
-    .text("Actual Gross Revenue")
-    );
+//     svg.append("g")
+//         .attr("transform", `translate(${marginLeft},0)`)
+//         .call(d3.axisLeft(y).tickFormat((y) => (y*100).toFixed()))
+//         .call(g => g.select(".domain").remove())
+//         .call(g => g.append("text")
+//     .attr("x", -marginLeft)
+//     .attr("y", 10)
+//     .attr("fill", "currentColor")
+//     .attr("text-anchor", "start")
+//     .text("Actual Gross Revenue")
+//     );
 
-    return svg.node();
-}
+//     return svg.node();
+// }
 
 
 
-drawVis2();
+// drawVis2();
