@@ -9,6 +9,38 @@
     <link rel="stylesheet" href="css/fonts.css">
     <script src="https://cdn.jsdelivr.net/npm/danfojs@1.1.2/lib/bundle.js"></script>
 
+
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-lite-api@5.6.0"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-tooltip"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
+
+
+        <script>
+            const options = {
+                config: {
+                    //Vegalite default configuration
+                },
+                init: (view) => {
+                    //Initialize tooltip handler
+                    view.tooltip(new vegaTooltip.Handler().call);
+                },
+                view: {
+                    //View constructor options
+                    //Remove the loader if you don't want to default to vega-datasets
+                    loader: vega.loader({
+                        baseURL: "https://cdn.jsdelivr.net/npm/vega-datasets@2/",
+                    }),
+                    renderer: "canvas",
+                },
+            };
+            //Register vega and vegalite with the API
+            vl.register(vega, vegaLite, options);
+        </script>
+
+
 </head>
 
 <body>
@@ -23,18 +55,28 @@
         </div>
         <div class="slides slide3">
             <h1>concerts of the 80s</h1>
+            <p></p>
+            <div id="eighties-chart"></div>
         </div>
         <div class="slides slide4">
             <h1>concerts of the 90s</h1>
+            <p></p>
+            <div id="nineties-chart"></div>
         </div>
         <div class="slides slide5">
             <h1>concerts of the 2000s</h1>
+            <p></p>
+            <div id="two-thousands-chart"></div>
         </div>
         <div class="slides slide6">
             <h1>concerts of the 2010s</h1>
+            <p></p>
+            <div id="twenty-tens-chart"></div>
         </div>
         <div class="slides slide7">
             <h1>concerts of the 2020s</h1>
+            <p></p>
+            <div id="twenty-twenties-chart"></div>
         </div>
         <div class="slides slide8">
             <h1 class="whitetext">all time statistics</h1>
@@ -42,6 +84,8 @@
         </div>
         <div class="slides slide9">
             <h1 class="whitetext">who’s the greediest musician?</h1>
+            <p></p>
+            <div id="greedy_artist_chart"></div>
         </div>
     </div>
     <script src="javascript/main.js"></script>
