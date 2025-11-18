@@ -143,6 +143,78 @@ async function render(){
 
     await vegaEmbed("#eighties-chart", vlSpec)
 
+    //90s chart
+    const vlSpec3 = vl
+        .markBar()
+        .data(concertData)
+
+         .transform([{filter: "(datum.Year_End >= 1990) && (datum.Year_End <= 1999)"}])
+   
+        .encode(
+            vl.x().fieldN("Tour_Name").title("Tour").sort("-y"),
+            vl.y().fieldQ("Actual_Gross_Income_USD").title("Actual Gross Income"),
+            vl.color().field("Tour_Name")
+        )
+        .width("800")
+        .height("300")
+        .toSpec();
+
+    await vegaEmbed("#nineties-chart", vlSpec3)
+
+    //2000s chart
+    const vlSpec4 = vl
+        .markBar()
+        .data(concertData)
+
+         .transform([{filter: "(datum.Year_End >= 2000) && (datum.Year_End <= 2009)"}])
+   
+        .encode(
+            vl.x().fieldN("Tour_Name").title("Tour").sort("-y"),
+            vl.y().fieldQ("Actual_Gross_Income_USD").title("Actual Gross Income"),
+            vl.color().field("Tour_Name")
+        )
+        .width("800")
+        .height("300")
+        .toSpec();
+
+    await vegaEmbed("#two-thousands-chart", vlSpec4)
+
+    //2010s chart
+    const vlSpec5 = vl
+        .markBar()
+        .data(concertData)
+
+         .transform([{filter: "(datum.Year_End >= 2000) && (datum.Year_End <= 2009)"}])
+   
+        .encode(
+            vl.x().fieldN("Tour_Name").title("Tour").sort("-y"),
+            vl.y().fieldQ("Actual_Gross_Income_USD").title("Actual Gross Income"),
+            vl.color().field("Tour_Name")
+        )
+        .width("800")
+        .height("300")
+        .toSpec();
+
+    await vegaEmbed("#twenty-tens-chart", vlSpec5)
+
+    //2020s chart
+    const vlSpec6 = vl
+        .markBar()
+        .data(concertData)
+
+         .transform([{filter: "(datum.Year_End >= 2000) && (datum.Year_End <= 2009)"}])
+   
+        .encode(
+            vl.x().fieldN("Tour_Name").title("Tour").sort("-y"),
+            vl.y().fieldQ("Actual_Gross_Income_USD").title("Actual Gross Income"),
+            vl.color().field("Tour_Name")
+        )
+        .width("800")
+        .height("300")
+        .toSpec();
+
+    await vegaEmbed("#twenty-twenties-chart", vlSpec6)
+
 
     //greedy artist chart
     const vlSpec2 = vl
