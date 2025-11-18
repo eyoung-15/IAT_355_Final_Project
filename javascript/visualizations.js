@@ -14,8 +14,8 @@ async function drawVis() {
 
     const df = dataset.map(d => ({
         Tour: d["Tour Name"],
-        actual: +d["Actual Gross Income (USD)"].replace(/[^0-9.-]/g, ""),
-        adjusted: +d["Adjusted Gross Income (2024 USD)"].replace(/[^0-9.-]/g, "")
+        actual: +d["Actual Gross Income (USD)"].replace(/,/g, ""),
+        adjusted: +d["Adjusted Gross Income (2024 USD)"].replace(/,/g, "")
     }));
 
 
