@@ -2,7 +2,7 @@ import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
 import _ from "https://cdn.jsdelivr.net/npm/lodash@4.17.21/+esm";
 
 async function drawVis() {
-    const dataset = await d3.csv("../datasets/Concert_Dataset.csv", d3.autoType);
+    const dataset = await d3.csv("datasets/Concert_Dataset.csv", d3.autoType);
     const width = 1400;
     const height = 600;
     const margin = { top: 30, right: 30, bottom: 200, left: 250 };
