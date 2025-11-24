@@ -28,7 +28,7 @@
 }
 
 h1 {
-    color: #5DDC6E;
+    color: white;
     font-family: 'GT-America', sans-serif;
     font-size: 3rem;
 }
@@ -37,8 +37,12 @@ h1 {
     color: white;
 }
 
+.purpletext {
+    color: #CA6CDC;
+}
+
 .slide1 {
-    background-color: #5A8D4A;
+    background-color: #9F58DA;
     display: flex;
     justify-content: center;
     align-items: center;
