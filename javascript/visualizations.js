@@ -119,29 +119,145 @@ drawVis();
 
 
 
+async function drawEightiesChart() {
+    const dataset = await d3.csv("datasets/Concert_Dataset.csv");
+    const width = 1000;
+    const height = 500;
+    const margin = { top: 40, right: 40, bottom: 200, left: 120 };
 
+    const df = dataset.map(d => ({
+            Tour: d["Tour Name"],
+            Artist: d["Artist Name "],
+            Label: `${d["Tour Name"]}\n${d["Artist Name "]}`,
+            actual: +d["Actual Gross Income (USD)"].replace(/,/g, ""),
+            endYear: +d["Year End"],
+        }))
+        .filter(d => d.endYear >= 1980 && d.endYear <= 1989);
+
+
+    // Sort descending
+    df.sort((a, b) => b.actual - a.actual);
+
+    const svg = d3.select("#eighties-chart")
+        .append("svg")
+        .attr("width", width)
+        .attr("height", height)
+        .style("border", "3px solid white")
+        .style("border-radius", "8px")
+        .style("box-sizing", "border-box");    
+
+    const xScale = d3.scaleBand()
+        .domain(df.map(d => d.Label))
+        .range([margin.left, width - margin.right])
+        .padding(0.3);
+
+    const yScale = d3.scaleLinear()
+        .domain([0, d3.max(df, d => d.actual)])
+        .nice()
+        .range([height - margin.bottom, margin.top]);
+
+    const color = d3.scaleOrdinal()
+        .domain(df.map(d => d.Tour))
+        .range(d3.schemeTableau10);
+
+    //Draw bars
+    svg.selectAll("rect")
+        .data(df)
+        .join("rect")
+        .attr("x", d => xScale(d.Label))
+        .attr("y", d => yScale(d.actual))
+        .attr("width", xScale.bandwidth())
+        .attr("height", d => yScale(0) - yScale(d.actual))
+        .attr("fill", d => color(d.Tour));
+
+    const xAxis = svg.append("g")
+        .attr("transform", `translate(0, ${height - margin.bottom})`)
+        .call(d3.axisBottom(xScale));
+
+    xAxis.selectAll("text")
+        .text("")
+        .each(function(d) {
+            const [tour, artist] = d.split("\n");
+            const text = d3.select(this);
+
+            text.append("tspan")
+                .text(tour)
+                .attr("x", 0)
+                .attr("dy", 0)
+                .style("fill", "white")
+                .style("font-size", "9px")
+                .style("font-weight", "600");
+
+            text.append("tspan")
+                .text(artist)
+                .attr("x", 0)
+                .attr("dy", 12)
+                .style("fill", "#4C8DFF") 
+                .style("font-size", "8px");
+        })
+        .attr("transform", "rotate(-75)")
+        .attr("text-anchor", "end");
+
+
+    svg.append("g")
+        .attr("transform", `translate(${margin.left},0)`)
+        .call(d3.axisLeft(yScale))
+        .selectAll("text")
+        .style("fill", "white")
+        .style("font-size", "12px");
+
+
+    svg.append("text")
+        .attr("x", width / 2)
+        .attr("y", height - 70)
+        .attr("text-anchor", "middle")
+        .style("fill", "white")
+        .style("font-size", "16px")
+        .text("Tour Name & Artist");
+
+
+    svg.append("text")
+        .attr("x", -height / 2)
+        .attr("y", 30)
+        .attr("text-anchor", "middle")
+        .attr("transform", "rotate(-90)")
+        .style("fill", "white")
+        .style("font-size", "14px")
+        .text("Actual Gross Income (USD)");
+
+
+    svg.append("text")
+        .attr("x", width / 2)
+        .attr("y", 25)
+        .attr("text-anchor", "middle")
+        .style("fill", "white")
+        .style("font-size", "18px")
+        .text("Top Concert Tours of the 1980s (Actual Gross Income)");
+}
+
+drawEightiesChart();
 
 
 //80s chart
 async function render(){
     const concertData = await d3.csv("datasets/Concert_Dataset_2.csv");
 
-    const vlSpec = vl
-        .markBar()
-        .data(concertData)
+//     const vlSpec = vl
+//         .markBar()
+//         .data(concertData)
 
-         .transform([{filter: "(datum.Year_End >= 1980) && (datum.Year_End <= 1989)"}])
+//          .transform([{filter: "(datum.Year_End >= 1980) && (datum.Year_End <= 1989)"}])
    
-        .encode(
-            vl.x().fieldN("Tour_Name").title("Tour").sort("-y"),
-            vl.y().fieldQ("Actual_Gross_Income_USD").title("Actual Gross Income"),
-            vl.color().field("Tour_Name")
-        )
-        .width("800")
-        .height("300")
-        .toSpec();
+//         .encode(
+//             vl.x().fieldN("Tour_Name").title("Tour").sort("-y"),
+//             vl.y().fieldQ("Actual_Gross_Income_USD").title("Actual Gross Income"),
+//             vl.color().field("Tour_Name")
+//         )
+//         .width("800")
+//         .height("300")
+//         .toSpec();
 
-    await vegaEmbed("#eighties-chart", vlSpec)
+//     await vegaEmbed("#eighties-chart", vlSpec)
 
     //90s chart
     const vlSpec3 = vl
