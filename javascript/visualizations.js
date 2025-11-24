@@ -958,7 +958,7 @@ async function draw2020sChart() {
                     .style("font-weight", "600");
             });
 
-            // Artist name lines
+            //Artist name lines
             const artistLines = wrapText(artist.toLowerCase(), 18);
             artistLines.forEach((line, i) => {
                 text.append("tspan")
@@ -1138,7 +1138,7 @@ async function drawAllTimeChart() {
         .attr("text-anchor", "middle")
         .style("fill", "white")
         .style("font-size", "16px")
-        .text("Concert Tours");
+        .text("concert tours");
 
     svg.append("text")
         .attr("x", -height / 2)
@@ -1147,7 +1147,7 @@ async function drawAllTimeChart() {
         .attr("text-anchor", "middle")
         .style("fill", "white")
         .style("font-size", "14px")
-        .text("Gross Income (USD)");
+        .text("gross income (usd)");
 
 
     const legend = svg.append("g")
@@ -1175,30 +1175,193 @@ async function drawAllTimeChart() {
 
 drawAllTimeChart();
 
+async function drawGreedyArtistsChart() {
+    const dataset = await d3.csv("datasets/Concert_Dataset_2.csv");
+    const width = 1000;
+    const height = 500;
+    const margin = { top: 40, right: 40, bottom: 200, left: 150 };
+    const borderPadding = 10;
 
-async function render(){
-    const concertData = await d3.csv("datasets/Concert_Dataset_2.csv");
+    const tooltip = d3.select("body")
+        .append("div")
+        .attr("class", "tooltip")
+        .style("position", "absolute")
+        .style("background-color", "#1f2937")
+        .style("color", "white")
+        .style("padding", "8px")
+        .style("border-radius", "4px")
+        .style("pointer-events", "none")
+        .style("opacity", 0)
+        .style("font-family", "Inter, sans-serif");
 
-    //greedy artist chart
-    const vlSpec2 = vl
-        .markBar()
-        .data(concertData)
 
-         .transform([{filter: "(datum.Average_Ticket_Price >= 148.5) && (datum.Average_Ticket_Price <= 300)"}])
-   
-        .encode(
-            vl.x().fieldN("Artist_Name ").title("Artist").sort("-y"),
-            vl.y().fieldQ("Average_Ticket_Price").title("Average Cost Per Ticket (USD)"),
-            vl.color().field("Artist_Name ")
+    function wrapText(text, maxChars) {
+        const words = text.split(" ");
+        let lines = [];
+        let currentLine = "";
+        words.forEach(word => {
+            if ((currentLine + word).length > maxChars) {
+                if (currentLine) {
+                    lines.push(currentLine.trim());
+                    currentLine = word + " ";
+                } else {
+                    lines.push(word);
+                    currentLine = "";
+                }
+            } else {
+                currentLine += word + " ";
+            }
+        });
+        if (currentLine) lines.push(currentLine.trim());
+        return lines;
+    }
+
+    const df = dataset
+        .map(d => ({
+            Artist: d["Artist_Name "],
+            price: +d.Average_Ticket_Price,
+        }))
+        .filter(d => d.price >= 148.5 && d.price <= 300)
+        .sort((a, b) => b.price - a.price);
+
+    const svg = d3.select("#greedy_artist_chart")
+        .append("svg")
+        .attr("width", width)
+        .attr("height", height)
+        .style("font-family", "Inter, sans-serif");   
+
+    const xScale = d3.scaleBand()
+        .domain(df.map(d => d.Artist))
+        .range([margin.left, width - margin.right])
+        .padding(0.3);
+
+    const yScale = d3.scaleLinear()
+        .domain([0, d3.max(df, d => d.price)])
+        .nice()
+        .range([height - margin.bottom, margin.top]);
+
+    svg.append("rect")
+        .attr("x", margin.left - borderPadding)
+        .attr("y", margin.top - borderPadding)
+        .attr("width", width - margin.left - margin.right + borderPadding * 2)
+        .attr("height", height - margin.top - margin.bottom + borderPadding * 2)
+        .attr("fill", "none")
+        .attr("stroke", "white")
+        .attr("stroke-width", 1);
+
+    const color = d3.scaleOrdinal()
+        .domain(df.map(d => d.Artist))
+        .range(d3.schemeTableau10);
+
+    svg.selectAll("rect.bar")
+        .data(df)
+        .enter()
+        .append("rect")
+        .attr("class", "bar")
+        .attr("x", d => xScale(d.Artist))
+        .attr("y", d => yScale(d.price))
+        .attr("width", xScale.bandwidth())
+        .attr("height", d => height - margin.bottom - yScale(d.price))
+        .attr("fill", "#4C46C9")
+        .on("mouseover", function(event, d) {
+            tooltip.transition().duration(100).style("opacity", 1);
+            tooltip.html(`
+                <strong>Artist:</strong> ${d.Artist}<br/>
+                <strong>Average Ticket Price:</strong> $${d.price.toFixed(2)}
+            `)
+            .style("left", (event.pageX + 10) + "px")
+            .style("top", (event.pageY - 28) + "px");
+            d3.select(this).attr("fill", "#6366F1");
+        })
+        .on("mousemove", function(event) {
+            tooltip.style("left", (event.pageX + 10) + "px")
+                   .style("top", (event.pageY - 28) + "px");
+        })
+        .on("mouseout", function(event, d) {
+            tooltip.transition().duration(200).style("opacity", 0);
+             d3.select(this).attr("fill", "#4C46C9");
+        });
+
+    const xAxis = svg.append("g")
+        .attr("transform", `translate(0, ${height - margin.bottom})`)
+        .call(d3.axisBottom(xScale));
+
+    xAxis.selectAll("text")
+        .text("")
+        .each(function(d) {
+            const text = d3.select(this);
+            const lines = wrapText(d.toLowerCase(), 18);
+            lines.forEach((line, i) => {
+                text.append("tspan")
+                    .text(line)
+                    .attr("x", -20)
+                    .attr("dy", i === 0 ? -20 : 10)
+                    .style("fill", "#FFFF")
+                    .style("font-size", "10px");
+            });
+        })
+        .attr("transform", "rotate(-90)")
+        .attr("text-anchor", "end");
+
+    const tickInterval = 20;
+    const maxY = Math.ceil(d3.max(df, d => d.price) / tickInterval) * tickInterval;
+    const yTicks = d3.range(0, maxY + 1, tickInterval);
+
+    svg.append("g")
+        .attr("transform", `translate(${margin.left},0)`)
+        .call(d3.axisLeft(yScale)
+            .tickValues(yTicks)
+            .tickFormat(d3.format("$.2f"))
         )
-        .width("800")
-        .height("300")
-        .toSpec();
+        .selectAll("text")
+        .attr("dx", -10)
+        .style("fill", "white")
+        .style("font-size", "14px");
 
-    await vegaEmbed("#greedy_artist_chart", vlSpec2)
+    svg.append("text")
+        .attr("x", width / 2)
+        .attr("y", height - 50)
+        .attr("text-anchor", "middle")
+        .style("fill", "white")
+        .style("font-size", "14px")
+        .text("artist");
+
+    svg.append("text")
+        .attr("x", - height / 3)
+        .attr("y", 40)
+        .attr("text-anchor", "middle")
+        .attr("transform", "rotate(-90)")
+        .style("fill", "white")
+        .style("font-size", "14px")
+        .text("average cost per ticket (usd)");
 }
 
-render();
+drawGreedyArtistsChart();
+
+
+// async function render(){
+//     const concertData = await d3.csv("datasets/Concert_Dataset_2.csv");
+
+//     //greedy artist chart
+//     const vlSpec2 = vl
+//         .markBar()
+//         .data(concertData)
+
+//          .transform([{filter: "(datum.Average_Ticket_Price >= 148.5) && (datum.Average_Ticket_Price <= 300)"}])
+   
+//         .encode(
+//             vl.x().fieldN("Artist_Name ").title("Artist").sort("-y"),
+//             vl.y().fieldQ("Average_Ticket_Price").title("Average Cost Per Ticket (USD)"),
+//             vl.color().field("Artist_Name ")
+//         )
+//         .width("800")
+//         .height("300")
+//         .toSpec();
+
+//     await vegaEmbed("#greedy_artist_chart", vlSpec2)
+// }
+
+// render();
 
 
 
