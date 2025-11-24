@@ -320,6 +320,206 @@ async function drawEightiesChart() {
 
 drawEightiesChart();
 
+async function drawNinetiesChart() {
+    const dataset = await d3.csv("datasets/Concert_Dataset.csv");
+    const width = 1000;
+    const height = 500;
+    const margin = { top: 40, right: 40, bottom: 200, left: 150 };
+    const borderPadding = 10;
+
+    const tooltip = d3.select("body")
+        .append("div")
+        .attr("class", "tooltip")
+        .style("position", "absolute")
+        .style("background-color", "#1f2937")
+        .style("color", "white")
+        .style("padding", "8px")
+        .style("border-radius", "4px")
+        .style("pointer-events", "none")
+        .style("opacity", 0)
+        .style("font-family", "Inter, sans-serif");
+
+    function wrapText(text, maxChars) {
+        const words = text.split(" ");
+        let lines = [];
+        let currentLine = "";
+
+        words.forEach(word => {
+            if ((currentLine + word).length > maxChars) {
+                if (currentLine) {
+                    lines.push(currentLine.trim());
+                    currentLine = word + " ";
+                } else {
+                    lines.push(word);
+                    currentLine = "";
+                }
+            } else {
+                currentLine += word + " ";
+            }
+        });
+
+        if (currentLine) lines.push(currentLine.trim());
+        return lines;
+    }
+
+  
+
+    const df = dataset.map(d => ({
+            Tour: d["Tour Name"],
+            Artist: d["Artist Name "],
+            Label: `${d["Tour Name"]}\n${d["Artist Name "]}`,
+            actual: +d["Actual Gross Income (USD)"].replace(/,/g, ""),
+            endYear: +d["Year End"],
+        }))
+        .filter(d => d.endYear >= 1990 && d.endYear <= 1999);
+
+
+    // Sort descending
+    df.sort((a, b) => b.actual - a.actual);
+
+    const svg = d3.select("#nineties-chart")
+        .append("svg")
+        .attr("width", width)
+        .attr("height", height)
+        .style("font-family", "Inter, sans-serif");   
+
+    const xScale = d3.scaleBand()
+        .domain(df.map(d => d.Label))
+        .range([margin.left, width - margin.right])
+        .padding(0.3);
+
+    const yScale = d3.scaleLinear()
+        .domain([0, d3.max(df, d => d.actual)])
+        .nice()
+        .range([height - margin.bottom, margin.top]);
+
+    const tickInterval = 20000000;
+    const maxY = Math.ceil(d3.max(df, d => d.actual) / tickInterval) * tickInterval;
+    const yTicks = d3.range(0, maxY + 1, tickInterval);
+
+    const color = d3.scaleOrdinal()
+        .domain(df.map(d => d.Tour))
+        .range(d3.schemeTableau10);
+
+
+    svg.append("rect")
+         .attr("x", margin.left - borderPadding)
+         .attr("y", margin.top - borderPadding)
+         .attr("width", width - margin.left - margin.right + borderPadding * 2)
+         .attr("height", height - margin.top - margin.bottom + borderPadding * 2)
+         .attr("fill", "none")
+         .attr("stroke", "white")
+         .attr("stroke-width", 1);
+
+    svg.selectAll("rect.bar")
+        .data(df)
+        .enter()
+        .append("rect")
+        .attr("class", "bar")
+        .attr("x", d => xScale(d.Label))
+        .attr("y", d => yScale(d.actual))
+        .attr("width", xScale.bandwidth())
+        .attr("height", d => height - margin.bottom - yScale(d.actual))
+        .attr("fill", "#4C46C9")
+        .on("mouseover", function(event, d) {
+            tooltip.transition()
+                .duration(100)
+                .style("opacity", 1);
+
+            tooltip.html(`
+                <strong>Tour:</strong> ${d.Tour}<br/>
+                <strong>Artist:</strong> ${d.Artist}<br/>
+                <strong>Actual Income:</strong> $${d.actual.toLocaleString()}
+            `)
+            .style("left", (event.pageX + 10) + "px")
+            .style("top", (event.pageY - 28) + "px");
+
+            d3.select(this).attr("fill", "#6366F1");
+        })
+        .on("mousemove", function(event) {
+            tooltip
+                .style("left", (event.pageX + 10) + "px")
+                .style("top", (event.pageY - 28) + "px");
+        })
+        .on("mouseout", function(event, d) {
+            tooltip.transition()
+                .duration(200)
+                .style("opacity", 0);
+
+            d3.select(this).attr("fill", "#4C46C9");
+        });
+
+
+
+    const xAxis = svg.append("g")
+    .attr("transform", `translate(0, ${height - margin.bottom})`)
+    .call(d3.axisBottom(xScale));
+
+     xAxis.selectAll("text")
+        .text("")
+        .each(function(d) {
+            const [tour, artist] = d.split("\n");
+            const text = d3.select(this);
+
+            // Tour name lines
+            const tourLines = wrapText(tour.toLowerCase(), 18); 
+            tourLines.forEach((line, i) => {
+                text.append("tspan")
+                    .text(line)
+                    .attr("x", -20)
+                    .attr("dy", i === 0 ? -20 : 10)
+                    .style("fill", "white")
+                    .style("font-size", "10px")
+                    .style("font-weight", "600");
+            });
+
+            // Artist name lines
+            const artistLines = wrapText(artist.toLowerCase(), 18);
+            artistLines.forEach((line, i) => {
+                text.append("tspan")
+                    .text(line)
+                    .attr("x", -20)
+                    .attr("dy", tourLines.length === 0 && i === 0 ? 0 : 10)
+                    .style("fill", "#CA6CDC")
+                    .style("font-size", "10px");
+            });
+        })
+        .attr("transform", "rotate(-90)")
+        .attr("text-anchor", "end");   
+
+    svg.append("g")
+        .attr("transform", `translate(${margin.left},0)`)
+        .call(d3.axisLeft(yScale)
+            .tickValues(yTicks)
+            .tickFormat(d3.format("$.2s"))
+        )
+        .selectAll("text")
+        .attr("dx", -10)
+        .style("fill", "white")
+        .style("font-size", "14px");
+
+
+    svg.append("text")
+        .attr("x", width / 2)
+        .attr("y", height - 50)
+        .attr("text-anchor", "middle")
+        .style("fill", "white")
+        .style("font-size", "14px")
+        .text("concert tour");
+
+
+    svg.append("text")
+        .attr("x", - height/3)
+        .attr("y", 20)
+        .attr("text-anchor", "middle")
+        .attr("transform", "rotate(-90)")
+        .style("fill", "white")
+        .style("font-size", "14px")
+        .text("actual gross income (usd)");
+
+}
+
+drawNinetiesChart();
 
 //80s chart
 async function render(){
@@ -343,22 +543,22 @@ async function render(){
 //     await vegaEmbed("#eighties-chart", vlSpec)
 
     //90s chart
-    const vlSpec3 = vl
-        .markBar()
-        .data(concertData)
+    // const vlSpec3 = vl
+    //     .markBar()
+    //     .data(concertData)
 
-         .transform([{filter: "(datum.Year_End >= 1990) && (datum.Year_End <= 1999)"}])
+    //      .transform([{filter: "(datum.Year_End >= 1990) && (datum.Year_End <= 1999)"}])
    
-        .encode(
-            vl.x().fieldN("Tour_Name").title("Tour").sort("-y"),
-            vl.y().fieldQ("Actual_Gross_Income_USD").title("Actual Gross Income"),
-            vl.color().field("Tour_Name")
-        )
-        .width("800")
-        .height("300")
-        .toSpec();
+    //     .encode(
+    //         vl.x().fieldN("Tour_Name").title("Tour").sort("-y"),
+    //         vl.y().fieldQ("Actual_Gross_Income_USD").title("Actual Gross Income"),
+    //         vl.color().field("Tour_Name")
+    //     )
+    //     .width("800")
+    //     .height("300")
+    //     .toSpec();
 
-    await vegaEmbed("#nineties-chart", vlSpec3)
+    // await vegaEmbed("#nineties-chart", vlSpec3)
 
     //2000s chart
     const vlSpec4 = vl
