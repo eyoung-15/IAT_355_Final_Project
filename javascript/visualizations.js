@@ -50,6 +50,7 @@ async function drawEightiesChart() {
             Artist: d["Artist Name "],
             Label: `${d["Tour Name"]}\n${d["Artist Name "]}`,
             actual: +d["Actual Gross Income (USD)"].replace(/,/g, ""),
+            startYear: +d["Year Start"],
             endYear: +d["Year End"],
         }))
         .filter(d => d.endYear >= 1980 && d.endYear <= 1989);
@@ -110,6 +111,7 @@ async function drawEightiesChart() {
             tooltip.html(`
                 <strong>Tour:</strong> ${d.Tour}<br/>
                 <strong>Artist:</strong> ${d.Artist}<br/>
+                <strong>Years:</strong> ${d.startYear} - ${d.endYear}<br/>
                 <strong>Actual Income:</strong> $${d.actual.toLocaleString()}
             `)
             .style("left", (event.pageX + 10) + "px")
@@ -251,6 +253,7 @@ async function drawNinetiesChart() {
             Artist: d["Artist Name "],
             Label: `${d["Tour Name"]}\n${d["Artist Name "]}`,
             actual: +d["Actual Gross Income (USD)"].replace(/,/g, ""),
+            startYear: +d["Year Start"],
             endYear: +d["Year End"],
         }))
         .filter(d => d.endYear >= 1990 && d.endYear <= 1999);
@@ -275,7 +278,7 @@ async function drawNinetiesChart() {
         .nice()
         .range([height - margin.bottom, margin.top]);
 
-    const tickInterval = 20000000;
+    const tickInterval = 40000000;
     const maxY = Math.ceil(d3.max(df, d => d.actual) / tickInterval) * tickInterval;
     const yTicks = d3.range(0, maxY + 1, tickInterval);
 
@@ -311,6 +314,7 @@ async function drawNinetiesChart() {
             tooltip.html(`
                 <strong>Tour:</strong> ${d.Tour}<br/>
                 <strong>Artist:</strong> ${d.Artist}<br/>
+                <strong>Years:</strong> ${d.startYear} - ${d.endYear}<br/>
                 <strong>Actual Income:</strong> $${d.actual.toLocaleString()}
             `)
             .style("left", (event.pageX + 10) + "px")
@@ -452,6 +456,7 @@ async function drawY2kChart() {
             Artist: d["Artist Name "],
             Label: `${d["Tour Name"]}\n${d["Artist Name "]}`,
             actual: +d["Actual Gross Income (USD)"].replace(/,/g, ""),
+            startYear: +d["Year Start"],
             endYear: +d["Year End"],
         }))
         .filter(d => d.endYear >= 2000 && d.endYear <= 2009);
@@ -476,7 +481,7 @@ async function drawY2kChart() {
         .nice()
         .range([height - margin.bottom, margin.top]);
 
-    const tickInterval = 20000000;
+    const tickInterval = 50000000;
     const maxY = Math.ceil(d3.max(df, d => d.actual) / tickInterval) * tickInterval;
     const yTicks = d3.range(0, maxY + 1, tickInterval);
 
@@ -512,6 +517,7 @@ async function drawY2kChart() {
             tooltip.html(`
                 <strong>Tour:</strong> ${d.Tour}<br/>
                 <strong>Artist:</strong> ${d.Artist}<br/>
+                <strong>Years:</strong> ${d.startYear} - ${d.endYear}<br/>
                 <strong>Actual Income:</strong> $${d.actual.toLocaleString()}
             `)
             .style("left", (event.pageX + 10) + "px")
@@ -653,6 +659,7 @@ async function draw2010sChart() {
             Artist: d["Artist Name "],
             Label: `${d["Tour Name"]}\n${d["Artist Name "]}`,
             actual: +d["Actual Gross Income (USD)"].replace(/,/g, ""),
+            startYear: +d["Year Start"],
             endYear: +d["Year End"],
         }))
         .filter(d => d.endYear >= 2010 && d.endYear <= 2019);
@@ -677,7 +684,7 @@ async function draw2010sChart() {
         .nice()
         .range([height - margin.bottom, margin.top]);
 
-    const tickInterval = 20000000;
+    const tickInterval = 100000000;
     const maxY = Math.ceil(d3.max(df, d => d.actual) / tickInterval) * tickInterval;
     const yTicks = d3.range(0, maxY + 1, tickInterval);
 
@@ -713,6 +720,7 @@ async function draw2010sChart() {
             tooltip.html(`
                 <strong>Tour:</strong> ${d.Tour}<br/>
                 <strong>Artist:</strong> ${d.Artist}<br/>
+                <strong>Years:</strong> ${d.startYear} - ${d.endYear}<br/>
                 <strong>Actual Income:</strong> $${d.actual.toLocaleString()}
             `)
             .style("left", (event.pageX + 10) + "px")
@@ -854,6 +862,7 @@ async function draw2020sChart() {
             Artist: d["Artist Name "],
             Label: `${d["Tour Name"]}\n${d["Artist Name "]}`,
             actual: +d["Actual Gross Income (USD)"].replace(/,/g, ""),
+            startYear: +d["Year Start"],
             endYear: +d["Year End"],
         }))
         .filter(d => d.endYear >= 2020 && d.endYear <= 2025);
@@ -878,7 +887,7 @@ async function draw2020sChart() {
         .nice()
         .range([height - margin.bottom, margin.top]);
 
-    const tickInterval = 20000000;
+    const tickInterval = 150000000;
     const maxY = Math.ceil(d3.max(df, d => d.actual) / tickInterval) * tickInterval;
     const yTicks = d3.range(0, maxY + 1, tickInterval);
 
@@ -914,6 +923,7 @@ async function draw2020sChart() {
             tooltip.html(`
                 <strong>Tour:</strong> ${d.Tour}<br/>
                 <strong>Artist:</strong> ${d.Artist}<br/>
+                <strong>Years:</strong> ${d.startYear} - ${d.endYear}<br/>
                 <strong>Actual Income:</strong> $${d.actual.toLocaleString()}
             `)
             .style("left", (event.pageX + 10) + "px")
@@ -1027,6 +1037,9 @@ async function drawAllTimeChart() {
 
     const df = dataset.map(d => ({
         Tour: d["Tour Name"],
+        Artist: d["Artist Name "],
+        startYear: +d["Year Start"],
+        endYear: +d["Year End"],
         actual: +d["Actual Gross Income (USD)"].replace(/,/g, ""),
         adjusted: +d["Adjusted Gross Income (2024 USD)"].replace(/,/g, "")
     }));
@@ -1089,6 +1102,8 @@ async function drawAllTimeChart() {
 
             tooltip.html(`
                 <strong>Tour:</strong> ${parentData.Tour}<br/>
+                <strong>Artist:</strong> ${parentData.Artist}<br/>
+                <strong>Years:</strong> ${parentData.startYear} - ${parentData.endYear}<br/>
                 <strong>${d.key.charAt(0).toUpperCase() + d.key.slice(1)}:</strong> $${d.value.toLocaleString()}
             `)
             .style("left", (event.pageX + 10) + "px")
@@ -1137,12 +1152,12 @@ async function drawAllTimeChart() {
         .attr("y", height - 60)
         .attr("text-anchor", "middle")
         .style("fill", "white")
-        .style("font-size", "16px")
+        .style("font-size", "14px")
         .text("concert tours");
 
     svg.append("text")
-        .attr("x", -height / 2)
-        .attr("y", 30)
+        .attr("x", -height / 3)
+        .attr("y", 80)
         .attr("transform", "rotate(-90)")
         .attr("text-anchor", "middle")
         .style("fill", "white")
@@ -1153,7 +1168,7 @@ async function drawAllTimeChart() {
     const legend = svg.append("g")
         .attr("transform", `translate(${width - 180}, ${margin.top})`);
 
-    const legendItems = ["Actual", "Adjusted"];
+    const legendItems = ["actual gross income (usd)", "adjusted gross income (2024 usd)"];
 
     legend.selectAll("circle")
         .data(legendItems)
@@ -1170,7 +1185,7 @@ async function drawAllTimeChart() {
         .attr("y", (_, i) => i * 25 + 5)
         .text(d => d)
         .style("fill", "white")
-        .style("font-size", "14px");
+        .style("font-size", "10px");
 }
 
 drawAllTimeChart();
