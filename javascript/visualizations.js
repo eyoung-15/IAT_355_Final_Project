@@ -1129,13 +1129,17 @@ async function drawAllTimeChart() {
         .attr("transform", `translate(0, ${height - margin.bottom})`)
         .call(d3.axisBottom(xScale));
 
-    xAxis.selectAll("text")
-        .style("fill", "white")
-        .style("font-size", "10px")
-        .attr("text-anchor", "end")
-        .attr("transform", "rotate(-90)")
-        .attr("dx", "-0.5em")
-        .attr("dy", "-0.5em");
+    // xAxis.selectAll("text")
+    //     .style("fill", "white")
+    //     .style("font-size", "10px")
+    //     .attr("text-anchor", "end")
+    //     .attr("transform", "rotate(-90)")
+    //     .attr("dx", "-0.5em")
+    //     .attr("dy", "-0.5em");
+    // 
+    
+       xAxis.selectAll("text")
+           .style("display", "none");
 
 
     svg.append("g")
@@ -1147,13 +1151,13 @@ async function drawAllTimeChart() {
         .attr("dx", -10); 
 
 
-    svg.append("text")
-        .attr("x", width / 2)
-        .attr("y", height - 60)
-        .attr("text-anchor", "middle")
-        .style("fill", "white")
-        .style("font-size", "14px")
-        .text("concert tours");
+    // svg.append("text")
+    //     .attr("x", width / 2)
+    //     .attr("y", height - 60)
+    //     .attr("text-anchor", "middle")
+    //     .style("fill", "white")
+    //     .style("font-size", "14px")
+    //     .text("concert tours");
 
     svg.append("text")
         .attr("x", -height / 3)
@@ -1166,7 +1170,7 @@ async function drawAllTimeChart() {
 
 
     const legend = svg.append("g")
-        .attr("transform", `translate(${width - 180}, ${margin.top})`);
+        .attr("transform", `translate(${width - 240}, ${margin.top + 20})`);
 
     const legendItems = ["actual gross income (usd)", "adjusted gross income (2024 usd)"];
 
@@ -1174,7 +1178,7 @@ async function drawAllTimeChart() {
         .data(legendItems)
         .join("circle")
         .attr("cx", 0)
-        .attr("cy", (_, i) => i * 25)
+        .attr("cy", (_, i) => i * 35)
         .attr("r", 7)
         .attr("fill", d => color(d.toLowerCase()));
 
@@ -1182,7 +1186,7 @@ async function drawAllTimeChart() {
         .data(legendItems)
         .join("text")
         .attr("x", 15)
-        .attr("y", (_, i) => i * 25 + 5)
+        .attr("y", (_, i) => i * 35 + 5)
         .text(d => d)
         .style("fill", "white")
         .style("font-size", "10px");
