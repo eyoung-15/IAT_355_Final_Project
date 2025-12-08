@@ -53,31 +53,31 @@ h1 {
 }
 
 .slide3 {
-    background-color: black;
+    background: url("../images/vis_backgrounds.svg") center/cover no-repeat;
 }
 
 .slide4 {
-    background-color: black;
+    background: url("../images/vis_backgrounds.svg") center/cover no-repeat;
 }
 
 .slide5 {
-    background-color: black;
+    background: url("../images/vis_backgrounds.svg") center/cover no-repeat;
 }
 
 .slide6 {
-    background-color: black;
+    background: url("../images/vis_backgrounds.svg") center/cover no-repeat;
 }
 
 .slide7 {
-    background-color: black;
+    background: url("../images/vis_backgrounds.svg") center/cover no-repeat;
 }
 
 .slide8 {
-    background-color: black;
+    background: url("../images/vis_backgrounds.svg") center/cover no-repeat;
 }
 
 .slide9 {
-    background-color: black;
+    background: url("../images/vis_backgrounds.svg") center/cover no-repeat;
 }
 
 .slide2 .whitetext {
