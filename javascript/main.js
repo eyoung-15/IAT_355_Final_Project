@@ -25,7 +25,7 @@ document.body.appendChild(tooltip);
 function positionToSlideIndex(x) {
     const width = slider.clientWidth;
     const ratio = Math.max(0, Math.min(1, x / width));
-    return Math.round(ratio * (slides.length - 1));
+    return Math.round(ratio * (slides.length));
 }
 
 function slideIndexToPosition(index) {
