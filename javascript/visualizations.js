@@ -15,7 +15,6 @@ function selectButton(selectedId) {
 
 
 async function drawEightiesChart() {
-    // d3.select("#eighties-chart").html("");
     const dataset = await d3.csv("datasets/Concert_Dataset.csv");
     const width = 1000;
     const height = 500;
@@ -213,6 +212,7 @@ async function drawEightiesChart() {
 }
 
 window.addEventListener("DOMContentLoaded", () => {
+    selectButton("show80sactual");
     drawEightiesChart();
 });
 
@@ -841,6 +841,7 @@ async function drawNinetiesChart() {
 }
 
 window.addEventListener("DOMContentLoaded", () => {
+    selectButton("show90sactual");
     drawNinetiesChart();
 });
 
@@ -848,6 +849,7 @@ document.getElementById("show90sactual").addEventListener("click", () => {
     document.getElementById("nineties-chart").style.display = "block";
     document.getElementById("nineties-chart-adjusted").style.display = "none";
     document.getElementById("nineties-chart-tickets").style.display = "none";
+    selectButton("show90sactual");
     drawNinetiesChart();
 });
 
@@ -1052,6 +1054,7 @@ document.getElementById("show90sadjusted").addEventListener("click", () => {
     document.getElementById("nineties-chart").style.display = "none";
     document.getElementById("nineties-chart-adjusted").style.display = "block";
     document.getElementById("nineties-chart-tickets").style.display = "none";
+    selectButton("show90sadjusted");
     drawNinetiesadjustedChart();
 });
 
@@ -1256,6 +1259,7 @@ document.getElementById("show90stickets").addEventListener("click", () => {
     document.getElementById("nineties-chart").style.display = "none";
     document.getElementById("nineties-chart-adjusted").style.display = "none";
     document.getElementById("nineties-chart-tickets").style.display = "block";
+    selectButton("show90stickets");
     drawNinetiesticketsChart();
 });
 
@@ -1461,6 +1465,7 @@ async function drawY2kChart() {
 }
 
 window.addEventListener("DOMContentLoaded", () => {
+    selectButton("show2000sactual");
     drawY2kChart();
 });
 
@@ -1468,6 +1473,7 @@ document.getElementById("show2000sactual").addEventListener("click", () => {
     document.getElementById("two-thousands-chart").style.display = "block";
     document.getElementById("two-thousands-chart-adjusted").style.display = "none";
     document.getElementById("two-thousands-chart-tickets").style.display = "none";
+    selectButton("show2000sactual");
     drawY2kChart();
 });
 
@@ -1672,6 +1678,7 @@ document.getElementById("show2000sadjusted").addEventListener("click", () => {
     document.getElementById("two-thousands-chart").style.display = "none";
     document.getElementById("two-thousands-chart-adjusted").style.display = "block";
     document.getElementById("two-thousands-chart-tickets").style.display = "none";
+    selectButton("show2000sadjusted");
     drawY2kadjustedChart();
 });
 
@@ -1876,6 +1883,7 @@ document.getElementById("show2000stickets").addEventListener("click", () => {
     document.getElementById("two-thousands-chart").style.display = "none";
     document.getElementById("two-thousands-chart-adjusted").style.display = "none";
     document.getElementById("two-thousands-chart-tickets").style.display = "block";
+    selectButton("show2000stickets");
     drawY2kticketsChart();
 });
 
@@ -2082,6 +2090,7 @@ async function draw2010sChart() {
 
 
 window.addEventListener("DOMContentLoaded", () => {
+    selectButton("show2010sactual");
     draw2010sChart();
 });
 
@@ -2089,6 +2098,7 @@ document.getElementById("show2010sactual").addEventListener("click", () => {
     document.getElementById("twenty-tens-chart").style.display = "block";
     document.getElementById("twenty-tens-chart-adjusted").style.display = "none";
     document.getElementById("twenty-tens-chart-tickets").style.display = "none";
+    selectButton("show2010sactual");
     draw2010sChart();
 });
 
@@ -2293,6 +2303,7 @@ document.getElementById("show2010sadjusted").addEventListener("click", () => {
     document.getElementById("twenty-tens-chart").style.display = "none";
     document.getElementById("twenty-tens-chart-adjusted").style.display = "block";
     document.getElementById("twenty-tens-chart-tickets").style.display = "none";
+    selectButton("show2010sadjusted");
     draw2010sadjustedChart();
 });
 
@@ -2497,6 +2508,7 @@ document.getElementById("show2010stickets").addEventListener("click", () => {
     document.getElementById("twenty-tens-chart").style.display = "none";
     document.getElementById("twenty-tens-chart-adjusted").style.display = "none";
     document.getElementById("twenty-tens-chart-tickets").style.display = "block";
+    selectButton("show2010stickets");
     draw2010sticketsChart();
 });
 
@@ -2702,6 +2714,7 @@ async function draw2020sChart() {
 }
 
 window.addEventListener("DOMContentLoaded", () => {
+    selectButton("show2020sactual");
     draw2020sChart();
 });
 
@@ -2709,6 +2722,7 @@ document.getElementById("show2020sactual").addEventListener("click", () => {
     document.getElementById("twenty-twenties-chart").style.display = "block";
     document.getElementById("twenty-twenties-chart-adjusted").style.display = "none";
     document.getElementById("twenty-twenties-chart-tickets").style.display = "none";
+    selectButton("show2020sactual");
     draw2020sChart();
 });
 
@@ -2913,6 +2927,7 @@ document.getElementById("show2020sadjusted").addEventListener("click", () => {
     document.getElementById("twenty-twenties-chart").style.display = "none";
     document.getElementById("twenty-twenties-chart-adjusted").style.display = "block";
     document.getElementById("twenty-twenties-chart-tickets").style.display = "none";
+    selectButton("show2020sadjusted");
     draw2020sadjustedChart();
 });
 
@@ -3117,6 +3132,7 @@ document.getElementById("show2020stickets").addEventListener("click", () => {
     document.getElementById("twenty-twenties-chart").style.display = "none";
     document.getElementById("twenty-twenties-chart-adjusted").style.display = "none";
     document.getElementById("twenty-twenties-chart-tickets").style.display = "block";
+    selectButton("show2020stickets");
     draw2020sticketsChart();
 });
 

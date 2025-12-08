@@ -282,7 +282,6 @@ button:hover {
     color: #CA6CDC;
 }
 
-
 .vis-button:hover::before {
     content: "▶";
     left: 0;
