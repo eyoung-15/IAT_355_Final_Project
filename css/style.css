@@ -254,11 +254,17 @@ button:hover {
     align-items: flex-start;
 }
 
+#buttons-container {
+    padding-top: 3rem;
+    padding-left: 1rem;
+}
+
 .vis-button {
     color: white;
-    font-size: 15px;
+    font-size: 14px;
     cursor: pointer;
     padding-left: 1rem;
+    padding-top: 0.5rem;
     margin: 0;
     background: none;
     border: none;
@@ -270,11 +276,10 @@ button:hover {
 }
 
 .vis-button.selected::before {
-    content: "▶";
+    content: "▶ ";
     left: 0;
     top: 50%;
     transform: translateY(-50%);
-    font-size: 14px;
     color: #CA6CDC;
 }
 
@@ -283,10 +288,9 @@ button:hover {
 }
 
 .vis-button:hover::before {
-    content: "▶";
+    content: "▶ ";
     left: 0;
     top: 50%;
     transform: translateY(-50%);
-    font-size: 14px;
     color: #CA6CDC;
 }
