@@ -101,12 +101,36 @@ h1 {
     margin-left: 9rem;
 }
 
+#eighties-chart-adjusted {
+    width: 100%;
+    height: 100%;
+    margin-left: 9rem;
+}
+
+#eighties-chart-tickets {
+    width: 100%;
+    height: 100%;
+    margin-left: 9rem;
+}
+
 .slide4 h1 {
     margin-left: 9rem;
     margin-top: 6rem;
 }
 
 #nineties-chart {
+    width: 100%;
+    height: 100%;
+    margin-left: 9rem;
+}
+
+#nineties-chart-adjusted {
+    width: 100%;
+    height: 100%;
+    margin-left: 9rem;
+}
+
+#nineties-chart-tickets {
     width: 100%;
     height: 100%;
     margin-left: 9rem;
@@ -123,6 +147,18 @@ h1 {
     margin-left: 9rem;
 }
 
+#two-thousands-chart-adjusted {
+    width: 100%;
+    height: 100%;
+    margin-left: 9rem;
+}
+
+#two-thousands-chart-tickets {
+    width: 100%;
+    height: 100%;
+    margin-left: 9rem;
+}
+
 .slide6 h1 {
     margin-left: 9rem;
     margin-top: 6rem;
@@ -134,12 +170,37 @@ h1 {
     margin-left: 9rem;
 }
 
+#twenty-tens-chart-adjusted {
+    width: 100%;
+    height: 100%;
+    margin-left: 9rem;
+}
+
+#twenty-tens-chart-tickets {
+    width: 100%;
+    height: 100%;
+    margin-left: 9rem;
+}
+
+
 .slide7 h1 {
     margin-left: 9rem;
     margin-top: 6rem;
 }
 
 #twenty-twenties-chart {
+    width: 100%;
+    height: 100%;
+    margin-left: 9rem;
+}
+
+#twenty-twenties-chart-adjusted {
+    width: 100%;
+    height: 100%;
+    margin-left: 9rem;
+}
+
+#twenty-twenties-chart-tickets {
     width: 100%;
     height: 100%;
     margin-left: 9rem;
@@ -169,4 +230,26 @@ h1 {
     width: 100%;
     height: 100%;
     margin-left: 9rem;
+}
+
+button {
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    text-align: left;
+}
+
+button:hover {
+    text-decoration: underline;
+}
+
+.chart-wrapper {
+    grid-column: span 2;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
 }
