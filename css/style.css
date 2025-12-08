@@ -314,3 +314,54 @@ button:hover {
     transform: translateY(-50%);
     color: #CA6CDC;
 }
+
+#slide-slider {
+    position: fixed;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 70vw;
+    height: 40px;
+    bottom: 25px;
+}
+
+#slider-track {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 6px;
+    background: rgba(255, 255, 255, 0.50);
+    border-radius: 4px;
+}
+
+#slider-thumb {
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: white;
+    cursor: grab;
+}
+
+#slider-thumb:active {
+    cursor: grabbing;
+}
+
+.slider-tooltip {
+    position: fixed;
+    background: rgba(0, 0, 0, 0.85);
+    color: white;
+    padding: 6px 8px;
+    border-radius: 6px;
+    font-size: 12px;
+    transform: translate(-50%, -120%);
+    opacity: 0;
+    transition: opacity 0.12s ease;
+}
+
+.slider-tooltip.visible {
+    opacity: 1;
+}
