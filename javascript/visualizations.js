@@ -287,7 +287,7 @@ async function drawEightiesadjustedChart() {
         .nice()
         .range([height - margin.bottom, margin.top]);
 
-    const tickInterval = 20000000;
+    const tickInterval = 50000000;
     const maxY = Math.ceil(d3.max(df, d => d.adjusted) / tickInterval) * tickInterval;
     const yTicks = d3.range(0, maxY + 1, tickInterval);
 
@@ -418,7 +418,6 @@ document.getElementById("show80sadjusted").addEventListener("click", () => {
 });
 
 async function drawEightiesticketsChart() {
-    // d3.select("#eighties-chart").html("");
     const dataset = await d3.csv("datasets/Concert_Dataset.csv");
     const width = 1000;
     const height = 500;
@@ -487,14 +486,14 @@ async function drawEightiesticketsChart() {
         .range([margin.left, width - margin.right])
         .padding(0.3);
 
-    const yMax = d3.max(df, d => d.tickets);
     const yScale = d3.scaleLinear()
-        .domain([0, yMax])
+        .domain([0, d3.max(df, d => d.tickets)])
         .nice()
         .range([height - margin.bottom, margin.top]);
 
-    const tickInterval = Math.ceil(yMax / 5);
-    const yTicks = d3.range(0, yMax + tickInterval, tickInterval);
+    const tickInterval = 900000;
+    const maxY = Math.ceil(d3.max(df, d => d.tickets) / tickInterval) * tickInterval;
+    const yTicks = d3.range(0, maxY + 1, tickInterval);
 
     svg.append("rect")
         .attr("x", margin.left - borderPadding)
@@ -910,7 +909,7 @@ async function drawNinetiesadjustedChart() {
         .nice()
         .range([height - margin.bottom, margin.top]);
 
-    const tickInterval = 20000000;
+    const tickInterval = 100000000;
     const maxY = Math.ceil(d3.max(df, d => d.adjusted) / tickInterval) * tickInterval;
     const yTicks = d3.range(0, maxY + 1, tickInterval);
 
@@ -1109,14 +1108,15 @@ async function drawNinetiesticketsChart() {
         .range([margin.left, width - margin.right])
         .padding(0.3);
 
-    const yMax = d3.max(df, d => d.tickets);
+
     const yScale = d3.scaleLinear()
-        .domain([0, yMax])
+        .domain([0, d3.max(df, d => d.tickets)])
         .nice()
         .range([height - margin.bottom, margin.top]);
 
-    const tickInterval = Math.ceil(yMax / 5);
-    const yTicks = d3.range(0, yMax + tickInterval, tickInterval);
+    const tickInterval = 900000;
+    const maxY = Math.ceil(d3.max(df, d => d.tickets) / tickInterval) * tickInterval;
+    const yTicks = d3.range(0, maxY + 1, tickInterval);
 
     svg.append("rect")
         .attr("x", margin.left - borderPadding)
@@ -1317,7 +1317,7 @@ async function drawY2kChart() {
         .nice()
         .range([height - margin.bottom, margin.top]);
 
-    const tickInterval = 50000000;
+    const tickInterval = 70000000;
     const maxY = Math.ceil(d3.max(df, d => d.actual) / tickInterval) * tickInterval;
     const yTicks = d3.range(0, maxY + 1, tickInterval);
 
@@ -1529,7 +1529,7 @@ async function drawY2kadjustedChart() {
         .nice()
         .range([height - margin.bottom, margin.top]);
 
-    const tickInterval = 20000000;
+    const tickInterval = 100000000;
     const maxY = Math.ceil(d3.max(df, d => d.adjusted) / tickInterval) * tickInterval;
     const yTicks = d3.range(0, maxY + 1, tickInterval);
 
@@ -1728,14 +1728,15 @@ async function drawY2kticketsChart() {
         .range([margin.left, width - margin.right])
         .padding(0.3);
 
-    const yMax = d3.max(df, d => d.tickets);
+
     const yScale = d3.scaleLinear()
-        .domain([0, yMax])
+        .domain([0, d3.max(df, d => d.tickets)])
         .nice()
         .range([height - margin.bottom, margin.top]);
 
-    const tickInterval = Math.ceil(yMax / 5);
-    const yTicks = d3.range(0, yMax + tickInterval, tickInterval);
+    const tickInterval = 700000;
+    const maxY = Math.ceil(d3.max(df, d => d.tickets) / tickInterval) * tickInterval;
+    const yTicks = d3.range(0, maxY + 1, tickInterval);
 
     svg.append("rect")
         .attr("x", margin.left - borderPadding)
@@ -2149,7 +2150,7 @@ async function draw2010sadjustedChart() {
         .nice()
         .range([height - margin.bottom, margin.top]);
 
-    const tickInterval = 20000000;
+    const tickInterval = 120000000;
     const maxY = Math.ceil(d3.max(df, d => d.adjusted) / tickInterval) * tickInterval;
     const yTicks = d3.range(0, maxY + 1, tickInterval);
 
@@ -2348,14 +2349,15 @@ async function draw2010sticketsChart() {
         .range([margin.left, width - margin.right])
         .padding(0.3);
 
-    const yMax = d3.max(df, d => d.tickets);
+
     const yScale = d3.scaleLinear()
-        .domain([0, yMax])
+        .domain([0, d3.max(df, d => d.tickets)])
         .nice()
         .range([height - margin.bottom, margin.top]);
 
-    const tickInterval = Math.ceil(yMax / 5);
-    const yTicks = d3.range(0, yMax + tickInterval, tickInterval);
+    const tickInterval = 1000000;
+    const maxY = Math.ceil(d3.max(df, d => d.tickets) / tickInterval) * tickInterval;
+    const yTicks = d3.range(0, maxY + 1, tickInterval);
 
     svg.append("rect")
         .attr("x", margin.left - borderPadding)
@@ -2556,7 +2558,7 @@ async function draw2020sChart() {
         .nice()
         .range([height - margin.bottom, margin.top]);
 
-    const tickInterval = 150000000;
+    const tickInterval = 300000000;
     const maxY = Math.ceil(d3.max(df, d => d.actual) / tickInterval) * tickInterval;
     const yTicks = d3.range(0, maxY + 1, tickInterval);
 
@@ -2768,7 +2770,7 @@ async function draw2020sadjustedChart() {
         .nice()
         .range([height - margin.bottom, margin.top]);
 
-    const tickInterval = 20000000;
+    const tickInterval = 300000000;
     const maxY = Math.ceil(d3.max(df, d => d.adjusted) / tickInterval) * tickInterval;
     const yTicks = d3.range(0, maxY + 1, tickInterval);
 
@@ -2967,14 +2969,15 @@ async function draw2020sticketsChart() {
         .range([margin.left, width - margin.right])
         .padding(0.3);
 
-    const yMax = d3.max(df, d => d.tickets);
+
     const yScale = d3.scaleLinear()
-        .domain([0, yMax])
+        .domain([0, d3.max(df, d => d.tickets)])
         .nice()
         .range([height - margin.bottom, margin.top]);
 
-    const tickInterval = Math.ceil(yMax / 5);
-    const yTicks = d3.range(0, yMax + tickInterval, tickInterval);
+    const tickInterval = 1400000;
+    const maxY = Math.ceil(d3.max(df, d => d.tickets) / tickInterval) * tickInterval;
+    const yTicks = d3.range(0, maxY + 1, tickInterval);
 
     svg.append("rect")
         .attr("x", margin.left - borderPadding)
