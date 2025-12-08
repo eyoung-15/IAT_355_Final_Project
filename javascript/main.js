@@ -28,6 +28,11 @@ function positionToSlideIndex(x) {
     return Math.round(ratio * (slides.length - 1));
 }
 
+function slideIndexToPosition(index) {
+    return (index / (slides.length)) * slider.clientWidth;
+}
+
+
 function goToSlide(index) {
     slides[index].scrollIntoView({ behavior: "smooth" });
 }
@@ -104,3 +109,17 @@ function updateSlider(x) {
     const progress = document.getElementById("slider-progress");
     progress.style.width = `${x}px`;
 }
+
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            const index = [...slides].indexOf(entry.target);
+            const x = slideIndexToPosition(index);
+            updateSlider(x);
+        }
+    });
+}, {
+    threshold: 0.5
+});
+
+slides.forEach(slide => observer.observe(slide));
