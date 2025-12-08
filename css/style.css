@@ -216,6 +216,26 @@ h1 {
     margin-top: 6rem;
 }
 
+.slide3 h1 {
+    margin-top: 4rem;
+}
+
+.slide4 h1 {
+    margin-top: 4rem;
+}
+
+.slide5 h1 {
+    margin-top: 4rem;
+}
+
+.slide6 h1 {
+    margin-top: 4rem;
+}
+
+.slide7 h1 {
+    margin-top: 4rem;
+}
+
 #alltime-chart {
     width: 100%;
     height: 80vh;
@@ -244,7 +264,7 @@ button {
 }
 
 button:hover {
-    text-decoration: underline;
+    text-decoration: none;
 }
 
 .chart-wrapper {
@@ -252,4 +272,45 @@ button:hover {
     display: flex;
     flex-direction: row;
     align-items: flex-start;
+}
+
+#buttons-container {
+    padding-top: 3rem;
+    padding-left: 1rem;
+}
+
+.vis-button {
+    color: white;
+    font-size: 14px;
+    cursor: pointer;
+    padding-left: 1rem;
+    padding-top: 0.5rem;
+    margin: 0;
+    background: none;
+    border: none;
+    text-align: left;
+}
+
+.vis-button.selected {
+    color: #CA6CDC;
+}
+
+.vis-button.selected::before {
+    content: "▶ ";
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #CA6CDC;
+}
+
+.vis-button:hover {
+    color: #CA6CDC;
+}
+
+.vis-button:hover::before {
+    content: "▶ ";
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #CA6CDC;
 }

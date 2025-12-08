@@ -1,8 +1,20 @@
 import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
 import _ from "https://cdn.jsdelivr.net/npm/lodash@4.17.21/+esm";
 
+const chartButtons = document.querySelectorAll(".vis-button");
+
+function selectButton(selectedId) {
+    chartButtons.forEach(btn => {
+        if (btn.id === selectedId) {
+            btn.classList.add("selected");
+        } else {
+            btn.classList.remove("selected");
+        }
+    });
+}
+
+
 async function drawEightiesChart() {
-    // d3.select("#eighties-chart").html("");
     const dataset = await d3.csv("datasets/Concert_Dataset.csv");
     const width = 1000;
     const height = 500;
@@ -200,6 +212,7 @@ async function drawEightiesChart() {
 }
 
 window.addEventListener("DOMContentLoaded", () => {
+    selectButton("show80sactual");
     drawEightiesChart();
 });
 
@@ -207,6 +220,7 @@ document.getElementById("show80sactual").addEventListener("click", () => {
     document.getElementById("eighties-chart").style.display = "block";
     document.getElementById("eighties-chart-adjusted").style.display = "none";
     document.getElementById("eighties-chart-tickets").style.display = "none";
+    selectButton("show80sactual");
     drawEightiesChart();
 });
 
@@ -287,7 +301,7 @@ async function drawEightiesadjustedChart() {
         .nice()
         .range([height - margin.bottom, margin.top]);
 
-    const tickInterval = 20000000;
+    const tickInterval = 50000000;
     const maxY = Math.ceil(d3.max(df, d => d.adjusted) / tickInterval) * tickInterval;
     const yTicks = d3.range(0, maxY + 1, tickInterval);
 
@@ -414,11 +428,11 @@ document.getElementById("show80sadjusted").addEventListener("click", () => {
     document.getElementById("eighties-chart").style.display = "none";
     document.getElementById("eighties-chart-adjusted").style.display = "block";
     document.getElementById("eighties-chart-tickets").style.display = "none";
+    selectButton("show80sadjusted");
     drawEightiesadjustedChart();
 });
 
 async function drawEightiesticketsChart() {
-    // d3.select("#eighties-chart").html("");
     const dataset = await d3.csv("datasets/Concert_Dataset.csv");
     const width = 1000;
     const height = 500;
@@ -487,14 +501,14 @@ async function drawEightiesticketsChart() {
         .range([margin.left, width - margin.right])
         .padding(0.3);
 
-    const yMax = d3.max(df, d => d.tickets);
     const yScale = d3.scaleLinear()
-        .domain([0, yMax])
+        .domain([0, d3.max(df, d => d.tickets)])
         .nice()
         .range([height - margin.bottom, margin.top]);
 
-    const tickInterval = Math.ceil(yMax / 5);
-    const yTicks = d3.range(0, yMax + tickInterval, tickInterval);
+    const tickInterval = 900000;
+    const maxY = Math.ceil(d3.max(df, d => d.tickets) / tickInterval) * tickInterval;
+    const yTicks = d3.range(0, maxY + 1, tickInterval);
 
     svg.append("rect")
         .attr("x", margin.left - borderPadding)
@@ -618,6 +632,7 @@ document.getElementById("show80stickets").addEventListener("click", () => {
     document.getElementById("eighties-chart").style.display = "none";
     document.getElementById("eighties-chart-adjusted").style.display = "none";
     document.getElementById("eighties-chart-tickets").style.display = "block";
+    selectButton("show80stickets");
     drawEightiesticketsChart();
 });
 
@@ -826,6 +841,7 @@ async function drawNinetiesChart() {
 }
 
 window.addEventListener("DOMContentLoaded", () => {
+    selectButton("show90sactual");
     drawNinetiesChart();
 });
 
@@ -833,6 +849,7 @@ document.getElementById("show90sactual").addEventListener("click", () => {
     document.getElementById("nineties-chart").style.display = "block";
     document.getElementById("nineties-chart-adjusted").style.display = "none";
     document.getElementById("nineties-chart-tickets").style.display = "none";
+    selectButton("show90sactual");
     drawNinetiesChart();
 });
 
@@ -910,7 +927,7 @@ async function drawNinetiesadjustedChart() {
         .nice()
         .range([height - margin.bottom, margin.top]);
 
-    const tickInterval = 20000000;
+    const tickInterval = 100000000;
     const maxY = Math.ceil(d3.max(df, d => d.adjusted) / tickInterval) * tickInterval;
     const yTicks = d3.range(0, maxY + 1, tickInterval);
 
@@ -1037,6 +1054,7 @@ document.getElementById("show90sadjusted").addEventListener("click", () => {
     document.getElementById("nineties-chart").style.display = "none";
     document.getElementById("nineties-chart-adjusted").style.display = "block";
     document.getElementById("nineties-chart-tickets").style.display = "none";
+    selectButton("show90sadjusted");
     drawNinetiesadjustedChart();
 });
 
@@ -1109,14 +1127,15 @@ async function drawNinetiesticketsChart() {
         .range([margin.left, width - margin.right])
         .padding(0.3);
 
-    const yMax = d3.max(df, d => d.tickets);
+
     const yScale = d3.scaleLinear()
-        .domain([0, yMax])
+        .domain([0, d3.max(df, d => d.tickets)])
         .nice()
         .range([height - margin.bottom, margin.top]);
 
-    const tickInterval = Math.ceil(yMax / 5);
-    const yTicks = d3.range(0, yMax + tickInterval, tickInterval);
+    const tickInterval = 900000;
+    const maxY = Math.ceil(d3.max(df, d => d.tickets) / tickInterval) * tickInterval;
+    const yTicks = d3.range(0, maxY + 1, tickInterval);
 
     svg.append("rect")
         .attr("x", margin.left - borderPadding)
@@ -1240,6 +1259,7 @@ document.getElementById("show90stickets").addEventListener("click", () => {
     document.getElementById("nineties-chart").style.display = "none";
     document.getElementById("nineties-chart-adjusted").style.display = "none";
     document.getElementById("nineties-chart-tickets").style.display = "block";
+    selectButton("show90stickets");
     drawNinetiesticketsChart();
 });
 
@@ -1317,7 +1337,7 @@ async function drawY2kChart() {
         .nice()
         .range([height - margin.bottom, margin.top]);
 
-    const tickInterval = 50000000;
+    const tickInterval = 70000000;
     const maxY = Math.ceil(d3.max(df, d => d.actual) / tickInterval) * tickInterval;
     const yTicks = d3.range(0, maxY + 1, tickInterval);
 
@@ -1445,6 +1465,7 @@ async function drawY2kChart() {
 }
 
 window.addEventListener("DOMContentLoaded", () => {
+    selectButton("show2000sactual");
     drawY2kChart();
 });
 
@@ -1452,6 +1473,7 @@ document.getElementById("show2000sactual").addEventListener("click", () => {
     document.getElementById("two-thousands-chart").style.display = "block";
     document.getElementById("two-thousands-chart-adjusted").style.display = "none";
     document.getElementById("two-thousands-chart-tickets").style.display = "none";
+    selectButton("show2000sactual");
     drawY2kChart();
 });
 
@@ -1529,7 +1551,7 @@ async function drawY2kadjustedChart() {
         .nice()
         .range([height - margin.bottom, margin.top]);
 
-    const tickInterval = 20000000;
+    const tickInterval = 100000000;
     const maxY = Math.ceil(d3.max(df, d => d.adjusted) / tickInterval) * tickInterval;
     const yTicks = d3.range(0, maxY + 1, tickInterval);
 
@@ -1656,6 +1678,7 @@ document.getElementById("show2000sadjusted").addEventListener("click", () => {
     document.getElementById("two-thousands-chart").style.display = "none";
     document.getElementById("two-thousands-chart-adjusted").style.display = "block";
     document.getElementById("two-thousands-chart-tickets").style.display = "none";
+    selectButton("show2000sadjusted");
     drawY2kadjustedChart();
 });
 
@@ -1728,14 +1751,15 @@ async function drawY2kticketsChart() {
         .range([margin.left, width - margin.right])
         .padding(0.3);
 
-    const yMax = d3.max(df, d => d.tickets);
+
     const yScale = d3.scaleLinear()
-        .domain([0, yMax])
+        .domain([0, d3.max(df, d => d.tickets)])
         .nice()
         .range([height - margin.bottom, margin.top]);
 
-    const tickInterval = Math.ceil(yMax / 5);
-    const yTicks = d3.range(0, yMax + tickInterval, tickInterval);
+    const tickInterval = 700000;
+    const maxY = Math.ceil(d3.max(df, d => d.tickets) / tickInterval) * tickInterval;
+    const yTicks = d3.range(0, maxY + 1, tickInterval);
 
     svg.append("rect")
         .attr("x", margin.left - borderPadding)
@@ -1859,6 +1883,7 @@ document.getElementById("show2000stickets").addEventListener("click", () => {
     document.getElementById("two-thousands-chart").style.display = "none";
     document.getElementById("two-thousands-chart-adjusted").style.display = "none";
     document.getElementById("two-thousands-chart-tickets").style.display = "block";
+    selectButton("show2000stickets");
     drawY2kticketsChart();
 });
 
@@ -2065,6 +2090,7 @@ async function draw2010sChart() {
 
 
 window.addEventListener("DOMContentLoaded", () => {
+    selectButton("show2010sactual");
     draw2010sChart();
 });
 
@@ -2072,6 +2098,7 @@ document.getElementById("show2010sactual").addEventListener("click", () => {
     document.getElementById("twenty-tens-chart").style.display = "block";
     document.getElementById("twenty-tens-chart-adjusted").style.display = "none";
     document.getElementById("twenty-tens-chart-tickets").style.display = "none";
+    selectButton("show2010sactual");
     draw2010sChart();
 });
 
@@ -2149,7 +2176,7 @@ async function draw2010sadjustedChart() {
         .nice()
         .range([height - margin.bottom, margin.top]);
 
-    const tickInterval = 20000000;
+    const tickInterval = 120000000;
     const maxY = Math.ceil(d3.max(df, d => d.adjusted) / tickInterval) * tickInterval;
     const yTicks = d3.range(0, maxY + 1, tickInterval);
 
@@ -2276,6 +2303,7 @@ document.getElementById("show2010sadjusted").addEventListener("click", () => {
     document.getElementById("twenty-tens-chart").style.display = "none";
     document.getElementById("twenty-tens-chart-adjusted").style.display = "block";
     document.getElementById("twenty-tens-chart-tickets").style.display = "none";
+    selectButton("show2010sadjusted");
     draw2010sadjustedChart();
 });
 
@@ -2348,14 +2376,15 @@ async function draw2010sticketsChart() {
         .range([margin.left, width - margin.right])
         .padding(0.3);
 
-    const yMax = d3.max(df, d => d.tickets);
+
     const yScale = d3.scaleLinear()
-        .domain([0, yMax])
+        .domain([0, d3.max(df, d => d.tickets)])
         .nice()
         .range([height - margin.bottom, margin.top]);
 
-    const tickInterval = Math.ceil(yMax / 5);
-    const yTicks = d3.range(0, yMax + tickInterval, tickInterval);
+    const tickInterval = 1000000;
+    const maxY = Math.ceil(d3.max(df, d => d.tickets) / tickInterval) * tickInterval;
+    const yTicks = d3.range(0, maxY + 1, tickInterval);
 
     svg.append("rect")
         .attr("x", margin.left - borderPadding)
@@ -2479,6 +2508,7 @@ document.getElementById("show2010stickets").addEventListener("click", () => {
     document.getElementById("twenty-tens-chart").style.display = "none";
     document.getElementById("twenty-tens-chart-adjusted").style.display = "none";
     document.getElementById("twenty-tens-chart-tickets").style.display = "block";
+    selectButton("show2010stickets");
     draw2010sticketsChart();
 });
 
@@ -2556,7 +2586,7 @@ async function draw2020sChart() {
         .nice()
         .range([height - margin.bottom, margin.top]);
 
-    const tickInterval = 150000000;
+    const tickInterval = 300000000;
     const maxY = Math.ceil(d3.max(df, d => d.actual) / tickInterval) * tickInterval;
     const yTicks = d3.range(0, maxY + 1, tickInterval);
 
@@ -2684,6 +2714,7 @@ async function draw2020sChart() {
 }
 
 window.addEventListener("DOMContentLoaded", () => {
+    selectButton("show2020sactual");
     draw2020sChart();
 });
 
@@ -2691,6 +2722,7 @@ document.getElementById("show2020sactual").addEventListener("click", () => {
     document.getElementById("twenty-twenties-chart").style.display = "block";
     document.getElementById("twenty-twenties-chart-adjusted").style.display = "none";
     document.getElementById("twenty-twenties-chart-tickets").style.display = "none";
+    selectButton("show2020sactual");
     draw2020sChart();
 });
 
@@ -2768,7 +2800,7 @@ async function draw2020sadjustedChart() {
         .nice()
         .range([height - margin.bottom, margin.top]);
 
-    const tickInterval = 20000000;
+    const tickInterval = 300000000;
     const maxY = Math.ceil(d3.max(df, d => d.adjusted) / tickInterval) * tickInterval;
     const yTicks = d3.range(0, maxY + 1, tickInterval);
 
@@ -2895,6 +2927,7 @@ document.getElementById("show2020sadjusted").addEventListener("click", () => {
     document.getElementById("twenty-twenties-chart").style.display = "none";
     document.getElementById("twenty-twenties-chart-adjusted").style.display = "block";
     document.getElementById("twenty-twenties-chart-tickets").style.display = "none";
+    selectButton("show2020sadjusted");
     draw2020sadjustedChart();
 });
 
@@ -2967,14 +3000,15 @@ async function draw2020sticketsChart() {
         .range([margin.left, width - margin.right])
         .padding(0.3);
 
-    const yMax = d3.max(df, d => d.tickets);
+
     const yScale = d3.scaleLinear()
-        .domain([0, yMax])
+        .domain([0, d3.max(df, d => d.tickets)])
         .nice()
         .range([height - margin.bottom, margin.top]);
 
-    const tickInterval = Math.ceil(yMax / 5);
-    const yTicks = d3.range(0, yMax + tickInterval, tickInterval);
+    const tickInterval = 1400000;
+    const maxY = Math.ceil(d3.max(df, d => d.tickets) / tickInterval) * tickInterval;
+    const yTicks = d3.range(0, maxY + 1, tickInterval);
 
     svg.append("rect")
         .attr("x", margin.left - borderPadding)
@@ -3098,6 +3132,7 @@ document.getElementById("show2020stickets").addEventListener("click", () => {
     document.getElementById("twenty-twenties-chart").style.display = "none";
     document.getElementById("twenty-twenties-chart-adjusted").style.display = "none";
     document.getElementById("twenty-twenties-chart-tickets").style.display = "block";
+    selectButton("show2020stickets");
     draw2020sticketsChart();
 });
 
