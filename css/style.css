@@ -360,8 +360,20 @@ button:hover {
     transform: translate(-50%, -120%);
     opacity: 0;
     transition: opacity 0.12s ease;
+    font-family: "Inter", sans-serif;
 }
 
 .slider-tooltip.visible {
     opacity: 1;
+}
+
+#slider-progress {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 6px;
+    background: white;
+    border-radius: 4px;
+    width: 0%;
 }

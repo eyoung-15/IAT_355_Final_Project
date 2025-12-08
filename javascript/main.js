@@ -5,16 +5,18 @@ const thumb = document.getElementById("slider-thumb");
 let isDragging = false;
 
 const labels = [
-    "Title",
-    "Intro",
+    "title",
+    "intro",
     "1980s",
     "1990s",
     "2000s",
     "2010s",
     "2020s",
-    "All Concerts",
-    "Greediest Artist"
+    "all concerts",
+    "greediest artist"
 ];
+
+
 
 const tooltip = document.createElement("div");
 tooltip.className = "slider-tooltip";
@@ -44,6 +46,7 @@ function hideTooltip() {
 slider.addEventListener("click", (e) => {
     const rect = slider.getBoundingClientRect();
     const x = e.clientX - rect.left;
+    updateSlider(x);
 
     const index = positionToSlideIndex(x);
     goToSlide(index);
@@ -53,6 +56,7 @@ slider.addEventListener("click", (e) => {
 thumb.addEventListener("mousedown", () => {
     isDragging = true;
     document.body.style.userSelect = "none";
+
 });
 
 document.addEventListener("mousemove", (e) => {
@@ -68,6 +72,7 @@ document.addEventListener("mousemove", (e) => {
     goToSlide(index);
 
     showTooltip(labels[index], e.pageX, rect.top - 8);
+    updateSlider(x);
 });
 
 document.addEventListener("mouseup", () => {
@@ -89,3 +94,13 @@ thumb.addEventListener("mouseenter", () => {
 thumb.addEventListener("mouseleave", () => {
     if (!isDragging) hideTooltip();
 });
+
+function updateSlider(x) {
+    const rect = slider.getBoundingClientRect();
+    x = Math.max(0, Math.min(x, slider.clientWidth));
+
+    thumb.style.left = `${x}px`;
+
+    const progress = document.getElementById("slider-progress");
+    progress.style.width = `${x}px`;
+}
