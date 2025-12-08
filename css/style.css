@@ -198,19 +198,9 @@ button:hover {
     text-decoration: underline;
 }
 
-/* #buttons-container {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    margin-left: 20px;
-} */
-
 .chart-wrapper {
     grid-column: span 2;
     display: flex;
     flex-direction: row;
     align-items: flex-start;
-    /* gap: 40px;
-    margin-left: 9rem;
-    margin-top: 2rem; */
 }

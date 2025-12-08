@@ -80,10 +80,6 @@ async function drawEightiesChart() {
     const maxY = Math.ceil(d3.max(df, d => d.actual) / tickInterval) * tickInterval;
     const yTicks = d3.range(0, maxY + 1, tickInterval);
 
-    const color = d3.scaleOrdinal()
-        .domain(df.map(d => d.Tour))
-        .range(d3.schemeTableau10);
-
 
     svg.append("rect")
         .attr("x", margin.left - borderPadding)
@@ -214,6 +210,8 @@ document.getElementById("show80sactual").addEventListener("click", () => {
     drawEightiesChart();
 });
 
+
+
 async function drawEightiesadjustedChart() {
     // d3.select("#eighties-chart-adjusted").html("");
     const dataset = await d3.csv("datasets/Concert_Dataset.csv");
@@ -263,7 +261,7 @@ async function drawEightiesadjustedChart() {
         Tour: d["Tour Name"],
         Artist: d["Artist Name "],
         Label: `${d["Tour Name"]}\n${d["Artist Name "]}`,
-        actual: +d["Actual Gross Income (USD)"].replace(/,/g, ""),
+        adjusted: +d["Adjusted Gross Income (2024 USD)"].replace(/,/g, ""),
         startYear: +d["Year Start"],
         endYear: +d["Year End"],
     }))
@@ -271,7 +269,7 @@ async function drawEightiesadjustedChart() {
 
 
     // Sort descending
-    df.sort((a, b) => b.actual - a.actual);
+    df.sort((a, b) => b.adjusted - a.adjusted);
 
     const svg = d3.select("#eighties-chart-adjusted").html("")
         .append("svg")
@@ -285,17 +283,13 @@ async function drawEightiesadjustedChart() {
         .padding(0.3);
 
     const yScale = d3.scaleLinear()
-        .domain([0, d3.max(df, d => d.actual)])
+        .domain([0, d3.max(df, d => d.adjusted)])
         .nice()
         .range([height - margin.bottom, margin.top]);
 
     const tickInterval = 20000000;
-    const maxY = Math.ceil(d3.max(df, d => d.actual) / tickInterval) * tickInterval;
+    const maxY = Math.ceil(d3.max(df, d => d.adjusted) / tickInterval) * tickInterval;
     const yTicks = d3.range(0, maxY + 1, tickInterval);
-
-    const color = d3.scaleOrdinal()
-        .domain(df.map(d => d.Tour))
-        .range(d3.schemeTableau10);
 
 
     svg.append("rect")
@@ -313,9 +307,9 @@ async function drawEightiesadjustedChart() {
         .append("rect")
         .attr("class", "bar")
         .attr("x", d => xScale(d.Label))
-        .attr("y", d => yScale(d.actual))
+        .attr("y", d => yScale(d.adjusted))
         .attr("width", xScale.bandwidth())
-        .attr("height", d => height - margin.bottom - yScale(d.actual))
+        .attr("height", d => height - margin.bottom - yScale(d.adjusted))
         .attr("fill", "#4C46C9")
         .on("mouseover", function (event, d) {
             tooltip.transition()
@@ -326,7 +320,7 @@ async function drawEightiesadjustedChart() {
                 <strong>Tour:</strong> ${d.Tour}<br/>
                 <strong>Artist:</strong> ${d.Artist}<br/>
                 <strong>Years:</strong> ${d.startYear} - ${d.endYear}<br/>
-                <strong>Actual Income:</strong> $${d.actual.toLocaleString()}
+                <strong>Inflation Adjusted Income:</strong> $${d.adjusted.toLocaleString()}
             `)
                 .style("left", (event.pageX + 10) + "px")
                 .style("top", (event.pageY - 28) + "px");
@@ -412,7 +406,7 @@ async function drawEightiesadjustedChart() {
         .attr("transform", "rotate(-90)")
         .style("fill", "white")
         .style("font-size", "14px")
-        .text("actual gross income (usd)");
+        .text("inflation adjusted gross income (2024 usd)");
 
 }
 
@@ -472,7 +466,7 @@ async function drawEightiesticketsChart() {
         Tour: d["Tour Name"],
         Artist: d["Artist Name "],
         Label: `${d["Tour Name"]}\n${d["Artist Name "]}`,
-        actual: +d["Actual Gross Income (USD)"].replace(/,/g, ""),
+        tickets: +d["Tickets Sold"].replace(/,/g, ""),
         startYear: +d["Year Start"],
         endYear: +d["Year End"],
     }))
@@ -480,7 +474,7 @@ async function drawEightiesticketsChart() {
 
 
     // Sort descending
-    df.sort((a, b) => b.actual - a.actual);
+    df.sort((a, b) => b.tickets - a.tickets);
 
     const svg = d3.select("#eighties-chart-tickets").html("")
         .append("svg")
@@ -493,19 +487,14 @@ async function drawEightiesticketsChart() {
         .range([margin.left, width - margin.right])
         .padding(0.3);
 
+    const yMax = d3.max(df, d => d.tickets);
     const yScale = d3.scaleLinear()
-        .domain([0, d3.max(df, d => d.actual)])
+        .domain([0, yMax])
         .nice()
         .range([height - margin.bottom, margin.top]);
 
-    const tickInterval = 20000000;
-    const maxY = Math.ceil(d3.max(df, d => d.actual) / tickInterval) * tickInterval;
-    const yTicks = d3.range(0, maxY + 1, tickInterval);
-
-    const color = d3.scaleOrdinal()
-        .domain(df.map(d => d.Tour))
-        .range(d3.schemeTableau10);
-
+    const tickInterval = Math.ceil(yMax / 5);
+    const yTicks = d3.range(0, yMax + tickInterval, tickInterval);
 
     svg.append("rect")
         .attr("x", margin.left - borderPadding)
@@ -522,9 +511,9 @@ async function drawEightiesticketsChart() {
         .append("rect")
         .attr("class", "bar")
         .attr("x", d => xScale(d.Label))
-        .attr("y", d => yScale(d.actual))
+        .attr("y", d => yScale(d.tickets))
         .attr("width", xScale.bandwidth())
-        .attr("height", d => height - margin.bottom - yScale(d.actual))
+        .attr("height", d => height - margin.bottom - yScale(d.tickets))
         .attr("fill", "#4C46C9")
         .on("mouseover", function (event, d) {
             tooltip.transition()
@@ -535,7 +524,7 @@ async function drawEightiesticketsChart() {
                 <strong>Tour:</strong> ${d.Tour}<br/>
                 <strong>Artist:</strong> ${d.Artist}<br/>
                 <strong>Years:</strong> ${d.startYear} - ${d.endYear}<br/>
-                <strong>Actual Income:</strong> $${d.actual.toLocaleString()}
+                <strong>Tickets Sold:</strong> ${d.tickets.toLocaleString()}
             `)
                 .style("left", (event.pageX + 10) + "px")
                 .style("top", (event.pageY - 28) + "px");
@@ -597,7 +586,7 @@ async function drawEightiesticketsChart() {
         .attr("transform", `translate(${margin.left},0)`)
         .call(d3.axisLeft(yScale)
             .tickValues(yTicks)
-            .tickFormat(d3.format("$.2s"))
+            .tickFormat(d3.format(".2s"))
         )
         .selectAll("text")
         .attr("dx", -10)
@@ -621,7 +610,7 @@ async function drawEightiesticketsChart() {
         .attr("transform", "rotate(-90)")
         .style("fill", "white")
         .style("font-size", "14px")
-        .text("actual gross income (usd)");
+        .text("tickets sold");
 
 }
 
