@@ -1,6 +1,19 @@
 import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
 import _ from "https://cdn.jsdelivr.net/npm/lodash@4.17.21/+esm";
 
+const chartButtons = document.querySelectorAll(".vis-button");
+
+function selectButton(selectedId) {
+    chartButtons.forEach(btn => {
+        if (btn.id === selectedId) {
+            btn.classList.add("selected");
+        } else {
+            btn.classList.remove("selected");
+        }
+    });
+}
+
+
 async function drawEightiesChart() {
     // d3.select("#eighties-chart").html("");
     const dataset = await d3.csv("datasets/Concert_Dataset.csv");
@@ -207,6 +220,7 @@ document.getElementById("show80sactual").addEventListener("click", () => {
     document.getElementById("eighties-chart").style.display = "block";
     document.getElementById("eighties-chart-adjusted").style.display = "none";
     document.getElementById("eighties-chart-tickets").style.display = "none";
+    selectButton("show80sactual");
     drawEightiesChart();
 });
 
@@ -414,6 +428,7 @@ document.getElementById("show80sadjusted").addEventListener("click", () => {
     document.getElementById("eighties-chart").style.display = "none";
     document.getElementById("eighties-chart-adjusted").style.display = "block";
     document.getElementById("eighties-chart-tickets").style.display = "none";
+    selectButton("show80sadjusted");
     drawEightiesadjustedChart();
 });
 
@@ -617,6 +632,7 @@ document.getElementById("show80stickets").addEventListener("click", () => {
     document.getElementById("eighties-chart").style.display = "none";
     document.getElementById("eighties-chart-adjusted").style.display = "none";
     document.getElementById("eighties-chart-tickets").style.display = "block";
+    selectButton("show80stickets");
     drawEightiesticketsChart();
 });
 

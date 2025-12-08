@@ -244,7 +244,7 @@ button {
 }
 
 button:hover {
-    text-decoration: underline;
+    text-decoration: none;
 }
 
 .chart-wrapper {
@@ -252,4 +252,42 @@ button:hover {
     display: flex;
     flex-direction: row;
     align-items: flex-start;
+}
+
+.vis-button {
+    color: white;
+    font-size: 15px;
+    cursor: pointer;
+    padding-left: 1rem;
+    margin: 0;
+    background: none;
+    border: none;
+    text-align: left;
+}
+
+.vis-button.selected {
+    color: #CA6CDC;
+}
+
+.vis-button.selected::before {
+    content: "▶";
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 14px;
+    color: #CA6CDC;
+}
+
+.vis-button:hover {
+    color: #CA6CDC;
+}
+
+
+.vis-button:hover::before {
+    content: "▶";
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 14px;
+    color: #CA6CDC;
 }
