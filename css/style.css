@@ -426,3 +426,25 @@ button:hover {
     border-radius: 4px;
     width: 0%;
 }
+
+#slide-num {
+    font-size: 14px;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 70%;
+    height: 6px;
+    color: white;
+    font-family: "Inter", sans-serif;
+}
+
+#slide-total {
+    position: absolute;
+    left: 100;
+    right: 0;
+    top: 70%;
+    height: 6px;
+    font-size: 14px;
+    color: white;
+    font-family: "Inter", sans-serif;
+}
