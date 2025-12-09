@@ -7,12 +7,15 @@ let isDragging = false;
 const labels = [
     "title",
     "intro",
+    "intro",
     "1980s",
     "1990s",
     "2000s",
     "2010s",
     "2020s",
+    "all concerts intro",
     "all concerts",
+    "greediest artist intro",
     "greediest artist"
 ];
 
