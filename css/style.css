@@ -433,7 +433,6 @@ button:hover {
     left: 0;
     right: 0;
     top: 80%;
-    height: 6px;
     color: white;
     font-family: "Inter", sans-serif;
 }
@@ -443,7 +442,6 @@ button:hover {
     left: 100;
     right: 0;
     top: 80%;
-    height: 6px;
     font-size: 14px;
     color: white;
     font-family: "Inter", sans-serif;
