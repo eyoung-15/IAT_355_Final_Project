@@ -42,7 +42,10 @@ h1 {
 }
 
 .slide1 {
-    background-color: #9F58DA;
+    background-image: url("../images/title_bg.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
     display: flex;
     justify-content: center;
     align-items: center;
