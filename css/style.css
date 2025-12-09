@@ -36,7 +36,8 @@ h1 {
 p {
     color: white;
     font-family: 'Inter', sans-serif;
-    font-size: 0.9rem;;
+    font-size: 0.9rem;
+    ;
 }
 
 .whitetext {
@@ -58,20 +59,20 @@ p {
 }
 
 .slide1b {
-    background-color: black;
+    background: url("../images/text-bg.svg") center/cover no-repeat;
     display: flex;
     justify-content: center;
     align-items: center;
     padding: 40px;
 }
 
-.slide1b p{
+.slide1b p {
     max-width: 520px;
     text-align: center;
 }
 
 .slide2 {
-    background-color: black;
+    background: url("../images/large-text-bg.svg") center/cover no-repeat;
 }
 
 .slide3 {
@@ -95,14 +96,14 @@ p {
 }
 
 .slide7b {
-    background-color: black;
+    background: url("../images/text-bg.svg") center/cover no-repeat;
     display: flex;
     justify-content: center;
     align-items: center;
     padding: 40px;
 }
 
-.slide7b p{
+.slide7b p {
     max-width: 550px;
     text-align: center;
 }
@@ -111,15 +112,15 @@ p {
     background: url("../images/vis_backgrounds.svg") center/cover no-repeat;
 }
 
-.slide8b{
-    background-color: black;
+.slide8b {
+    background: url("../images/text-bg.svg") center/cover no-repeat;
     display: flex;
     justify-content: center;
     align-items: center;
     padding: 40px;
 }
 
-.slide8b p{
+.slide8b p {
     max-width: 500px;
     text-align: center;
 }
