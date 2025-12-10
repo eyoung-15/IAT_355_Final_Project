@@ -125,6 +125,14 @@ p {
     text-align: center;
 }
 
+.slide8c {
+    background: url("../images/large-text-bg.svg") center/cover no-repeat;
+}
+
+.slide8d {
+    background: url("../images/text-bg.svg") center/cover no-repeat;
+}
+
 .slide9 {
     background: url("../images/vis_backgrounds.svg") center/cover no-repeat;
 }
@@ -165,6 +173,16 @@ p {
 .slide4 h1 {
     margin-left: 9rem;
     margin-top: 6rem;
+}
+
+.slide8c .whitetext {
+    margin-left: 9rem;
+    margin-top: 10rem;
+}
+
+.slide8c h1 {
+    margin-right: 4rem;
+    margin-top: 25rem;
 }
 
 #nineties-chart {
@@ -445,4 +463,46 @@ button:hover {
     font-size: 14px;
     color: white;
     font-family: "Inter", sans-serif;
+}
+
+.slide8d {
+    display: grid;
+    grid-template-columns: 1fr;
+}
+
+#guess-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    gap: 15px;
+    font-family: 'Inter', sans-serif;
+}
+
+#artist-guess {
+    padding: 10px 15px;
+    border-radius: 8px;
+    border: 1px solid #CA6CDC;
+    font-size: 16px;
+    min-width: 250px;
+    background-color: #18142c;
+    color: white;
+    outline: none;
+    transition: border 0.2s;
+}
+
+#submit-guess {
+    padding: 10px 20px;
+    border-radius: 8px;
+    border: none;
+    background-color: #CA6CDC;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+#submit-guess:hover {
+    background-color: #6366F1;
 }

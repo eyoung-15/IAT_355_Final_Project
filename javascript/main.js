@@ -16,6 +16,8 @@ const labels = [
     "all concerts intro",
     "all concerts",
     "greediest artist intro",
+    "greediest artist intro",
+    "greediest artist guess",
     "greediest artist"
 ];
 
@@ -60,11 +62,12 @@ slider.addEventListener("click", (e) => {
     const rect = slider.getBoundingClientRect();
     const x = e.clientX - rect.left;
     updateSlider(x);
-    updateSlideNum(index);
+
 
 
     const index = positionToSlideIndex(x);
     goToSlide(index);
+    updateSlideNum(index);
 
     thumb.style.left = `${x}px`;
 });

@@ -3315,8 +3315,38 @@ async function drawAllTimeChart() {
 
 drawAllTimeChart();
 
+//guessing feature
+
+let currentGuess = null;
+async function loadArtistDropdown() {
+    const dataset = await d3.csv("datasets/Concert_Dataset_2.csv");
+    const artists = [...new Set(dataset.map(d => d["Artist_Name "].trim()))];
+
+    const select = document.getElementById("artist-guess");
+
+    artists.forEach(artist => {
+        const option = document.createElement("option");
+        option.value = artist;
+        option.textContent = artist;
+        select.appendChild(option);
+    });
+}
+
+loadArtistDropdown();
+
+document.getElementById("submit-guess").addEventListener("click", () => {
+    const guess = document.getElementById("artist-guess").value.trim();
+    currentGuess = guess;
+    localStorage.setItem("artist_guess", guess);
+    drawGreedyArtistsChart();
+
+    goToSlide(slides.length - 1);
+});
+
 async function drawGreedyArtistsChart() {
     const dataset = await d3.csv("datasets/Concert_Dataset_2.csv");
+    const container = document.getElementById("greedy_artist_chart");
+    container.innerHTML = "";
     const width = 1000;
     const height = 500;
     const margin = { top: 40, right: 40, bottom: 200, left: 150 };
@@ -3358,17 +3388,40 @@ async function drawGreedyArtistsChart() {
 
     const df = dataset
         .map(d => ({
-            Artist: d["Artist_Name "],
+            Artist: d["Artist_Name "].trim(),
             price: +d.Average_Ticket_Price,
         }))
         .filter(d => d.price >= 148.5 && d.price <= 300)
         .sort((a, b) => b.price - a.price);
 
-    const svg = d3.select("#greedy_artist_chart")
+    let guessData = null;
+    const userGuess = currentGuess || localStorage.getItem("artist_guess");
+
+    if (userGuess) {
+        const rawGuess = dataset.find(d => d["Artist_Name "].trim() === userGuess);
+
+        if (rawGuess) {
+            guessData = {
+                Artist: rawGuess["Artist_Name "].trim(),
+                price: +rawGuess.Average_Ticket_Price,
+                isGuess: true
+            };
+
+            if (!df.some(d => d.Artist === guessData.Artist)) {
+                df.push(guessData);
+
+            }
+        }
+    }
+
+    df.sort((a, b) => b.price - a.price);
+
+    const svg = d3.select(container)
         .append("svg")
         .attr("width", width)
         .attr("height", height)
         .style("font-family", "Inter, sans-serif");
+
 
     const xScale = d3.scaleBand()
         .domain(df.map(d => d.Artist))
@@ -3397,21 +3450,23 @@ async function drawGreedyArtistsChart() {
         .data(df)
         .enter()
         .append("rect")
-        .attr("class", "bar")
+        // .attr("class", d => d.isGuess ? "bar guess-bar" : "bar")
         .attr("x", d => xScale(d.Artist))
         .attr("y", d => yScale(d.price))
         .attr("width", xScale.bandwidth())
         .attr("height", d => height - margin.bottom - yScale(d.price))
-        .attr("fill", "#4C46C9")
+        .attr("fill", d => d.isGuess ? "orange" : "#4C46C9")
+        .attr("opacity", d => d.isGuess ? 0.8 : 1)
         .on("mouseover", function (event, d) {
             tooltip.transition().duration(100).style("opacity", 1);
             tooltip.html(`
                 <strong>Artist:</strong> ${d.Artist}<br/>
                 <strong>Average Ticket Price:</strong> $${d.price.toFixed(2)}
+                 ${d.isGuess ? "<br/><em>(Your Guess)</em>" : ""}
             `)
                 .style("left", (event.pageX + 10) + "px")
                 .style("top", (event.pageY - 28) + "px");
-            d3.select(this).attr("fill", "#6366F1");
+            d3.select(this).attr("fill", d.isGuess ? "orange" : "#4C46C9");
         })
         .on("mousemove", function (event) {
             tooltip.style("left", (event.pageX + 10) + "px")
@@ -3419,8 +3474,19 @@ async function drawGreedyArtistsChart() {
         })
         .on("mouseout", function (event, d) {
             tooltip.transition().duration(200).style("opacity", 0);
-            d3.select(this).attr("fill", "#4C46C9");
+            d3.select(this).attr("fill", d.isGuess ? "orange" : "#4C46C9");
         });
+
+    if (guessData) {
+        svg.append("text")
+            .attr("x", xScale(guessData.Artist) + xScale.bandwidth() / 2)
+            .attr("y", yScale(guessData.price) - 10)
+            .attr("text-anchor", "middle")
+            .style("fill", "#ffb347")
+            .style("font-size", "14px")
+            .style("font-weight", "bold")
+            .text("Your Guess");
+    }
 
     const xAxis = svg.append("g")
         .attr("transform", `translate(0, ${height - margin.bottom})`)
