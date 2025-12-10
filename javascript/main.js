@@ -51,10 +51,17 @@ function hideTooltip() {
     tooltip.classList.remove("visible");
 }
 
+function updateSlideNum(index) {
+    const indicator = document.getElementById("slide-num");
+    indicator.textContent = `${index}:00`;
+}
+
 slider.addEventListener("click", (e) => {
     const rect = slider.getBoundingClientRect();
     const x = e.clientX - rect.left;
     updateSlider(x);
+    updateSlideNum(index);
+
 
     const index = positionToSlideIndex(x);
     goToSlide(index);
@@ -81,6 +88,7 @@ document.addEventListener("mousemove", (e) => {
 
     showTooltip(labels[index], e.pageX, rect.top - 8);
     updateSlider(x);
+    updateSlideNum(index);
 });
 
 document.addEventListener("mouseup", () => {
@@ -119,6 +127,7 @@ const observer = new IntersectionObserver((entries) => {
             const index = [...slides].indexOf(entry.target);
             const x = slideIndexToPosition(index);
             updateSlider(x);
+            updateSlideNum(index);
         }
     });
 }, {
