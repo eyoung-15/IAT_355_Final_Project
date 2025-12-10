@@ -37,7 +37,6 @@ p {
     color: white;
     font-family: 'Inter', sans-serif;
     font-size: 0.9rem;
-    ;
 }
 
 .whitetext {
@@ -176,12 +175,12 @@ p {
 }
 
 .slide8c .whitetext {
-    margin-left: 9rem;
-    margin-top: 10rem;
+    margin-left: 20rem;
+    margin-top: 12rem;
 }
 
 .slide8c h1 {
-    margin-right: 4rem;
+    margin-right: 15rem;
     margin-top: 25rem;
 }
 
@@ -505,4 +504,32 @@ button:hover {
 
 #submit-guess:hover {
     background-color: #6366F1;
+}
+
+@media (max-width: 1068px) {
+    .slides {
+        grid-template-columns: 1fr;
+    }
+
+    .slide8c .whitetext {
+        margin-left: 5rem;
+        margin-top: 10rem;
+    }
+
+    .slide8c h1 {
+        margin-left: 5rem;
+        margin-top: 0rem;
+    }
+
+    .slide2 .whitetext {
+        margin-left: 5rem;
+        margin-top: 5rem;
+    }
+
+    .slide2 h1 {
+        margin-left: 5rem;
+        margin-top: 0rem;
+    }
+
+
 }
