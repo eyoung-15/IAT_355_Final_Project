@@ -340,7 +340,7 @@ button:hover {
     align-items: flex-start;
 }
 
-#buttons-container {
+.buttons-container {
     padding-top: 3rem;
     padding-left: 1rem;
 }
@@ -506,6 +506,10 @@ button:hover {
     background-color: #6366F1;
 }
 
+.slide8d .whitetext {
+    margin-bottom: 3rem;
+}
+
 @media (max-width: 1068px) {
     .slides {
         grid-template-columns: 1fr;
@@ -530,6 +534,5 @@ button:hover {
         margin-left: 5rem;
         margin-top: 0rem;
     }
-
 
 }
