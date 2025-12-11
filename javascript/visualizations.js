@@ -1,11 +1,11 @@
 import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
 import _ from "https://cdn.jsdelivr.net/npm/lodash@4.17.21/+esm";
 
-const chartButtons = document.querySelectorAll(".vis-button");
-
-function selectButton(selectedId) {
+function selectButton(divId, buttonId) {
+    //const chartButtons = document.querySelectorAll(divId).querySelectorAll(".vis-button");
+    const chartButtons = document.getElementById(divId).querySelectorAll('*');
     chartButtons.forEach(btn => {
-        if (btn.id === selectedId) {
+        if (btn.id === buttonId) {
             btn.classList.add("selected");
         } else {
             btn.classList.remove("selected");
@@ -212,7 +212,7 @@ async function drawEightiesChart() {
 }
 
 window.addEventListener("DOMContentLoaded", () => {
-    selectButton("show80sactual");
+    selectButton("80s-buttons", "show80sactual");
     drawEightiesChart();
 });
 
@@ -220,7 +220,7 @@ document.getElementById("show80sactual").addEventListener("click", () => {
     document.getElementById("eighties-chart").style.display = "block";
     document.getElementById("eighties-chart-adjusted").style.display = "none";
     document.getElementById("eighties-chart-tickets").style.display = "none";
-    selectButton("show80sactual");
+    selectButton("80s-buttons", "show80sactual");
     drawEightiesChart();
 });
 
@@ -428,7 +428,7 @@ document.getElementById("show80sadjusted").addEventListener("click", () => {
     document.getElementById("eighties-chart").style.display = "none";
     document.getElementById("eighties-chart-adjusted").style.display = "block";
     document.getElementById("eighties-chart-tickets").style.display = "none";
-    selectButton("show80sadjusted");
+    selectButton("80s-buttons", "show80sadjusted");
     drawEightiesadjustedChart();
 });
 
@@ -632,7 +632,7 @@ document.getElementById("show80stickets").addEventListener("click", () => {
     document.getElementById("eighties-chart").style.display = "none";
     document.getElementById("eighties-chart-adjusted").style.display = "none";
     document.getElementById("eighties-chart-tickets").style.display = "block";
-    selectButton("show80stickets");
+    selectButton("80s-buttons", "show80stickets");
     drawEightiesticketsChart();
 });
 
@@ -841,7 +841,7 @@ async function drawNinetiesChart() {
 }
 
 window.addEventListener("DOMContentLoaded", () => {
-    selectButton("show90sactual");
+    selectButton("90s-buttons", "show90sactual");
     drawNinetiesChart();
 });
 
@@ -849,7 +849,7 @@ document.getElementById("show90sactual").addEventListener("click", () => {
     document.getElementById("nineties-chart").style.display = "block";
     document.getElementById("nineties-chart-adjusted").style.display = "none";
     document.getElementById("nineties-chart-tickets").style.display = "none";
-    selectButton("show90sactual");
+    selectButton("90s-buttons", "show90sactual");
     drawNinetiesChart();
 });
 
@@ -1054,7 +1054,7 @@ document.getElementById("show90sadjusted").addEventListener("click", () => {
     document.getElementById("nineties-chart").style.display = "none";
     document.getElementById("nineties-chart-adjusted").style.display = "block";
     document.getElementById("nineties-chart-tickets").style.display = "none";
-    selectButton("show90sadjusted");
+    selectButton("90s-buttons", "show90sadjusted");
     drawNinetiesadjustedChart();
 });
 
@@ -1259,7 +1259,7 @@ document.getElementById("show90stickets").addEventListener("click", () => {
     document.getElementById("nineties-chart").style.display = "none";
     document.getElementById("nineties-chart-adjusted").style.display = "none";
     document.getElementById("nineties-chart-tickets").style.display = "block";
-    selectButton("show90stickets");
+    selectButton("90s-buttons", "show90stickets");
     drawNinetiesticketsChart();
 });
 
@@ -1465,7 +1465,7 @@ async function drawY2kChart() {
 }
 
 window.addEventListener("DOMContentLoaded", () => {
-    selectButton("show2000sactual");
+    selectButton("2000s-buttons", "show2000sactual");
     drawY2kChart();
 });
 
@@ -1473,7 +1473,7 @@ document.getElementById("show2000sactual").addEventListener("click", () => {
     document.getElementById("two-thousands-chart").style.display = "block";
     document.getElementById("two-thousands-chart-adjusted").style.display = "none";
     document.getElementById("two-thousands-chart-tickets").style.display = "none";
-    selectButton("show2000sactual");
+    selectButton("2000s-buttons", "show2000sactual");
     drawY2kChart();
 });
 
@@ -1678,7 +1678,7 @@ document.getElementById("show2000sadjusted").addEventListener("click", () => {
     document.getElementById("two-thousands-chart").style.display = "none";
     document.getElementById("two-thousands-chart-adjusted").style.display = "block";
     document.getElementById("two-thousands-chart-tickets").style.display = "none";
-    selectButton("show2000sadjusted");
+    selectButton("2000s-buttons", "show2000sadjusted");
     drawY2kadjustedChart();
 });
 
@@ -1883,7 +1883,7 @@ document.getElementById("show2000stickets").addEventListener("click", () => {
     document.getElementById("two-thousands-chart").style.display = "none";
     document.getElementById("two-thousands-chart-adjusted").style.display = "none";
     document.getElementById("two-thousands-chart-tickets").style.display = "block";
-    selectButton("show2000stickets");
+    selectButton("2000s-buttons", "show2000stickets");
     drawY2kticketsChart();
 });
 
@@ -2090,7 +2090,7 @@ async function draw2010sChart() {
 
 
 window.addEventListener("DOMContentLoaded", () => {
-    selectButton("show2010sactual");
+    selectButton("2010s-buttons", "show2010sactual");
     draw2010sChart();
 });
 
@@ -2098,7 +2098,7 @@ document.getElementById("show2010sactual").addEventListener("click", () => {
     document.getElementById("twenty-tens-chart").style.display = "block";
     document.getElementById("twenty-tens-chart-adjusted").style.display = "none";
     document.getElementById("twenty-tens-chart-tickets").style.display = "none";
-    selectButton("show2010sactual");
+    selectButton("2010s-buttons", "show2010sactual");
     draw2010sChart();
 });
 
@@ -2303,7 +2303,7 @@ document.getElementById("show2010sadjusted").addEventListener("click", () => {
     document.getElementById("twenty-tens-chart").style.display = "none";
     document.getElementById("twenty-tens-chart-adjusted").style.display = "block";
     document.getElementById("twenty-tens-chart-tickets").style.display = "none";
-    selectButton("show2010sadjusted");
+    selectButton("2010s-buttons", "show2010sadjusted");
     draw2010sadjustedChart();
 });
 
@@ -2508,7 +2508,7 @@ document.getElementById("show2010stickets").addEventListener("click", () => {
     document.getElementById("twenty-tens-chart").style.display = "none";
     document.getElementById("twenty-tens-chart-adjusted").style.display = "none";
     document.getElementById("twenty-tens-chart-tickets").style.display = "block";
-    selectButton("show2010stickets");
+    selectButton("2010s-buttons", "show2010stickets");
     draw2010sticketsChart();
 });
 
@@ -2714,7 +2714,7 @@ async function draw2020sChart() {
 }
 
 window.addEventListener("DOMContentLoaded", () => {
-    selectButton("show2020sactual");
+    selectButton("2020s-buttons", "show2020sactual");
     draw2020sChart();
 });
 
@@ -2722,7 +2722,7 @@ document.getElementById("show2020sactual").addEventListener("click", () => {
     document.getElementById("twenty-twenties-chart").style.display = "block";
     document.getElementById("twenty-twenties-chart-adjusted").style.display = "none";
     document.getElementById("twenty-twenties-chart-tickets").style.display = "none";
-    selectButton("show2020sactual");
+    selectButton("2020s-buttons", "show2020sactual");
     draw2020sChart();
 });
 
@@ -2927,7 +2927,7 @@ document.getElementById("show2020sadjusted").addEventListener("click", () => {
     document.getElementById("twenty-twenties-chart").style.display = "none";
     document.getElementById("twenty-twenties-chart-adjusted").style.display = "block";
     document.getElementById("twenty-twenties-chart-tickets").style.display = "none";
-    selectButton("show2020sadjusted");
+    selectButton("2020s-buttons", "show2020sadjusted");
     draw2020sadjustedChart();
 });
 
@@ -3132,7 +3132,7 @@ document.getElementById("show2020stickets").addEventListener("click", () => {
     document.getElementById("twenty-twenties-chart").style.display = "none";
     document.getElementById("twenty-twenties-chart-adjusted").style.display = "none";
     document.getElementById("twenty-twenties-chart-tickets").style.display = "block";
-    selectButton("show2020stickets");
+    selectButton("2020s-buttons", "show2020stickets");
     draw2020sticketsChart();
 });
 
@@ -3390,6 +3390,7 @@ async function drawGreedyArtistsChart() {
         .map(d => ({
             Artist: d["Artist_Name "].trim(),
             price: +d.Average_Ticket_Price,
+            isGuess: false
         }))
         .filter(d => d.price >= 148.5 && d.price <= 300)
         .sort((a, b) => b.price - a.price);
@@ -3407,9 +3408,11 @@ async function drawGreedyArtistsChart() {
                 isGuess: true
             };
 
-            if (!df.some(d => d.Artist === guessData.Artist)) {
+            let artistRecord = df.find(d => d.Artist === guessData.Artist);
+            if (artistRecord) {
+                artistRecord.isGuess = true;
+            } else {
                 df.push(guessData);
-
             }
         }
     }
@@ -3455,7 +3458,7 @@ async function drawGreedyArtistsChart() {
         .attr("y", d => yScale(d.price))
         .attr("width", xScale.bandwidth())
         .attr("height", d => height - margin.bottom - yScale(d.price))
-        .attr("fill", d => d.isGuess ? "orange" : "#4C46C9")
+        .attr("fill", d => d.isGuess ? "#CA6CDC" : "#4C46C9")
         .attr("opacity", d => d.isGuess ? 0.8 : 1)
         .on("mouseover", function (event, d) {
             tooltip.transition().duration(100).style("opacity", 1);
@@ -3466,7 +3469,6 @@ async function drawGreedyArtistsChart() {
             `)
                 .style("left", (event.pageX + 10) + "px")
                 .style("top", (event.pageY - 28) + "px");
-            d3.select(this).attr("fill", d.isGuess ? "orange" : "#4C46C9");
         })
         .on("mousemove", function (event) {
             tooltip.style("left", (event.pageX + 10) + "px")
@@ -3474,7 +3476,6 @@ async function drawGreedyArtistsChart() {
         })
         .on("mouseout", function (event, d) {
             tooltip.transition().duration(200).style("opacity", 0);
-            d3.select(this).attr("fill", d.isGuess ? "orange" : "#4C46C9");
         });
 
     if (guessData) {
@@ -3482,10 +3483,10 @@ async function drawGreedyArtistsChart() {
             .attr("x", xScale(guessData.Artist) + xScale.bandwidth() / 2)
             .attr("y", yScale(guessData.price) - 10)
             .attr("text-anchor", "middle")
-            .style("fill", "#ffb347")
+            .style("fill", "white")
             .style("font-size", "14px")
             .style("font-weight", "bold")
-            .text("Your Guess");
+            .text("your guess");
     }
 
     const xAxis = svg.append("g")
