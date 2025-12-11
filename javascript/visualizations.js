@@ -3453,7 +3453,6 @@ async function drawGreedyArtistsChart() {
         .data(df)
         .enter()
         .append("rect")
-        // .attr("class", d => d.isGuess ? "bar guess-bar" : "bar")
         .attr("x", d => xScale(d.Artist))
         .attr("y", d => yScale(d.price))
         .attr("width", xScale.bandwidth())
@@ -3504,7 +3503,7 @@ async function drawGreedyArtistsChart() {
                     .attr("x", -20)
                     .attr("dy", i === 0 ? -20 : 10)
                     .style("fill", "#FFFF")
-                    .style("font-size", "10px");
+                    .style("font-size", "14px");
             });
         })
         .attr("transform", "rotate(-90)")
