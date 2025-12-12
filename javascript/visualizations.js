@@ -16,19 +16,19 @@ function selectButton(divId, buttonId) {
 
 let screen_width = window.innerWidth,
     device_type;
-if (screen_width >= 500) device_type = "xl";
+if (screen_width < 600) device_type = "xs";
 // else if (screen_width >= 992) device_type = "l";
 // else if (screen_width >= 768) device_type = "m";
 // else if (screen_width >= 576) device_type = "s";
-else device_type = "xs";
+else device_type = "xl";
 
 const params = {
     xl: {
         width: 1024,
         height: 500,
     }, xs: {
-        width: 200,
-        height: 400,
+        width: 900,
+        height: 500,
     }
 }[device_type];
 
