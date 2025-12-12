@@ -3144,6 +3144,20 @@ async function drawAllTimeChart() {
     const margin = { top: 40, right: 40, bottom: 200, left: 250 };
     const borderPadding = 10;
 
+    const annotations = [
+        {
+            note: {
+                label: "Taylor Swift wins the Revenue War, with and without adjustment for inflation.",
+                title: "annotation"
+            },
+            color: ["#69b3a2"],
+            x: 100,
+            y: 100,
+            dy: 100,
+            dx: 100
+        }
+    ]
+
     const tooltip = d3.select("body")
         .append("div")
         .attr("class", "tooltip")
@@ -3311,6 +3325,13 @@ async function drawAllTimeChart() {
         .text(d => d)
         .style("fill", "white")
         .style("font-size", "10px");
+
+    const makeAnnotations = d3.annotation()
+        .annotations(annotations)
+    d3.select("svg")
+        .append("g")
+        .call(makeAnnotations)
+
 }
 
 drawAllTimeChart();
