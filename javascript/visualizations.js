@@ -14,10 +14,29 @@ function selectButton(divId, buttonId) {
 }
 
 
+let screen_width = window.innerWidth,
+    device_type;
+if (screen_width >= 500) device_type = "xl";
+// else if (screen_width >= 992) device_type = "l";
+// else if (screen_width >= 768) device_type = "m";
+// else if (screen_width >= 576) device_type = "s";
+else device_type = "xs";
+
+const params = {
+    xl: {
+        width: 1024,
+        height: 500,
+    }, xs: {
+        width: 200,
+        height: 400,
+    }
+}[device_type];
+
+
 async function drawEightiesChart() {
     const dataset = await d3.csv("datasets/Concert_Dataset.csv");
-    const width = 1000;
-    const height = 500;
+    const height = params.height;
+    const width = params.width;
     const margin = { top: 40, right: 40, bottom: 200, left: 150 };
     const borderPadding = 10;
 
@@ -74,8 +93,9 @@ async function drawEightiesChart() {
 
     const svg = d3.select("#eighties-chart").html("")
         .append("svg")
-        .attr("width", width)
-        .attr("height", height)
+        .attr("width", params.width)
+        .attr("height", params.height)
+        .attr("viewBox", `0 0 ${params.width} ${params.height}`)
         .style("font-family", "Inter, sans-serif");
 
     const xScale = d3.scaleBand()
