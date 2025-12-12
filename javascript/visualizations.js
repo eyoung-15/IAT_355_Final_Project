@@ -3150,14 +3150,19 @@ async function drawAllTimeChart() {
     const annotations = [
         {
             note: {
-                label: "Taylor Swift wins the Revenue War, with and without adjustment for inflation.",
-                title: "annotation"
+                label: "Taylor Swift wins the Revenue War by a landslide, with and without adjustment for inflation.",
+                align: "left",
+                wrap: 245,
+                padding: 10
+            },
+            connector: {
+                type: "line"
             },
             color: ["#FFFFFF"],
-            x: 300,
-            y: 100,
-            dy: 100,
-            dx: 100
+            x: 290,
+            y: 70,
+            dy: 70,
+            dx: 75
         }
     ]
 
@@ -3334,6 +3339,9 @@ async function drawAllTimeChart() {
         
     svg.append("g")
         .call(makeAnnotations);
+
+    svg.selectAll(".annotation-note-label")
+        .style("font-size", "14px");
 
 }
 
