@@ -3413,7 +3413,7 @@ async function drawGreedyArtistsChart() {
             price: +d.Average_Ticket_Price,
             isGuess: false
         }))
-        .filter(d => d.price >= 148.5 && d.price <= 300)
+        .filter(d => d.price >= 165 && d.price <= 300)
         .sort((a, b) => b.price - a.price);
 
     let guessData = null;
