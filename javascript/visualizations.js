@@ -3376,7 +3376,7 @@ document.getElementById("submit-guess").addEventListener("click", () => {
 });
 
 async function drawGreedyArtistsChart() {
-    const dataset = await d3.csv("datasets/Concert_Dataset_2.csv");
+    const dataset = await d3.csv("datasets/Concert_Dataset_3.csv");
     const container = document.getElementById("greedy_artist_chart");
     container.innerHTML = "";
     const width = 1000;
