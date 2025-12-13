@@ -2,7 +2,6 @@ import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
 import _ from "https://cdn.jsdelivr.net/npm/lodash@4.17.21/+esm";
 
 function selectButton(divId, buttonId) {
-    //const chartButtons = document.querySelectorAll(divId).querySelectorAll(".vis-button");
     const chartButtons = document.getElementById(divId).querySelectorAll('*');
     chartButtons.forEach(btn => {
         if (btn.id === buttonId) {
@@ -20,13 +19,14 @@ function get_device_type() {
 
     const params = {
         xl: {
-            width: 1024,
+            width: 1000,
             height: 500,
             margin: 9
+
         }, xs: {
-            width: 524,
+            width: 500,
             height: 500,
-            margin: 0
+            margin: 0,
         }
     }[device_type];
     return { screen_width, device_type, params };
