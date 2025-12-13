@@ -1,5 +1,8 @@
 import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
 import _ from "https://cdn.jsdelivr.net/npm/lodash@4.17.21/+esm";
+import * as d3Annotation from "https://cdn.jsdelivr.net/npm/d3-svg-annotation@2.5.1/+esm";
+
+
 
 function selectButton(divId, buttonId) {
     //const chartButtons = document.querySelectorAll(divId).querySelectorAll(".vis-button");
@@ -3144,6 +3147,25 @@ async function drawAllTimeChart() {
     const margin = { top: 40, right: 40, bottom: 200, left: 250 };
     const borderPadding = 10;
 
+    const annotations = [
+        {
+            note: {
+                label: "Taylor Swift wins the Revenue War by a landslide, with and without adjustment for inflation.",
+                align: "left",
+                wrap: 245,
+                padding: 10
+            },
+            connector: {
+                type: "line"
+            },
+            color: ["#FFFFFF"],
+            x: 290,
+            y: 70,
+            dy: 70,
+            dx: 75
+        }
+    ]
+
     const tooltip = d3.select("body")
         .append("div")
         .attr("class", "tooltip")
@@ -3311,6 +3333,16 @@ async function drawAllTimeChart() {
         .text(d => d)
         .style("fill", "white")
         .style("font-size", "10px");
+
+    const makeAnnotations = d3Annotation.annotation()
+        .annotations(annotations);
+        
+    svg.append("g")
+        .call(makeAnnotations);
+
+    svg.selectAll(".annotation-note-label")
+        .style("font-size", "14px");
+
 }
 
 drawAllTimeChart();
