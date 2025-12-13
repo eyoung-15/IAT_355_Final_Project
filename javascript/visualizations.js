@@ -13,24 +13,24 @@ function selectButton(divId, buttonId) {
     });
 }
 
-
 let screen_width = window.innerWidth,
     device_type;
-if (screen_width < 600) device_type = "xs";
-// else if (screen_width >= 992) device_type = "l";
-// else if (screen_width >= 768) device_type = "m";
-// else if (screen_width >= 576) device_type = "s";
+if (screen_width < 1068) device_type = "xs";
 else device_type = "xl";
 
 const params = {
     xl: {
         width: 1024,
         height: 500,
+        margin: 9
     }, xs: {
-        width: 900,
+        width: 524,
         height: 500,
+        margin: 0
     }
 }[device_type];
+
+
 
 
 async function drawEightiesChart() {
