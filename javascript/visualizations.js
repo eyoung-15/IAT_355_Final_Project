@@ -12,29 +12,31 @@ function selectButton(divId, buttonId) {
         }
     });
 }
+function get_device_type() {
+    let screen_width = window.innerWidth,
+        device_type;
+    if (screen_width < 1068) device_type = "xs";
+    else device_type = "xl";
 
-let screen_width = window.innerWidth,
-    device_type;
-if (screen_width < 1068) device_type = "xs";
-else device_type = "xl";
-
-const params = {
-    xl: {
-        width: 1024,
-        height: 500,
-        margin: 9
-    }, xs: {
-        width: 524,
-        height: 500,
-        margin: 0
-    }
-}[device_type];
-
+    const params = {
+        xl: {
+            width: 1024,
+            height: 500,
+            margin: 9
+        }, xs: {
+            width: 524,
+            height: 500,
+            margin: 0
+        }
+    }[device_type];
+    return { screen_width, device_type, params };
+}
 
 
 
 async function drawEightiesChart() {
     const dataset = await d3.csv("datasets/Concert_Dataset.csv");
+    let { screen_width, device_type, params } = get_device_type();
     const height = params.height;
     const width = params.width;
     const margin = { top: 40, right: 40, bottom: 200, left: 150 };
@@ -233,7 +235,9 @@ async function drawEightiesChart() {
 
 window.addEventListener("DOMContentLoaded", () => {
     selectButton("80s-buttons", "show80sactual");
+
     drawEightiesChart();
+    window.onresize = drawEightiesChart;
 });
 
 document.getElementById("show80sactual").addEventListener("click", () => {
@@ -242,6 +246,7 @@ document.getElementById("show80sactual").addEventListener("click", () => {
     document.getElementById("eighties-chart-tickets").style.display = "none";
     selectButton("80s-buttons", "show80sactual");
     drawEightiesChart();
+    window.onresize = drawEightiesChart;
 });
 
 
