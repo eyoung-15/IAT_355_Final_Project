@@ -286,6 +286,21 @@ p {
     margin-top: 6rem;
 }
 
+.slide10 .whitetext {
+    margin-left: 9rem;
+    margin-top: 6rem;
+}
+
+.slide10 h1 {
+    margin-left: 4rem;
+    margin-top: 20rem;
+}
+
+.slide10 p{
+    margin-left: 4rem;
+    margin-top: 3rem;
+}
+
 .slide3 h1 {
     margin-top: 4rem;
 }
@@ -535,6 +550,16 @@ button:hover {
     }
 
     .slide2 h1 {
+        margin-left: 5rem;
+        margin-top: 0rem;
+    }
+
+    .slide10 .whitetext{
+        margin-left: 5rem;
+        margin-top: 5rem;
+    }
+
+    .slide10 h1{
         margin-left: 5rem;
         margin-top: 0rem;
     }
