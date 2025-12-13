@@ -252,10 +252,10 @@ document.getElementById("show80sactual").addEventListener("click", () => {
 
 
 async function drawEightiesadjustedChart() {
-    // d3.select("#eighties-chart-adjusted").html("");
     const dataset = await d3.csv("datasets/Concert_Dataset.csv");
-    const width = 1000;
-    const height = 500;
+    let { screen_width, device_type, params } = get_device_type();
+    const height = params.height;
+    const width = params.width;
     const margin = { top: 40, right: 40, bottom: 200, left: 150 };
     const borderPadding = 10;
 
@@ -312,8 +312,9 @@ async function drawEightiesadjustedChart() {
 
     const svg = d3.select("#eighties-chart-adjusted").html("")
         .append("svg")
-        .attr("width", width)
-        .attr("height", height)
+        .attr("width", params.width)
+        .attr("height", params.height)
+        .attr("viewBox", `0 0 ${params.width} ${params.height}`)
         .style("font-family", "Inter, sans-serif");
 
     const xScale = d3.scaleBand()
@@ -455,12 +456,14 @@ document.getElementById("show80sadjusted").addEventListener("click", () => {
     document.getElementById("eighties-chart-tickets").style.display = "none";
     selectButton("80s-buttons", "show80sadjusted");
     drawEightiesadjustedChart();
+    window.onresize = drawEightiesadjustedChart;
 });
 
 async function drawEightiesticketsChart() {
     const dataset = await d3.csv("datasets/Concert_Dataset.csv");
-    const width = 1000;
-    const height = 500;
+    let { screen_width, device_type, params } = get_device_type();
+    const height = params.height;
+    const width = params.width;
     const margin = { top: 40, right: 40, bottom: 200, left: 150 };
     const borderPadding = 10;
 
@@ -517,8 +520,9 @@ async function drawEightiesticketsChart() {
 
     const svg = d3.select("#eighties-chart-tickets").html("")
         .append("svg")
-        .attr("width", width)
-        .attr("height", height)
+        .attr("width", params.width)
+        .attr("height", params.height)
+        .attr("viewBox", `0 0 ${params.width} ${params.height}`)
         .style("font-family", "Inter, sans-serif");
 
     const xScale = d3.scaleBand()
@@ -659,6 +663,7 @@ document.getElementById("show80stickets").addEventListener("click", () => {
     document.getElementById("eighties-chart-tickets").style.display = "block";
     selectButton("80s-buttons", "show80stickets");
     drawEightiesticketsChart();
+    window.onresize = drawEightiesticketsChart;
 });
 
 
@@ -666,8 +671,9 @@ document.getElementById("show80stickets").addEventListener("click", () => {
 
 async function drawNinetiesChart() {
     const dataset = await d3.csv("datasets/Concert_Dataset.csv");
-    const width = 1000;
-    const height = 500;
+    let { screen_width, device_type, params } = get_device_type();
+    const height = params.height;
+    const width = params.width;
     const margin = { top: 40, right: 40, bottom: 200, left: 150 };
     const borderPadding = 10;
 
@@ -724,8 +730,9 @@ async function drawNinetiesChart() {
 
     const svg = d3.select("#nineties-chart").html("")
         .append("svg")
-        .attr("width", width)
-        .attr("height", height)
+        .attr("width", params.width)
+        .attr("height", params.height)
+        .attr("viewBox", `0 0 ${params.width} ${params.height}`)
         .style("font-family", "Inter, sans-serif");
 
     const xScale = d3.scaleBand()
@@ -868,6 +875,7 @@ async function drawNinetiesChart() {
 window.addEventListener("DOMContentLoaded", () => {
     selectButton("90s-buttons", "show90sactual");
     drawNinetiesChart();
+    window.onresize = drawNinetiesChart;
 });
 
 document.getElementById("show90sactual").addEventListener("click", () => {
@@ -876,12 +884,14 @@ document.getElementById("show90sactual").addEventListener("click", () => {
     document.getElementById("nineties-chart-tickets").style.display = "none";
     selectButton("90s-buttons", "show90sactual");
     drawNinetiesChart();
+    window.onresize = drawNinetiesChart;
 });
 
 async function drawNinetiesadjustedChart() {
     const dataset = await d3.csv("datasets/Concert_Dataset.csv");
-    const width = 1000;
-    const height = 500;
+    let { screen_width, device_type, params } = get_device_type();
+    const height = params.height;
+    const width = params.width;
     const margin = { top: 40, right: 40, bottom: 200, left: 150 };
     const borderPadding = 10;
 
@@ -938,8 +948,9 @@ async function drawNinetiesadjustedChart() {
 
     const svg = d3.select("#nineties-chart-adjusted").html("")
         .append("svg")
-        .attr("width", width)
-        .attr("height", height)
+        .attr("width", params.width)
+        .attr("height", params.height)
+        .attr("viewBox", `0 0 ${params.width} ${params.height}`)
         .style("font-family", "Inter, sans-serif");
 
     const xScale = d3.scaleBand()
@@ -1081,12 +1092,14 @@ document.getElementById("show90sadjusted").addEventListener("click", () => {
     document.getElementById("nineties-chart-tickets").style.display = "none";
     selectButton("90s-buttons", "show90sadjusted");
     drawNinetiesadjustedChart();
+    window.onresize = drawNinetiesadjustedChart;
 });
 
 async function drawNinetiesticketsChart() {
     const dataset = await d3.csv("datasets/Concert_Dataset.csv");
-    const width = 1000;
-    const height = 500;
+    let { screen_width, device_type, params } = get_device_type();
+    const height = params.height;
+    const width = params.width;
     const margin = { top: 40, right: 40, bottom: 200, left: 150 };
     const borderPadding = 10;
 
@@ -1143,8 +1156,9 @@ async function drawNinetiesticketsChart() {
 
     const svg = d3.select("#nineties-chart-tickets").html("")
         .append("svg")
-        .attr("width", width)
-        .attr("height", height)
+        .attr("width", params.width)
+        .attr("height", params.height)
+        .attr("viewBox", `0 0 ${params.width} ${params.height}`)
         .style("font-family", "Inter, sans-serif");
 
     const xScale = d3.scaleBand()
@@ -1286,6 +1300,7 @@ document.getElementById("show90stickets").addEventListener("click", () => {
     document.getElementById("nineties-chart-tickets").style.display = "block";
     selectButton("90s-buttons", "show90stickets");
     drawNinetiesticketsChart();
+    window.onresize = drawNinetiesticketsChart;
 });
 
 async function drawY2kChart() {
