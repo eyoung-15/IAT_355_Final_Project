@@ -136,6 +136,10 @@ p {
     background: url("../images/vis_backgrounds.svg") center/cover no-repeat;
 }
 
+.slide10{
+    background: url("../images/large-text-bg.svg")
+}
+
 .slide2 .whitetext {
     margin-left: 9rem;
     margin-top: 10rem;
