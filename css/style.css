@@ -297,8 +297,8 @@ p {
 }
 
 .slide10 p{
-    margin-left: 4rem;
     margin-top: 3rem;
+    text-align: left;
 }
 
 .slide3 h1 {
