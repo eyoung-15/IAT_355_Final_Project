@@ -297,7 +297,10 @@ p {
 }
 
 .slide10 p{
-    margin-top: 3rem;
+    grid-column: 2;
+    margin-left: 4rem;
+    margin-top: -10rem;
+    width: 450px;
     text-align: left;
 }
 
