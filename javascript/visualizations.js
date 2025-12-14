@@ -446,18 +446,19 @@ async function drawEightiesticketsChart() {
         {
             note: {
                 label: "Despite placing third for actual gross revenue, The Rolling Stones sold the most tickets for their Steel Wheels tour.",
-                align: "left",
+                align: "middle",
                 wrap: 245,
-                padding: 10
+                padding: 10,
+                lineType: "vertical"
             },
             connector: {
                 type: "line"
             },
             color: ["#FFFFFF"],
-            x:  250,
-            y: 70,
+            x:  210,
+            y: 80,
             dy: 0,
-            dx: 70
+            dx: 130
         }
     ]
 
