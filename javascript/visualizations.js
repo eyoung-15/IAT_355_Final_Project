@@ -442,6 +442,25 @@ async function drawEightiesticketsChart() {
     const margin = { top: 40, right: 40, bottom: 200, left: 150 };
     const borderPadding = 10;
 
+    const annotations = [
+        {
+            note: {
+                label: "Despite placing third for actual gross revenue, The Rolling Stones sold the most tickets for their Steel Wheels tour.",
+                align: "left",
+                wrap: 245,
+                padding: 10
+            },
+            connector: {
+                type: "line"
+            },
+            color: ["#FFFFFF"],
+            x:  250,
+            y: 70,
+            dy: 0,
+            dx: 70
+        }
+    ]
+
     const tooltip = d3.select("body")
         .append("div")
         .attr("class", "tooltip")
@@ -628,6 +647,15 @@ async function drawEightiesticketsChart() {
         .style("fill", "white")
         .style("font-size", "14px")
         .text("tickets sold");
+
+    const makeAnnotations = d3Annotation.annotation()
+        .annotations(annotations);
+        
+    svg.append("g")
+        .call(makeAnnotations);
+
+    svg.selectAll(".annotation-note-label")
+        .style("font-size", "14px");
 
 }
 
