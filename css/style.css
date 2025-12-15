@@ -136,8 +136,8 @@ p {
     background: url("../images/vis_backgrounds.svg") center/cover no-repeat;
 }
 
-.slide10{
-    background: url("../images/large-text-bg.svg")
+.slide10 {
+    background: url("../images/large-text-bg.svg") center/cover no-repeat;
 }
 
 .slide2 .whitetext {
@@ -288,22 +288,23 @@ p {
 
 .slide10 .whitetext {
     margin-left: 9rem;
-    margin-top: 6rem;
+    margin-top: 10rem;
 }
 
 .slide10 h1 {
     margin-left: 4rem;
     margin-top: 20rem;
-    width: 475px;
 }
 
-.slide10 p{
-    
+.slide10 p {
+    margin-bottom: 15rem;
+    /* width: 35rem; */
+    max-width: 35rem;
     margin-left: 4rem;
-    margin-top: -11rem;
-    width: 450px;
-    text-align: left;
+    margin-right: 0;
 }
+
+
 
 .slide3 h1 {
     margin-top: 4rem;
@@ -558,18 +559,53 @@ button:hover {
         margin-top: 0rem;
     }
 
-    .slide10 .whitetext{
+    .slide10 .whitetext {
         margin-left: 5rem;
         margin-top: 5rem;
     }
 
-    .slide10 h1{
+    .slide10 h1 {
         margin-left: 5rem;
         margin-top: 0rem;
     }
 
-    .slide10 p{
+    .slide10 p {
         margin-left: 5rem;
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+
+    #eighties-chart,
+    #eighties-chart-adjusted,
+    #eighties-chart-tickets,
+    #nineties-chart,
+    #nineties-chart-adjusted,
+    #nineties-chart-tickets,
+    #two-thousands-chart,
+    #two-thousands-chart-adjusted,
+    #two-thousands-chart-tickets,
+    #twenty-tens-chart,
+    #twenty-tens-chart-adjusted,
+    #twenty-tens-chart-tickets,
+    #twenty-twenties-chart,
+    #twenty-twenties-chart-adjusted,
+    #twenty-twenties-chart-tickets {
+        margin-left: 0rem;
+    }
+
+    #greedy_artist_chart {
+        margin-left: 0rem;
+
+    }
+
+    .slide9 h1 {
+        margin-left: 9rem;
+        margin-top: 1rem;
+    }
+
+    .buttons-container {
+        padding-top: 3rem;
+        padding-left: 0rem;
     }
 
 }

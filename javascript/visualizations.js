@@ -5,7 +5,6 @@ import * as d3Annotation from "https://cdn.jsdelivr.net/npm/d3-svg-annotation@2.
 
 
 function selectButton(divId, buttonId) {
-    //const chartButtons = document.querySelectorAll(divId).querySelectorAll(".vis-button");
     const chartButtons = document.getElementById(divId).querySelectorAll('*');
     chartButtons.forEach(btn => {
         if (btn.id === buttonId) {
@@ -15,12 +14,36 @@ function selectButton(divId, buttonId) {
         }
     });
 }
+function get_device_type() {
+    let screen_width = window.innerWidth,
+        device_type;
+    if (screen_width < 1068) device_type = "xs";
+    else device_type = "xl";
+
+    const params = {
+        xl: {
+            width: 1000,
+            height: 500,
+            margin: 9,
+
+        }, xs: {
+            width: 450,
+            height: 500,
+            margin: 0,
+
+        }
+    }[device_type];
+    return { screen_width, device_type, params };
+}
+
+
 
 
 async function drawEightiesChart() {
     const dataset = await d3.csv("datasets/Concert_Dataset.csv");
-    const width = 1000;
-    const height = 500;
+    let { screen_width, device_type, params } = get_device_type();
+    const height = params.height;
+    const width = params.width;
     const margin = { top: 40, right: 40, bottom: 200, left: 150 };
     const borderPadding = 10;
 
@@ -77,8 +100,9 @@ async function drawEightiesChart() {
 
     const svg = d3.select("#eighties-chart").html("")
         .append("svg")
-        .attr("width", width)
-        .attr("height", height)
+        .attr("width", params.width)
+        .attr("height", params.height)
+        .attr("viewBox", `0 0 ${params.width} ${params.height}`)
         .style("font-family", "Inter, sans-serif");
 
     const xScale = d3.scaleBand()
@@ -149,38 +173,43 @@ async function drawEightiesChart() {
     const xAxis = svg.append("g")
         .attr("transform", `translate(0, ${height - margin.bottom})`)
         .call(d3.axisBottom(xScale));
+    if (device_type === "xl") {
+        xAxis.selectAll("text")
+            .text("")
+            .each(function (d) {
+                const [tour, artist] = d.split("\n");
+                const text = d3.select(this);
 
-    xAxis.selectAll("text")
-        .text("")
-        .each(function (d) {
-            const [tour, artist] = d.split("\n");
-            const text = d3.select(this);
+                // Tour name lines
+                const tourLines = wrapText(tour.toLowerCase(), 18);
+                tourLines.forEach((line, i) => {
+                    text.append("tspan")
+                        .text(line)
+                        .attr("x", -20)
+                        .attr("dy", i === 0 ? -20 : 13)
+                        .style("fill", "white")
+                        .style("font-size", "13px")
+                        .style("font-weight", "600");
+                });
 
-            // Tour name lines
-            const tourLines = wrapText(tour.toLowerCase(), 18);
-            tourLines.forEach((line, i) => {
-                text.append("tspan")
-                    .text(line)
-                    .attr("x", -20)
-                    .attr("dy", i === 0 ? -20 : 10)
-                    .style("fill", "white")
-                    .style("font-size", "10px")
-                    .style("font-weight", "600");
-            });
+                // Artist name lines
+                const artistLines = wrapText(artist.toLowerCase(), 18);
+                artistLines.forEach((line, i) => {
+                    text.append("tspan")
+                        .text(line)
+                        .attr("x", -20)
+                        .attr("dy", tourLines.length === 0 && i === 0 ? 0 : 13)
+                        .style("fill", "#CA6CDC")
+                        .style("font-size", "13px");
+                });
+            })
+            .attr("transform", "rotate(-90)")
+            .attr("text-anchor", "end");
 
-            // Artist name lines
-            const artistLines = wrapText(artist.toLowerCase(), 18);
-            artistLines.forEach((line, i) => {
-                text.append("tspan")
-                    .text(line)
-                    .attr("x", -20)
-                    .attr("dy", tourLines.length === 0 && i === 0 ? 0 : 10)
-                    .style("fill", "#CA6CDC")
-                    .style("font-size", "10px");
-            });
-        })
-        .attr("transform", "rotate(-90)")
-        .attr("text-anchor", "end");
+    } else {
+
+        xAxis.selectAll("text").remove();
+    }
 
     svg.append("g")
         .attr("transform", `translate(${margin.left},0)`)
@@ -216,6 +245,7 @@ async function drawEightiesChart() {
 
 window.addEventListener("DOMContentLoaded", () => {
     selectButton("80s-buttons", "show80sactual");
+
     drawEightiesChart();
 });
 
@@ -230,10 +260,10 @@ document.getElementById("show80sactual").addEventListener("click", () => {
 
 
 async function drawEightiesadjustedChart() {
-    // d3.select("#eighties-chart-adjusted").html("");
     const dataset = await d3.csv("datasets/Concert_Dataset.csv");
-    const width = 1000;
-    const height = 500;
+    let { screen_width, device_type, params } = get_device_type();
+    const height = params.height;
+    const width = params.width;
     const margin = { top: 40, right: 40, bottom: 200, left: 150 };
     const borderPadding = 10;
 
@@ -249,7 +279,7 @@ async function drawEightiesadjustedChart() {
                 type: "line"
             },
             color: ["#FFFFFF"],
-            x:  645,
+            x: 645,
             y: 200,
             dy: -50,
             dx: 50
@@ -309,8 +339,9 @@ async function drawEightiesadjustedChart() {
 
     const svg = d3.select("#eighties-chart-adjusted").html("")
         .append("svg")
-        .attr("width", width)
-        .attr("height", height)
+        .attr("width", params.width)
+        .attr("height", params.height)
+        .attr("viewBox", `0 0 ${params.width} ${params.height}`)
         .style("font-family", "Inter, sans-serif");
 
     const xScale = d3.scaleBand()
@@ -381,38 +412,42 @@ async function drawEightiesadjustedChart() {
     const xAxis = svg.append("g")
         .attr("transform", `translate(0, ${height - margin.bottom})`)
         .call(d3.axisBottom(xScale));
+    if (device_type === "xl") {
+        xAxis.selectAll("text")
+            .text("")
+            .each(function (d) {
+                const [tour, artist] = d.split("\n");
+                const text = d3.select(this);
 
-    xAxis.selectAll("text")
-        .text("")
-        .each(function (d) {
-            const [tour, artist] = d.split("\n");
-            const text = d3.select(this);
+                // Tour name lines
+                const tourLines = wrapText(tour.toLowerCase(), 18);
+                tourLines.forEach((line, i) => {
+                    text.append("tspan")
+                        .text(line)
+                        .attr("x", -20)
+                        .attr("dy", i === 0 ? -20 : 13)
+                        .style("fill", "white")
+                        .style("font-size", "13px")
+                        .style("font-weight", "600");
+                });
 
-            // Tour name lines
-            const tourLines = wrapText(tour.toLowerCase(), 18);
-            tourLines.forEach((line, i) => {
-                text.append("tspan")
-                    .text(line)
-                    .attr("x", -20)
-                    .attr("dy", i === 0 ? -20 : 10)
-                    .style("fill", "white")
-                    .style("font-size", "10px")
-                    .style("font-weight", "600");
-            });
+                // Artist name lines
+                const artistLines = wrapText(artist.toLowerCase(), 18);
+                artistLines.forEach((line, i) => {
+                    text.append("tspan")
+                        .text(line)
+                        .attr("x", -20)
+                        .attr("dy", tourLines.length === 0 && i === 0 ? 0 : 13)
+                        .style("fill", "#CA6CDC")
+                        .style("font-size", "13px");
+                });
+            })
+            .attr("transform", "rotate(-90)")
+            .attr("text-anchor", "end");
 
-            // Artist name lines
-            const artistLines = wrapText(artist.toLowerCase(), 18);
-            artistLines.forEach((line, i) => {
-                text.append("tspan")
-                    .text(line)
-                    .attr("x", -20)
-                    .attr("dy", tourLines.length === 0 && i === 0 ? 0 : 10)
-                    .style("fill", "#CA6CDC")
-                    .style("font-size", "10px");
-            });
-        })
-        .attr("transform", "rotate(-90)")
-        .attr("text-anchor", "end");
+    } else {
+        xAxis.selectAll("text").remove();
+    }
 
     svg.append("g")
         .attr("transform", `translate(${margin.left},0)`)
@@ -443,16 +478,16 @@ async function drawEightiesadjustedChart() {
         .style("fill", "white")
         .style("font-size", "14px")
         .text("inflation adjusted gross income (2024 usd)");
+    if (device_type !== "xs") {
+        const makeAnnotations = d3Annotation.annotation()
+            .annotations(annotations);
 
-    const makeAnnotations = d3Annotation.annotation()
-        .annotations(annotations);
-        
-    svg.append("g")
-        .call(makeAnnotations);
+        svg.append("g")
+            .call(makeAnnotations);
 
-    svg.selectAll(".annotation-note-label")
-        .style("font-size", "14px");
-
+        svg.selectAll(".annotation-note-label")
+            .style("font-size", "14px");
+    }
 }
 
 document.getElementById("show80sadjusted").addEventListener("click", () => {
@@ -465,8 +500,9 @@ document.getElementById("show80sadjusted").addEventListener("click", () => {
 
 async function drawEightiesticketsChart() {
     const dataset = await d3.csv("datasets/Concert_Dataset.csv");
-    const width = 1000;
-    const height = 500;
+    let { screen_width, device_type, params } = get_device_type();
+    const height = params.height;
+    const width = params.width;
     const margin = { top: 40, right: 40, bottom: 200, left: 150 };
     const borderPadding = 10;
 
@@ -483,7 +519,7 @@ async function drawEightiesticketsChart() {
                 type: "line"
             },
             color: ["#FFFFFF"],
-            x:  210,
+            x: 210,
             y: 80,
             dy: 0,
             dx: 130
@@ -543,8 +579,9 @@ async function drawEightiesticketsChart() {
 
     const svg = d3.select("#eighties-chart-tickets").html("")
         .append("svg")
-        .attr("width", width)
-        .attr("height", height)
+        .attr("width", params.width)
+        .attr("height", params.height)
+        .attr("viewBox", `0 0 ${params.width} ${params.height}`)
         .style("font-family", "Inter, sans-serif");
 
     const xScale = d3.scaleBand()
@@ -614,38 +651,42 @@ async function drawEightiesticketsChart() {
     const xAxis = svg.append("g")
         .attr("transform", `translate(0, ${height - margin.bottom})`)
         .call(d3.axisBottom(xScale));
+    if (device_type === "xl") {
+        xAxis.selectAll("text")
+            .text("")
+            .each(function (d) {
+                const [tour, artist] = d.split("\n");
+                const text = d3.select(this);
 
-    xAxis.selectAll("text")
-        .text("")
-        .each(function (d) {
-            const [tour, artist] = d.split("\n");
-            const text = d3.select(this);
+                // Tour name lines
+                const tourLines = wrapText(tour.toLowerCase(), 18);
+                tourLines.forEach((line, i) => {
+                    text.append("tspan")
+                        .text(line)
+                        .attr("x", -20)
+                        .attr("dy", i === 0 ? -20 : 13)
+                        .style("fill", "white")
+                        .style("font-size", "13px")
+                        .style("font-weight", "600");
+                });
 
-            // Tour name lines
-            const tourLines = wrapText(tour.toLowerCase(), 18);
-            tourLines.forEach((line, i) => {
-                text.append("tspan")
-                    .text(line)
-                    .attr("x", -20)
-                    .attr("dy", i === 0 ? -20 : 10)
-                    .style("fill", "white")
-                    .style("font-size", "10px")
-                    .style("font-weight", "600");
-            });
+                // Artist name lines
+                const artistLines = wrapText(artist.toLowerCase(), 18);
+                artistLines.forEach((line, i) => {
+                    text.append("tspan")
+                        .text(line)
+                        .attr("x", -20)
+                        .attr("dy", tourLines.length === 0 && i === 0 ? 0 : 13)
+                        .style("fill", "#CA6CDC")
+                        .style("font-size", "13px");
+                });
+            })
+            .attr("transform", "rotate(-90)")
+            .attr("text-anchor", "end");
 
-            // Artist name lines
-            const artistLines = wrapText(artist.toLowerCase(), 18);
-            artistLines.forEach((line, i) => {
-                text.append("tspan")
-                    .text(line)
-                    .attr("x", -20)
-                    .attr("dy", tourLines.length === 0 && i === 0 ? 0 : 10)
-                    .style("fill", "#CA6CDC")
-                    .style("font-size", "10px");
-            });
-        })
-        .attr("transform", "rotate(-90)")
-        .attr("text-anchor", "end");
+    } else {
+        xAxis.selectAll("text").remove();
+    }
 
     svg.append("g")
         .attr("transform", `translate(${margin.left},0)`)
@@ -676,15 +717,16 @@ async function drawEightiesticketsChart() {
         .style("fill", "white")
         .style("font-size", "14px")
         .text("tickets sold");
+    if (device_type !== "xs") {
+        const makeAnnotations = d3Annotation.annotation()
+            .annotations(annotations);
 
-    const makeAnnotations = d3Annotation.annotation()
-        .annotations(annotations);
-        
-    svg.append("g")
-        .call(makeAnnotations);
+        svg.append("g")
+            .call(makeAnnotations);
 
-    svg.selectAll(".annotation-note-label")
-        .style("font-size", "14px");
+        svg.selectAll(".annotation-note-label")
+            .style("font-size", "14px");
+    }
 
 }
 
@@ -701,8 +743,9 @@ document.getElementById("show80stickets").addEventListener("click", () => {
 
 async function drawNinetiesChart() {
     const dataset = await d3.csv("datasets/Concert_Dataset.csv");
-    const width = 1000;
-    const height = 500;
+    let { screen_width, device_type, params } = get_device_type();
+    const height = params.height;
+    const width = params.width;
     const margin = { top: 40, right: 40, bottom: 200, left: 150 };
     const borderPadding = 10;
 
@@ -759,8 +802,9 @@ async function drawNinetiesChart() {
 
     const svg = d3.select("#nineties-chart").html("")
         .append("svg")
-        .attr("width", width)
-        .attr("height", height)
+        .attr("width", params.width)
+        .attr("height", params.height)
+        .attr("viewBox", `0 0 ${params.width} ${params.height}`)
         .style("font-family", "Inter, sans-serif");
 
     const xScale = d3.scaleBand()
@@ -835,38 +879,43 @@ async function drawNinetiesChart() {
     const xAxis = svg.append("g")
         .attr("transform", `translate(0, ${height - margin.bottom})`)
         .call(d3.axisBottom(xScale));
+    if (device_type === "xl") {
+        xAxis.selectAll("text")
+            .text("")
+            .each(function (d) {
+                const [tour, artist] = d.split("\n");
+                const text = d3.select(this);
 
-    xAxis.selectAll("text")
-        .text("")
-        .each(function (d) {
-            const [tour, artist] = d.split("\n");
-            const text = d3.select(this);
+                // Tour name lines
+                const tourLines = wrapText(tour.toLowerCase(), 18);
+                tourLines.forEach((line, i) => {
+                    text.append("tspan")
+                        .text(line)
+                        .attr("x", -20)
+                        .attr("dy", i === 0 ? -20 : 13)
+                        .style("fill", "white")
+                        .style("font-size", "13px")
+                        .style("font-weight", "600");
+                });
 
-            // Tour name lines
-            const tourLines = wrapText(tour.toLowerCase(), 18);
-            tourLines.forEach((line, i) => {
-                text.append("tspan")
-                    .text(line)
-                    .attr("x", -20)
-                    .attr("dy", i === 0 ? -20 : 10)
-                    .style("fill", "white")
-                    .style("font-size", "10px")
-                    .style("font-weight", "600");
-            });
+                // Artist name lines
+                const artistLines = wrapText(artist.toLowerCase(), 18);
+                artistLines.forEach((line, i) => {
+                    text.append("tspan")
+                        .text(line)
+                        .attr("x", -20)
+                        .attr("dy", tourLines.length === 0 && i === 0 ? 0 : 13)
+                        .style("fill", "#CA6CDC")
+                        .style("font-size", "13px");
+                });
+            })
+            .attr("transform", "rotate(-90)")
+            .attr("text-anchor", "end");
 
-            // Artist name lines
-            const artistLines = wrapText(artist.toLowerCase(), 18);
-            artistLines.forEach((line, i) => {
-                text.append("tspan")
-                    .text(line)
-                    .attr("x", -20)
-                    .attr("dy", tourLines.length === 0 && i === 0 ? 0 : 10)
-                    .style("fill", "#CA6CDC")
-                    .style("font-size", "10px");
-            });
-        })
-        .attr("transform", "rotate(-90)")
-        .attr("text-anchor", "end");
+    } else {
+
+        xAxis.selectAll("text").remove();
+    }
 
     svg.append("g")
         .attr("transform", `translate(${margin.left},0)`)
@@ -903,6 +952,7 @@ async function drawNinetiesChart() {
 window.addEventListener("DOMContentLoaded", () => {
     selectButton("90s-buttons", "show90sactual");
     drawNinetiesChart();
+
 });
 
 document.getElementById("show90sactual").addEventListener("click", () => {
@@ -915,8 +965,9 @@ document.getElementById("show90sactual").addEventListener("click", () => {
 
 async function drawNinetiesadjustedChart() {
     const dataset = await d3.csv("datasets/Concert_Dataset.csv");
-    const width = 1000;
-    const height = 500;
+    let { screen_width, device_type, params } = get_device_type();
+    const height = params.height;
+    const width = params.width;
     const margin = { top: 40, right: 40, bottom: 200, left: 150 };
     const borderPadding = 10;
 
@@ -973,8 +1024,9 @@ async function drawNinetiesadjustedChart() {
 
     const svg = d3.select("#nineties-chart-adjusted").html("")
         .append("svg")
-        .attr("width", width)
-        .attr("height", height)
+        .attr("width", params.width)
+        .attr("height", params.height)
+        .attr("viewBox", `0 0 ${params.width} ${params.height}`)
         .style("font-family", "Inter, sans-serif");
 
     const xScale = d3.scaleBand()
@@ -1045,39 +1097,41 @@ async function drawNinetiesadjustedChart() {
     const xAxis = svg.append("g")
         .attr("transform", `translate(0, ${height - margin.bottom})`)
         .call(d3.axisBottom(xScale));
+    if (device_type === "xl") {
+        xAxis.selectAll("text")
+            .text("")
+            .each(function (d) {
+                const [tour, artist] = d.split("\n");
+                const text = d3.select(this);
 
-    xAxis.selectAll("text")
-        .text("")
-        .each(function (d) {
-            const [tour, artist] = d.split("\n");
-            const text = d3.select(this);
+                // Tour name lines
+                const tourLines = wrapText(tour.toLowerCase(), 18);
+                tourLines.forEach((line, i) => {
+                    text.append("tspan")
+                        .text(line)
+                        .attr("x", -20)
+                        .attr("dy", i === 0 ? -20 : 13)
+                        .style("fill", "white")
+                        .style("font-size", "13px")
+                        .style("font-weight", "600");
+                });
 
-            // Tour name lines
-            const tourLines = wrapText(tour.toLowerCase(), 18);
-            tourLines.forEach((line, i) => {
-                text.append("tspan")
-                    .text(line)
-                    .attr("x", -20)
-                    .attr("dy", i === 0 ? -20 : 10)
-                    .style("fill", "white")
-                    .style("font-size", "10px")
-                    .style("font-weight", "600");
-            });
-
-            // Artist name lines
-            const artistLines = wrapText(artist.toLowerCase(), 18);
-            artistLines.forEach((line, i) => {
-                text.append("tspan")
-                    .text(line)
-                    .attr("x", -20)
-                    .attr("dy", tourLines.length === 0 && i === 0 ? 0 : 10)
-                    .style("fill", "#CA6CDC")
-                    .style("font-size", "10px");
-            });
-        })
-        .attr("transform", "rotate(-90)")
-        .attr("text-anchor", "end");
-
+                // Artist name lines
+                const artistLines = wrapText(artist.toLowerCase(), 18);
+                artistLines.forEach((line, i) => {
+                    text.append("tspan")
+                        .text(line)
+                        .attr("x", -20)
+                        .attr("dy", tourLines.length === 0 && i === 0 ? 0 : 13)
+                        .style("fill", "#CA6CDC")
+                        .style("font-size", "13px");
+                });
+            })
+            .attr("transform", "rotate(-90)")
+            .attr("text-anchor", "end");
+    } else {
+        xAxis.selectAll("text").remove();
+    }
     svg.append("g")
         .attr("transform", `translate(${margin.left},0)`)
         .call(d3.axisLeft(yScale)
@@ -1120,25 +1174,26 @@ document.getElementById("show90sadjusted").addEventListener("click", () => {
 
 async function drawNinetiesticketsChart() {
     const dataset = await d3.csv("datasets/Concert_Dataset.csv");
-    const width = 1000;
-    const height = 500;
+    let { screen_width, device_type, params } = get_device_type();
+    const height = params.height;
+    const width = params.width;
     const margin = { top: 40, right: 40, bottom: 200, left: 150 };
     const borderPadding = 10;
 
-        const annotations = [
+    const annotations = [
         {
             note: {
                 label: "Garth Brooks jumps from 10th place, selling the third most tickets to any concert tour in the 90s.",
                 align: "left",
                 wrap: 260,
                 padding: 0,
-                
+
             },
             connector: {
                 type: "line"
             },
             color: ["#FFFFFF"],
-            x:  360,
+            x: 360,
             y: 130,
             dy: -30,
             dx: 50
@@ -1198,8 +1253,9 @@ async function drawNinetiesticketsChart() {
 
     const svg = d3.select("#nineties-chart-tickets").html("")
         .append("svg")
-        .attr("width", width)
-        .attr("height", height)
+        .attr("width", params.width)
+        .attr("height", params.height)
+        .attr("viewBox", `0 0 ${params.width} ${params.height}`)
         .style("font-family", "Inter, sans-serif");
 
     const xScale = d3.scaleBand()
@@ -1270,38 +1326,42 @@ async function drawNinetiesticketsChart() {
     const xAxis = svg.append("g")
         .attr("transform", `translate(0, ${height - margin.bottom})`)
         .call(d3.axisBottom(xScale));
+    if (device_type === "xl") {
+        xAxis.selectAll("text")
+            .text("")
+            .each(function (d) {
+                const [tour, artist] = d.split("\n");
+                const text = d3.select(this);
 
-    xAxis.selectAll("text")
-        .text("")
-        .each(function (d) {
-            const [tour, artist] = d.split("\n");
-            const text = d3.select(this);
+                // Tour name lines
+                const tourLines = wrapText(tour.toLowerCase(), 18);
+                tourLines.forEach((line, i) => {
+                    text.append("tspan")
+                        .text(line)
+                        .attr("x", -20)
+                        .attr("dy", i === 0 ? -20 : 13)
+                        .style("fill", "white")
+                        .style("font-size", "13px")
+                        .style("font-weight", "600");
+                });
 
-            // Tour name lines
-            const tourLines = wrapText(tour.toLowerCase(), 18);
-            tourLines.forEach((line, i) => {
-                text.append("tspan")
-                    .text(line)
-                    .attr("x", -20)
-                    .attr("dy", i === 0 ? -20 : 10)
-                    .style("fill", "white")
-                    .style("font-size", "10px")
-                    .style("font-weight", "600");
-            });
+                // Artist name lines
+                const artistLines = wrapText(artist.toLowerCase(), 18);
+                artistLines.forEach((line, i) => {
+                    text.append("tspan")
+                        .text(line)
+                        .attr("x", -20)
+                        .attr("dy", tourLines.length === 0 && i === 0 ? 0 : 13)
+                        .style("fill", "#CA6CDC")
+                        .style("font-size", "13px");
+                });
+            })
+            .attr("transform", "rotate(-90)")
+            .attr("text-anchor", "end");
 
-            // Artist name lines
-            const artistLines = wrapText(artist.toLowerCase(), 18);
-            artistLines.forEach((line, i) => {
-                text.append("tspan")
-                    .text(line)
-                    .attr("x", -20)
-                    .attr("dy", tourLines.length === 0 && i === 0 ? 0 : 10)
-                    .style("fill", "#CA6CDC")
-                    .style("font-size", "10px");
-            });
-        })
-        .attr("transform", "rotate(-90)")
-        .attr("text-anchor", "end");
+    } else {
+        xAxis.selectAll("text").remove();
+    }
 
     svg.append("g")
         .attr("transform", `translate(${margin.left},0)`)
@@ -1332,15 +1392,16 @@ async function drawNinetiesticketsChart() {
         .style("fill", "white")
         .style("font-size", "14px")
         .text("tickets sold");
+    if (device_type !== "xs") {
+        const makeAnnotations = d3Annotation.annotation()
+            .annotations(annotations);
 
-    const makeAnnotations = d3Annotation.annotation()
-        .annotations(annotations);
-        
-    svg.append("g")
-        .call(makeAnnotations);
+        svg.append("g")
+            .call(makeAnnotations);
 
-    svg.selectAll(".annotation-note-label")
-        .style("font-size", "14px");
+        svg.selectAll(".annotation-note-label")
+            .style("font-size", "14px");
+    }
 
 }
 
@@ -1354,8 +1415,9 @@ document.getElementById("show90stickets").addEventListener("click", () => {
 
 async function drawY2kChart() {
     const dataset = await d3.csv("datasets/Concert_Dataset.csv");
-    const width = 1000;
-    const height = 500;
+    let { screen_width, device_type, params } = get_device_type();
+    const height = params.height;
+    const width = params.width;
     const margin = { top: 40, right: 40, bottom: 200, left: 150 };
     const borderPadding = 10;
 
@@ -1412,8 +1474,9 @@ async function drawY2kChart() {
 
     const svg = d3.select("#two-thousands-chart").html("")
         .append("svg")
-        .attr("width", width)
-        .attr("height", height)
+        .attr("width", params.width)
+        .attr("height", params.height)
+        .attr("viewBox", `0 0 ${params.width} ${params.height}`)
         .style("font-family", "Inter, sans-serif");
 
     const xScale = d3.scaleBand()
@@ -1488,39 +1551,41 @@ async function drawY2kChart() {
     const xAxis = svg.append("g")
         .attr("transform", `translate(0, ${height - margin.bottom})`)
         .call(d3.axisBottom(xScale));
+    if (device_type === "xl") {
+        xAxis.selectAll("text")
+            .text("")
+            .each(function (d) {
+                const [tour, artist] = d.split("\n");
+                const text = d3.select(this);
 
-    xAxis.selectAll("text")
-        .text("")
-        .each(function (d) {
-            const [tour, artist] = d.split("\n");
-            const text = d3.select(this);
+                // Tour name lines
+                const tourLines = wrapText(tour.toLowerCase(), 18);
+                tourLines.forEach((line, i) => {
+                    text.append("tspan")
+                        .text(line)
+                        .attr("x", -20)
+                        .attr("dy", i === 0 ? -20 : 13)
+                        .style("fill", "white")
+                        .style("font-size", "13px")
+                        .style("font-weight", "600");
+                });
 
-            // Tour name lines
-            const tourLines = wrapText(tour.toLowerCase(), 18);
-            tourLines.forEach((line, i) => {
-                text.append("tspan")
-                    .text(line)
-                    .attr("x", -20)
-                    .attr("dy", i === 0 ? -20 : 10)
-                    .style("fill", "white")
-                    .style("font-size", "10px")
-                    .style("font-weight", "600");
-            });
-
-            // Artist name lines
-            const artistLines = wrapText(artist.toLowerCase(), 18);
-            artistLines.forEach((line, i) => {
-                text.append("tspan")
-                    .text(line)
-                    .attr("x", -20)
-                    .attr("dy", tourLines.length === 0 && i === 0 ? 0 : 10)
-                    .style("fill", "#CA6CDC")
-                    .style("font-size", "10px");
-            });
-        })
-        .attr("transform", "rotate(-90)")
-        .attr("text-anchor", "end");
-
+                // Artist name lines
+                const artistLines = wrapText(artist.toLowerCase(), 18);
+                artistLines.forEach((line, i) => {
+                    text.append("tspan")
+                        .text(line)
+                        .attr("x", -20)
+                        .attr("dy", tourLines.length === 0 && i === 0 ? 0 : 13)
+                        .style("fill", "#CA6CDC")
+                        .style("font-size", "13px");
+                });
+            })
+            .attr("transform", "rotate(-90)")
+            .attr("text-anchor", "end");
+    } else {
+        xAxis.selectAll("text").remove();
+    }
     svg.append("g")
         .attr("transform", `translate(${margin.left},0)`)
         .call(d3.axisLeft(yScale)
@@ -1568,8 +1633,9 @@ document.getElementById("show2000sactual").addEventListener("click", () => {
 
 async function drawY2kadjustedChart() {
     const dataset = await d3.csv("datasets/Concert_Dataset.csv");
-    const width = 1000;
-    const height = 500;
+    let { screen_width, device_type, params } = get_device_type();
+    const height = params.height;
+    const width = params.width;
     const margin = { top: 40, right: 40, bottom: 200, left: 150 };
     const borderPadding = 10;
 
@@ -1626,8 +1692,9 @@ async function drawY2kadjustedChart() {
 
     const svg = d3.select("#two-thousands-chart-adjusted").html("")
         .append("svg")
-        .attr("width", width)
-        .attr("height", height)
+        .attr("width", params.width)
+        .attr("height", params.height)
+        .attr("viewBox", `0 0 ${params.width} ${params.height}`)
         .style("font-family", "Inter, sans-serif");
 
     const xScale = d3.scaleBand()
@@ -1698,38 +1765,43 @@ async function drawY2kadjustedChart() {
     const xAxis = svg.append("g")
         .attr("transform", `translate(0, ${height - margin.bottom})`)
         .call(d3.axisBottom(xScale));
+    if (device_type === "xl") {
+        xAxis.selectAll("text")
+            .text("")
+            .each(function (d) {
+                const [tour, artist] = d.split("\n");
+                const text = d3.select(this);
 
-    xAxis.selectAll("text")
-        .text("")
-        .each(function (d) {
-            const [tour, artist] = d.split("\n");
-            const text = d3.select(this);
+                // Tour name lines
+                const tourLines = wrapText(tour.toLowerCase(), 18);
+                tourLines.forEach((line, i) => {
+                    text.append("tspan")
+                        .text(line)
+                        .attr("x", -20)
+                        .attr("dy", i === 0 ? -20 : 13)
+                        .style("fill", "white")
+                        .style("font-size", "13px")
+                        .style("font-weight", "600");
+                });
 
-            // Tour name lines
-            const tourLines = wrapText(tour.toLowerCase(), 18);
-            tourLines.forEach((line, i) => {
-                text.append("tspan")
-                    .text(line)
-                    .attr("x", -20)
-                    .attr("dy", i === 0 ? -20 : 10)
-                    .style("fill", "white")
-                    .style("font-size", "10px")
-                    .style("font-weight", "600");
-            });
+                // Artist name lines
+                const artistLines = wrapText(artist.toLowerCase(), 18);
+                artistLines.forEach((line, i) => {
+                    text.append("tspan")
+                        .text(line)
+                        .attr("x", -20)
+                        .attr("dy", tourLines.length === 0 && i === 0 ? 0 : 13)
+                        .style("fill", "#CA6CDC")
+                        .style("font-size", "13px");
+                });
+            })
+            .attr("transform", "rotate(-90)")
+            .attr("text-anchor", "end");
 
-            // Artist name lines
-            const artistLines = wrapText(artist.toLowerCase(), 18);
-            artistLines.forEach((line, i) => {
-                text.append("tspan")
-                    .text(line)
-                    .attr("x", -20)
-                    .attr("dy", tourLines.length === 0 && i === 0 ? 0 : 10)
-                    .style("fill", "#CA6CDC")
-                    .style("font-size", "10px");
-            });
-        })
-        .attr("transform", "rotate(-90)")
-        .attr("text-anchor", "end");
+    } else {
+        xAxis.selectAll("text").remove();
+    }
+
 
     svg.append("g")
         .attr("transform", `translate(${margin.left},0)`)
@@ -1773,8 +1845,9 @@ document.getElementById("show2000sadjusted").addEventListener("click", () => {
 
 async function drawY2kticketsChart() {
     const dataset = await d3.csv("datasets/Concert_Dataset.csv");
-    const width = 1000;
-    const height = 500;
+    let { screen_width, device_type, params } = get_device_type();
+    const height = params.height;
+    const width = params.width;
     const margin = { top: 40, right: 40, bottom: 200, left: 150 };
     const borderPadding = 10;
 
@@ -1831,8 +1904,9 @@ async function drawY2kticketsChart() {
 
     const svg = d3.select("#two-thousands-chart-tickets").html("")
         .append("svg")
-        .attr("width", width)
-        .attr("height", height)
+        .attr("width", params.width)
+        .attr("height", params.height)
+        .attr("viewBox", `0 0 ${params.width} ${params.height}`)
         .style("font-family", "Inter, sans-serif");
 
     const xScale = d3.scaleBand()
@@ -1903,38 +1977,42 @@ async function drawY2kticketsChart() {
     const xAxis = svg.append("g")
         .attr("transform", `translate(0, ${height - margin.bottom})`)
         .call(d3.axisBottom(xScale));
+    if (device_type === "xl") {
+        xAxis.selectAll("text")
+            .text("")
+            .each(function (d) {
+                const [tour, artist] = d.split("\n");
+                const text = d3.select(this);
 
-    xAxis.selectAll("text")
-        .text("")
-        .each(function (d) {
-            const [tour, artist] = d.split("\n");
-            const text = d3.select(this);
+                // Tour name lines
+                const tourLines = wrapText(tour.toLowerCase(), 18);
+                tourLines.forEach((line, i) => {
+                    text.append("tspan")
+                        .text(line)
+                        .attr("x", -20)
+                        .attr("dy", i === 0 ? -20 : 13)
+                        .style("fill", "white")
+                        .style("font-size", "13px")
+                        .style("font-weight", "600");
+                });
 
-            // Tour name lines
-            const tourLines = wrapText(tour.toLowerCase(), 18);
-            tourLines.forEach((line, i) => {
-                text.append("tspan")
-                    .text(line)
-                    .attr("x", -20)
-                    .attr("dy", i === 0 ? -20 : 10)
-                    .style("fill", "white")
-                    .style("font-size", "10px")
-                    .style("font-weight", "600");
-            });
+                // Artist name lines
+                const artistLines = wrapText(artist.toLowerCase(), 18);
+                artistLines.forEach((line, i) => {
+                    text.append("tspan")
+                        .text(line)
+                        .attr("x", -20)
+                        .attr("dy", tourLines.length === 0 && i === 0 ? 0 : 13)
+                        .style("fill", "#CA6CDC")
+                        .style("font-size", "13px");
+                });
+            })
+            .attr("transform", "rotate(-90)")
+            .attr("text-anchor", "end");
+    } else {
+        xAxis.selectAll("text").remove();
+    }
 
-            // Artist name lines
-            const artistLines = wrapText(artist.toLowerCase(), 18);
-            artistLines.forEach((line, i) => {
-                text.append("tspan")
-                    .text(line)
-                    .attr("x", -20)
-                    .attr("dy", tourLines.length === 0 && i === 0 ? 0 : 10)
-                    .style("fill", "#CA6CDC")
-                    .style("font-size", "10px");
-            });
-        })
-        .attr("transform", "rotate(-90)")
-        .attr("text-anchor", "end");
 
     svg.append("g")
         .attr("transform", `translate(${margin.left},0)`)
@@ -1978,8 +2056,9 @@ document.getElementById("show2000stickets").addEventListener("click", () => {
 
 async function draw2010sChart() {
     const dataset = await d3.csv("datasets/Concert_Dataset.csv");
-    const width = 1000;
-    const height = 500;
+    let { screen_width, device_type, params } = get_device_type();
+    const height = params.height;
+    const width = params.width;
     const margin = { top: 40, right: 40, bottom: 200, left: 150 };
     const borderPadding = 10;
 
@@ -2036,8 +2115,9 @@ async function draw2010sChart() {
 
     const svg = d3.select("#twenty-tens-chart").html("")
         .append("svg")
-        .attr("width", width)
-        .attr("height", height)
+        .attr("width", params.width)
+        .attr("height", params.height)
+        .attr("viewBox", `0 0 ${params.width} ${params.height}`)
         .style("font-family", "Inter, sans-serif");
 
     const xScale = d3.scaleBand()
@@ -2112,38 +2192,43 @@ async function draw2010sChart() {
     const xAxis = svg.append("g")
         .attr("transform", `translate(0, ${height - margin.bottom})`)
         .call(d3.axisBottom(xScale));
+    if (device_type === "xl") {
+        xAxis.selectAll("text")
+            .text("")
+            .each(function (d) {
+                const [tour, artist] = d.split("\n");
+                const text = d3.select(this);
 
-    xAxis.selectAll("text")
-        .text("")
-        .each(function (d) {
-            const [tour, artist] = d.split("\n");
-            const text = d3.select(this);
+                // Tour name lines
+                const tourLines = wrapText(tour.toLowerCase(), 18);
+                tourLines.forEach((line, i) => {
+                    text.append("tspan")
+                        .text(line)
+                        .attr("x", -20)
+                        .attr("dy", i === 0 ? -20 : 13)
+                        .style("fill", "white")
+                        .style("font-size", "13px")
+                        .style("font-weight", "600");
+                });
 
-            // Tour name lines
-            const tourLines = wrapText(tour.toLowerCase(), 18);
-            tourLines.forEach((line, i) => {
-                text.append("tspan")
-                    .text(line)
-                    .attr("x", -20)
-                    .attr("dy", i === 0 ? -20 : 10)
-                    .style("fill", "white")
-                    .style("font-size", "10px")
-                    .style("font-weight", "600");
-            });
+                // Artist name lines
+                const artistLines = wrapText(artist.toLowerCase(), 18);
+                artistLines.forEach((line, i) => {
+                    text.append("tspan")
+                        .text(line)
+                        .attr("x", -20)
+                        .attr("dy", tourLines.length === 0 && i === 0 ? 0 : 13)
+                        .style("fill", "#CA6CDC")
+                        .style("font-size", "13px");
+                });
+            })
+            .attr("transform", "rotate(-90)")
+            .attr("text-anchor", "end");
 
-            // Artist name lines
-            const artistLines = wrapText(artist.toLowerCase(), 18);
-            artistLines.forEach((line, i) => {
-                text.append("tspan")
-                    .text(line)
-                    .attr("x", -20)
-                    .attr("dy", tourLines.length === 0 && i === 0 ? 0 : 10)
-                    .style("fill", "#CA6CDC")
-                    .style("font-size", "10px");
-            });
-        })
-        .attr("transform", "rotate(-90)")
-        .attr("text-anchor", "end");
+    } else {
+
+        xAxis.selectAll("text").remove();
+    }
 
     svg.append("g")
         .attr("transform", `translate(${margin.left},0)`)
@@ -2193,8 +2278,9 @@ document.getElementById("show2010sactual").addEventListener("click", () => {
 
 async function draw2010sadjustedChart() {
     const dataset = await d3.csv("datasets/Concert_Dataset.csv");
-    const width = 1000;
-    const height = 500;
+    let { screen_width, device_type, params } = get_device_type();
+    const height = params.height;
+    const width = params.width;
     const margin = { top: 40, right: 40, bottom: 200, left: 150 };
     const borderPadding = 10;
 
@@ -2251,8 +2337,9 @@ async function draw2010sadjustedChart() {
 
     const svg = d3.select("#twenty-tens-chart-adjusted").html("")
         .append("svg")
-        .attr("width", width)
-        .attr("height", height)
+        .attr("width", params.width)
+        .attr("height", params.height)
+        .attr("viewBox", `0 0 ${params.width} ${params.height}`)
         .style("font-family", "Inter, sans-serif");
 
     const xScale = d3.scaleBand()
@@ -2323,38 +2410,42 @@ async function draw2010sadjustedChart() {
     const xAxis = svg.append("g")
         .attr("transform", `translate(0, ${height - margin.bottom})`)
         .call(d3.axisBottom(xScale));
+    if (device_type === "xl") {
+        xAxis.selectAll("text")
+            .text("")
+            .each(function (d) {
+                const [tour, artist] = d.split("\n");
+                const text = d3.select(this);
 
-    xAxis.selectAll("text")
-        .text("")
-        .each(function (d) {
-            const [tour, artist] = d.split("\n");
-            const text = d3.select(this);
+                // Tour name lines
+                const tourLines = wrapText(tour.toLowerCase(), 18);
+                tourLines.forEach((line, i) => {
+                    text.append("tspan")
+                        .text(line)
+                        .attr("x", -20)
+                        .attr("dy", i === 0 ? -20 : 13)
+                        .style("fill", "white")
+                        .style("font-size", "13px")
+                        .style("font-weight", "600");
+                });
 
-            // Tour name lines
-            const tourLines = wrapText(tour.toLowerCase(), 18);
-            tourLines.forEach((line, i) => {
-                text.append("tspan")
-                    .text(line)
-                    .attr("x", -20)
-                    .attr("dy", i === 0 ? -20 : 10)
-                    .style("fill", "white")
-                    .style("font-size", "10px")
-                    .style("font-weight", "600");
-            });
+                // Artist name lines
+                const artistLines = wrapText(artist.toLowerCase(), 18);
+                artistLines.forEach((line, i) => {
+                    text.append("tspan")
+                        .text(line)
+                        .attr("x", -20)
+                        .attr("dy", tourLines.length === 0 && i === 0 ? 0 : 13)
+                        .style("fill", "#CA6CDC")
+                        .style("font-size", "13px");
+                });
+            })
+            .attr("transform", "rotate(-90)")
+            .attr("text-anchor", "end");
 
-            // Artist name lines
-            const artistLines = wrapText(artist.toLowerCase(), 18);
-            artistLines.forEach((line, i) => {
-                text.append("tspan")
-                    .text(line)
-                    .attr("x", -20)
-                    .attr("dy", tourLines.length === 0 && i === 0 ? 0 : 10)
-                    .style("fill", "#CA6CDC")
-                    .style("font-size", "10px");
-            });
-        })
-        .attr("transform", "rotate(-90)")
-        .attr("text-anchor", "end");
+    } else {
+        xAxis.selectAll("text").remove();
+    }
 
     svg.append("g")
         .attr("transform", `translate(${margin.left},0)`)
@@ -2398,8 +2489,9 @@ document.getElementById("show2010sadjusted").addEventListener("click", () => {
 
 async function draw2010sticketsChart() {
     const dataset = await d3.csv("datasets/Concert_Dataset.csv");
-    const width = 1000;
-    const height = 500;
+    let { screen_width, device_type, params } = get_device_type();
+    const height = params.height;
+    const width = params.width;
     const margin = { top: 40, right: 40, bottom: 200, left: 150 };
     const borderPadding = 10;
 
@@ -2456,8 +2548,9 @@ async function draw2010sticketsChart() {
 
     const svg = d3.select("#twenty-tens-chart-tickets").html("")
         .append("svg")
-        .attr("width", width)
-        .attr("height", height)
+        .attr("width", params.width)
+        .attr("height", params.height)
+        .attr("viewBox", `0 0 ${params.width} ${params.height}`)
         .style("font-family", "Inter, sans-serif");
 
     const xScale = d3.scaleBand()
@@ -2528,38 +2621,42 @@ async function draw2010sticketsChart() {
     const xAxis = svg.append("g")
         .attr("transform", `translate(0, ${height - margin.bottom})`)
         .call(d3.axisBottom(xScale));
+    if (device_type === "xl") {
+        xAxis.selectAll("text")
+            .text("")
+            .each(function (d) {
+                const [tour, artist] = d.split("\n");
+                const text = d3.select(this);
 
-    xAxis.selectAll("text")
-        .text("")
-        .each(function (d) {
-            const [tour, artist] = d.split("\n");
-            const text = d3.select(this);
+                // Tour name lines
+                const tourLines = wrapText(tour.toLowerCase(), 18);
+                tourLines.forEach((line, i) => {
+                    text.append("tspan")
+                        .text(line)
+                        .attr("x", -20)
+                        .attr("dy", i === 0 ? -20 : 13)
+                        .style("fill", "white")
+                        .style("font-size", "13px")
+                        .style("font-weight", "600");
+                });
 
-            // Tour name lines
-            const tourLines = wrapText(tour.toLowerCase(), 18);
-            tourLines.forEach((line, i) => {
-                text.append("tspan")
-                    .text(line)
-                    .attr("x", -20)
-                    .attr("dy", i === 0 ? -20 : 10)
-                    .style("fill", "white")
-                    .style("font-size", "10px")
-                    .style("font-weight", "600");
-            });
+                // Artist name lines
+                const artistLines = wrapText(artist.toLowerCase(), 18);
+                artistLines.forEach((line, i) => {
+                    text.append("tspan")
+                        .text(line)
+                        .attr("x", -20)
+                        .attr("dy", tourLines.length === 0 && i === 0 ? 0 : 13)
+                        .style("fill", "#CA6CDC")
+                        .style("font-size", "13px");
+                });
+            })
+            .attr("transform", "rotate(-90)")
+            .attr("text-anchor", "end");
 
-            // Artist name lines
-            const artistLines = wrapText(artist.toLowerCase(), 18);
-            artistLines.forEach((line, i) => {
-                text.append("tspan")
-                    .text(line)
-                    .attr("x", -20)
-                    .attr("dy", tourLines.length === 0 && i === 0 ? 0 : 10)
-                    .style("fill", "#CA6CDC")
-                    .style("font-size", "10px");
-            });
-        })
-        .attr("transform", "rotate(-90)")
-        .attr("text-anchor", "end");
+    } else {
+        xAxis.selectAll("text").remove();
+    }
 
     svg.append("g")
         .attr("transform", `translate(${margin.left},0)`)
@@ -2603,8 +2700,9 @@ document.getElementById("show2010stickets").addEventListener("click", () => {
 
 async function draw2020sChart() {
     const dataset = await d3.csv("datasets/Concert_Dataset.csv");
-    const width = 1000;
-    const height = 500;
+    let { screen_width, device_type, params } = get_device_type();
+    const height = params.height;
+    const width = params.width;
     const margin = { top: 40, right: 40, bottom: 200, left: 150 };
     const borderPadding = 10;
 
@@ -2661,8 +2759,9 @@ async function draw2020sChart() {
 
     const svg = d3.select("#twenty-twenties-chart").html("")
         .append("svg")
-        .attr("width", width)
-        .attr("height", height)
+        .attr("width", params.width)
+        .attr("height", params.height)
+        .attr("viewBox", `0 0 ${params.width} ${params.height}`)
         .style("font-family", "Inter, sans-serif");
 
     const xScale = d3.scaleBand()
@@ -2737,38 +2836,42 @@ async function draw2020sChart() {
     const xAxis = svg.append("g")
         .attr("transform", `translate(0, ${height - margin.bottom})`)
         .call(d3.axisBottom(xScale));
+    if (device_type === "xl") {
+        xAxis.selectAll("text")
+            .text("")
+            .each(function (d) {
+                const [tour, artist] = d.split("\n");
+                const text = d3.select(this);
 
-    xAxis.selectAll("text")
-        .text("")
-        .each(function (d) {
-            const [tour, artist] = d.split("\n");
-            const text = d3.select(this);
+                // Tour name lines
+                const tourLines = wrapText(tour.toLowerCase(), 18);
+                tourLines.forEach((line, i) => {
+                    text.append("tspan")
+                        .text(line)
+                        .attr("x", -20)
+                        .attr("dy", i === 0 ? -20 : 13)
+                        .style("fill", "white")
+                        .style("font-size", "13px")
+                        .style("font-weight", "600");
+                });
 
-            // Tour name lines
-            const tourLines = wrapText(tour.toLowerCase(), 18);
-            tourLines.forEach((line, i) => {
-                text.append("tspan")
-                    .text(line)
-                    .attr("x", -20)
-                    .attr("dy", i === 0 ? -20 : 10)
-                    .style("fill", "white")
-                    .style("font-size", "10px")
-                    .style("font-weight", "600");
-            });
+                //Artist name lines
+                const artistLines = wrapText(artist.toLowerCase(), 18);
+                artistLines.forEach((line, i) => {
+                    text.append("tspan")
+                        .text(line)
+                        .attr("x", -20)
+                        .attr("dy", tourLines.length === 0 && i === 0 ? 0 : 13)
+                        .style("fill", "#CA6CDC")
+                        .style("font-size", "13px");
+                });
+            })
+            .attr("transform", "rotate(-90)")
+            .attr("text-anchor", "end");
 
-            //Artist name lines
-            const artistLines = wrapText(artist.toLowerCase(), 18);
-            artistLines.forEach((line, i) => {
-                text.append("tspan")
-                    .text(line)
-                    .attr("x", -20)
-                    .attr("dy", tourLines.length === 0 && i === 0 ? 0 : 10)
-                    .style("fill", "#CA6CDC")
-                    .style("font-size", "10px");
-            });
-        })
-        .attr("transform", "rotate(-90)")
-        .attr("text-anchor", "end");
+    } else {
+        xAxis.selectAll("text").remove();
+    }
 
     svg.append("g")
         .attr("transform", `translate(${margin.left},0)`)
@@ -2817,8 +2920,9 @@ document.getElementById("show2020sactual").addEventListener("click", () => {
 
 async function draw2020sadjustedChart() {
     const dataset = await d3.csv("datasets/Concert_Dataset.csv");
-    const width = 1000;
-    const height = 500;
+    let { screen_width, device_type, params } = get_device_type();
+    const height = params.height;
+    const width = params.width;
     const margin = { top: 40, right: 40, bottom: 200, left: 150 };
     const borderPadding = 10;
 
@@ -2875,8 +2979,9 @@ async function draw2020sadjustedChart() {
 
     const svg = d3.select("#twenty-twenties-chart-adjusted").html("")
         .append("svg")
-        .attr("width", width)
-        .attr("height", height)
+        .attr("width", params.width)
+        .attr("height", params.height)
+        .attr("viewBox", `0 0 ${params.width} ${params.height}`)
         .style("font-family", "Inter, sans-serif");
 
     const xScale = d3.scaleBand()
@@ -2947,38 +3052,42 @@ async function draw2020sadjustedChart() {
     const xAxis = svg.append("g")
         .attr("transform", `translate(0, ${height - margin.bottom})`)
         .call(d3.axisBottom(xScale));
+    if (device_type === "xl") {
+        xAxis.selectAll("text")
+            .text("")
+            .each(function (d) {
+                const [tour, artist] = d.split("\n");
+                const text = d3.select(this);
 
-    xAxis.selectAll("text")
-        .text("")
-        .each(function (d) {
-            const [tour, artist] = d.split("\n");
-            const text = d3.select(this);
+                // Tour name lines
+                const tourLines = wrapText(tour.toLowerCase(), 18);
+                tourLines.forEach((line, i) => {
+                    text.append("tspan")
+                        .text(line)
+                        .attr("x", -20)
+                        .attr("dy", i === 0 ? -20 : 13)
+                        .style("fill", "white")
+                        .style("font-size", "13px")
+                        .style("font-weight", "600");
+                });
 
-            // Tour name lines
-            const tourLines = wrapText(tour.toLowerCase(), 18);
-            tourLines.forEach((line, i) => {
-                text.append("tspan")
-                    .text(line)
-                    .attr("x", -20)
-                    .attr("dy", i === 0 ? -20 : 10)
-                    .style("fill", "white")
-                    .style("font-size", "10px")
-                    .style("font-weight", "600");
-            });
+                // Artist name lines
+                const artistLines = wrapText(artist.toLowerCase(), 18);
+                artistLines.forEach((line, i) => {
+                    text.append("tspan")
+                        .text(line)
+                        .attr("x", -20)
+                        .attr("dy", tourLines.length === 0 && i === 0 ? 0 : 13)
+                        .style("fill", "#CA6CDC")
+                        .style("font-size", "13px");
+                });
+            })
+            .attr("transform", "rotate(-90)")
+            .attr("text-anchor", "end");
 
-            // Artist name lines
-            const artistLines = wrapText(artist.toLowerCase(), 18);
-            artistLines.forEach((line, i) => {
-                text.append("tspan")
-                    .text(line)
-                    .attr("x", -20)
-                    .attr("dy", tourLines.length === 0 && i === 0 ? 0 : 10)
-                    .style("fill", "#CA6CDC")
-                    .style("font-size", "10px");
-            });
-        })
-        .attr("transform", "rotate(-90)")
-        .attr("text-anchor", "end");
+    } else {
+        xAxis.selectAll("text").remove();
+    }
 
     svg.append("g")
         .attr("transform", `translate(${margin.left},0)`)
@@ -3022,8 +3131,9 @@ document.getElementById("show2020sadjusted").addEventListener("click", () => {
 
 async function draw2020sticketsChart() {
     const dataset = await d3.csv("datasets/Concert_Dataset.csv");
-    const width = 1000;
-    const height = 500;
+    let { screen_width, device_type, params } = get_device_type();
+    const height = params.height;
+    const width = params.width;
     const margin = { top: 40, right: 40, bottom: 200, left: 150 };
     const borderPadding = 10;
 
@@ -3080,8 +3190,9 @@ async function draw2020sticketsChart() {
 
     const svg = d3.select("#twenty-twenties-chart-tickets").html("")
         .append("svg")
-        .attr("width", width)
-        .attr("height", height)
+        .attr("width", params.width)
+        .attr("height", params.height)
+        .attr("viewBox", `0 0 ${params.width} ${params.height}`)
         .style("font-family", "Inter, sans-serif");
 
     const xScale = d3.scaleBand()
@@ -3152,38 +3263,42 @@ async function draw2020sticketsChart() {
     const xAxis = svg.append("g")
         .attr("transform", `translate(0, ${height - margin.bottom})`)
         .call(d3.axisBottom(xScale));
+    if (device_type === "xl") {
+        xAxis.selectAll("text")
+            .text("")
+            .each(function (d) {
+                const [tour, artist] = d.split("\n");
+                const text = d3.select(this);
 
-    xAxis.selectAll("text")
-        .text("")
-        .each(function (d) {
-            const [tour, artist] = d.split("\n");
-            const text = d3.select(this);
+                // Tour name lines
+                const tourLines = wrapText(tour.toLowerCase(), 18);
+                tourLines.forEach((line, i) => {
+                    text.append("tspan")
+                        .text(line)
+                        .attr("x", -20)
+                        .attr("dy", i === 0 ? -20 : 13)
+                        .style("fill", "white")
+                        .style("font-size", "13px")
+                        .style("font-weight", "600");
+                });
 
-            // Tour name lines
-            const tourLines = wrapText(tour.toLowerCase(), 18);
-            tourLines.forEach((line, i) => {
-                text.append("tspan")
-                    .text(line)
-                    .attr("x", -20)
-                    .attr("dy", i === 0 ? -20 : 10)
-                    .style("fill", "white")
-                    .style("font-size", "10px")
-                    .style("font-weight", "600");
-            });
+                // Artist name lines
+                const artistLines = wrapText(artist.toLowerCase(), 18);
+                artistLines.forEach((line, i) => {
+                    text.append("tspan")
+                        .text(line)
+                        .attr("x", -20)
+                        .attr("dy", tourLines.length === 0 && i === 0 ? 0 : 13)
+                        .style("fill", "#CA6CDC")
+                        .style("font-size", "13px");
+                });
+            })
+            .attr("transform", "rotate(-90)")
+            .attr("text-anchor", "end");
 
-            // Artist name lines
-            const artistLines = wrapText(artist.toLowerCase(), 18);
-            artistLines.forEach((line, i) => {
-                text.append("tspan")
-                    .text(line)
-                    .attr("x", -20)
-                    .attr("dy", tourLines.length === 0 && i === 0 ? 0 : 10)
-                    .style("fill", "#CA6CDC")
-                    .style("font-size", "10px");
-            });
-        })
-        .attr("transform", "rotate(-90)")
-        .attr("text-anchor", "end");
+    } else {
+        xAxis.selectAll("text").remove();
+    }
 
     svg.append("g")
         .attr("transform", `translate(${margin.left},0)`)
@@ -3422,7 +3537,7 @@ async function drawAllTimeChart() {
 
     const makeAnnotations = d3Annotation.annotation()
         .annotations(annotations);
-        
+
     svg.append("g")
         .call(makeAnnotations);
 
@@ -3437,7 +3552,7 @@ drawAllTimeChart();
 
 let currentGuess = null;
 async function loadArtistDropdown() {
-    const dataset = await d3.csv("datasets/Concert_Dataset_2.csv");
+    const dataset = await d3.csv("datasets/Concert_Dataset_3.csv");
     const artists = [...new Set(dataset.map(d => d["Artist_Name "].trim()))];
 
     const select = document.getElementById("artist-guess");
@@ -3458,19 +3573,20 @@ document.getElementById("submit-guess").addEventListener("click", () => {
     localStorage.setItem("artist_guess", guess);
     drawGreedyArtistsChart();
 
-    goToSlide(slides.length - 1);
+    goToSlide(slides.length - 2);
 });
 
 async function drawGreedyArtistsChart() {
     const dataset = await d3.csv("datasets/Concert_Dataset_3.csv");
     const container = document.getElementById("greedy_artist_chart");
     container.innerHTML = "";
-    const width = 1000;
-    const height = 500;
+    let { screen_width, device_type, params } = get_device_type();
+    const height = params.height;
+    const width = params.width;
     const margin = { top: 40, right: 40, bottom: 200, left: 150 };
     const borderPadding = 10;
 
-        const annotations = [
+    const annotations = [
         {
             note: {
                 label: "These averages use adjusted US dollars. Today, it would have cost you about $221 to see The Rolling Stones!",
@@ -3480,7 +3596,7 @@ async function drawGreedyArtistsChart() {
                 lineType: "none"
             },
             color: ["#FFFFFF"],
-            x:  545,
+            x: 545,
             y: 3,
             dy: 0,
             dx: 0
@@ -3556,8 +3672,9 @@ async function drawGreedyArtistsChart() {
 
     const svg = d3.select(container)
         .append("svg")
-        .attr("width", width)
-        .attr("height", height)
+        .attr("width", params.width)
+        .attr("height", params.height)
+        .attr("viewBox", `0 0 ${params.width} ${params.height}`)
         .style("font-family", "Inter, sans-serif");
 
 
@@ -3626,23 +3743,27 @@ async function drawGreedyArtistsChart() {
     const xAxis = svg.append("g")
         .attr("transform", `translate(0, ${height - margin.bottom})`)
         .call(d3.axisBottom(xScale));
+    if (device_type === "xl") {
+        xAxis.selectAll("text")
+            .text("")
+            .each(function (d) {
+                const text = d3.select(this);
+                const lines = wrapText(d.toLowerCase(), 18);
+                lines.forEach((line, i) => {
+                    text.append("tspan")
+                        .text(line)
+                        .attr("x", -20)
+                        .attr("dy", i === 0 ? -20 : 10)
+                        .style("fill", "#FFFF")
+                        .style("font-size", "14px");
+                });
+            })
+            .attr("transform", "rotate(-90)")
+            .attr("text-anchor", "end");
 
-    xAxis.selectAll("text")
-        .text("")
-        .each(function (d) {
-            const text = d3.select(this);
-            const lines = wrapText(d.toLowerCase(), 18);
-            lines.forEach((line, i) => {
-                text.append("tspan")
-                    .text(line)
-                    .attr("x", -20)
-                    .attr("dy", i === 0 ? -20 : 10)
-                    .style("fill", "#FFFF")
-                    .style("font-size", "14px");
-            });
-        })
-        .attr("transform", "rotate(-90)")
-        .attr("text-anchor", "end");
+    } else {
+        xAxis.selectAll("text").remove();
+    }
 
     const tickInterval = 20;
     const maxY = Math.ceil(d3.max(df, d => d.price) / tickInterval) * tickInterval;
@@ -3675,16 +3796,42 @@ async function drawGreedyArtistsChart() {
         .style("fill", "white")
         .style("font-size", "14px")
         .text("average cost per ticket (usd)");
+    if (device_type !== "xs") {
+        const makeAnnotations = d3Annotation.annotation()
+            .disable(["connector"])
+            .annotations(annotations);
 
-    const makeAnnotations = d3Annotation.annotation()
-        .disable(["connector"])
-        .annotations(annotations);
-        
-    svg.append("g")
-        .call(makeAnnotations);
+        svg.append("g")
+            .call(makeAnnotations);
 
-    svg.selectAll(".annotation-note-label")
-        .style("font-size", "14px");
+        svg.selectAll(".annotation-note-label")
+            .style("font-size", "14px");
+    }
 }
 
 drawGreedyArtistsChart();
+
+
+window.addEventListener("resize", () => {
+    drawEightiesChart();
+    drawEightiesadjustedChart();
+    drawEightiesticketsChart();
+
+    drawNinetiesChart();
+    drawNinetiesadjustedChart();
+    drawNinetiesticketsChart();
+
+    drawY2kChart();
+    drawY2kadjustedChart();
+    drawY2kticketsChart();
+
+    draw2010sChart();
+    draw2010sadjustedChart();
+    draw2010sticketsChart();
+
+    draw2020sChart();
+    draw2020sadjustedChart();
+    draw2020sticketsChart();
+
+    drawGreedyArtistsChart();
+});
