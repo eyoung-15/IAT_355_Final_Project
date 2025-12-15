@@ -36,7 +36,6 @@ function get_device_type() {
 }
 
 
-
 async function drawEightiesChart() {
     const dataset = await d3.csv("datasets/Concert_Dataset.csv");
     let { screen_width, device_type, params } = get_device_type();
@@ -240,7 +239,6 @@ window.addEventListener("DOMContentLoaded", () => {
     selectButton("80s-buttons", "show80sactual");
 
     drawEightiesChart();
-    window.onresize = drawEightiesChart;
 });
 
 document.getElementById("show80sactual").addEventListener("click", () => {
@@ -249,7 +247,6 @@ document.getElementById("show80sactual").addEventListener("click", () => {
     document.getElementById("eighties-chart-tickets").style.display = "none";
     selectButton("80s-buttons", "show80sactual");
     drawEightiesChart();
-    window.onresize = drawEightiesChart;
 });
 
 
@@ -487,7 +484,6 @@ document.getElementById("show80sadjusted").addEventListener("click", () => {
     document.getElementById("eighties-chart-tickets").style.display = "none";
     selectButton("80s-buttons", "show80sadjusted");
     drawEightiesadjustedChart();
-    window.onresize = drawEightiesadjustedChart;
 });
 
 async function drawEightiesticketsChart() {
@@ -723,7 +719,6 @@ document.getElementById("show80stickets").addEventListener("click", () => {
     document.getElementById("eighties-chart-tickets").style.display = "block";
     selectButton("80s-buttons", "show80stickets");
     drawEightiesticketsChart();
-    window.onresize = drawEightiesticketsChart;
 });
 
 
@@ -935,7 +930,7 @@ async function drawNinetiesChart() {
 window.addEventListener("DOMContentLoaded", () => {
     selectButton("90s-buttons", "show90sactual");
     drawNinetiesChart();
-    window.onresize = drawNinetiesChart;
+
 });
 
 document.getElementById("show90sactual").addEventListener("click", () => {
@@ -944,7 +939,6 @@ document.getElementById("show90sactual").addEventListener("click", () => {
     document.getElementById("nineties-chart-tickets").style.display = "none";
     selectButton("90s-buttons", "show90sactual");
     drawNinetiesChart();
-    window.onresize = drawNinetiesChart;
 });
 
 async function drawNinetiesadjustedChart() {
@@ -1152,7 +1146,6 @@ document.getElementById("show90sadjusted").addEventListener("click", () => {
     document.getElementById("nineties-chart-tickets").style.display = "none";
     selectButton("90s-buttons", "show90sadjusted");
     drawNinetiesadjustedChart();
-    window.onresize = drawNinetiesadjustedChart;
 });
 
 async function drawNinetiesticketsChart() {
@@ -1389,7 +1382,6 @@ document.getElementById("show90stickets").addEventListener("click", () => {
     document.getElementById("nineties-chart-tickets").style.display = "block";
     selectButton("90s-buttons", "show90stickets");
     drawNinetiesticketsChart();
-    window.onresize = drawNinetiesticketsChart;
 });
 
 async function drawY2kChart() {
@@ -3728,3 +3720,15 @@ async function drawGreedyArtistsChart() {
 }
 
 drawGreedyArtistsChart();
+
+
+window.addEventListener("resize", () => {
+    drawEightiesChart();
+    drawEightiesadjustedChart();
+    drawEightiesticketsChart();
+
+    drawNinetiesChart();
+    drawNinetiesadjustedChart();
+    drawNinetiesticketsChart();
+
+});
