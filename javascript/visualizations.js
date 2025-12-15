@@ -1,5 +1,8 @@
 import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
 import _ from "https://cdn.jsdelivr.net/npm/lodash@4.17.21/+esm";
+import * as d3Annotation from "https://cdn.jsdelivr.net/npm/d3-svg-annotation@2.5.1/+esm";
+
+
 
 function selectButton(divId, buttonId) {
     const chartButtons = document.getElementById(divId).querySelectorAll('*');
@@ -259,6 +262,25 @@ async function drawEightiesadjustedChart() {
     const margin = { top: 40, right: 40, bottom: 200, left: 150 };
     const borderPadding = 10;
 
+    const annotations = [
+        {
+            note: {
+                label: "The Rolling Stones American Tour jumps up to 6th place from 9th after adjusting for inflation.",
+                align: "left",
+                wrap: 240,
+                padding: 0,
+            },
+            connector: {
+                type: "line"
+            },
+            color: ["#FFFFFF"],
+            x:  645,
+            y: 200,
+            dy: -50,
+            dx: 50
+        }
+    ]
+
     const tooltip = d3.select("body")
         .append("div")
         .attr("class", "tooltip")
@@ -448,6 +470,15 @@ async function drawEightiesadjustedChart() {
         .style("font-size", "14px")
         .text("inflation adjusted gross income (2024 usd)");
 
+    const makeAnnotations = d3Annotation.annotation()
+        .annotations(annotations);
+        
+    svg.append("g")
+        .call(makeAnnotations);
+
+    svg.selectAll(".annotation-note-label")
+        .style("font-size", "14px");
+
 }
 
 document.getElementById("show80sadjusted").addEventListener("click", () => {
@@ -466,6 +497,26 @@ async function drawEightiesticketsChart() {
     const width = params.width;
     const margin = { top: 40, right: 40, bottom: 200, left: 150 };
     const borderPadding = 10;
+
+    const annotations = [
+        {
+            note: {
+                label: "Despite placing third for actual gross revenue, The Rolling Stones sold the most tickets for their Steel Wheels tour.",
+                align: "middle",
+                wrap: 300,
+                padding: 10,
+                lineType: "vertical"
+            },
+            connector: {
+                type: "line"
+            },
+            color: ["#FFFFFF"],
+            x:  210,
+            y: 80,
+            dy: 0,
+            dx: 130
+        }
+    ]
 
     const tooltip = d3.select("body")
         .append("div")
@@ -654,6 +705,15 @@ async function drawEightiesticketsChart() {
         .style("fill", "white")
         .style("font-size", "14px")
         .text("tickets sold");
+
+    const makeAnnotations = d3Annotation.annotation()
+        .annotations(annotations);
+        
+    svg.append("g")
+        .call(makeAnnotations);
+
+    svg.selectAll(".annotation-note-label")
+        .style("font-size", "14px");
 
 }
 
@@ -1103,6 +1163,26 @@ async function drawNinetiesticketsChart() {
     const margin = { top: 40, right: 40, bottom: 200, left: 150 };
     const borderPadding = 10;
 
+        const annotations = [
+        {
+            note: {
+                label: "Garth Brooks jumps from 10th place, selling the third most tickets to any concert tour in the 90s.",
+                align: "left",
+                wrap: 260,
+                padding: 0,
+                
+            },
+            connector: {
+                type: "line"
+            },
+            color: ["#FFFFFF"],
+            x:  360,
+            y: 130,
+            dy: -30,
+            dx: 50
+        }
+    ]
+
     const tooltip = d3.select("body")
         .append("div")
         .attr("class", "tooltip")
@@ -1291,6 +1371,15 @@ async function drawNinetiesticketsChart() {
         .style("fill", "white")
         .style("font-size", "14px")
         .text("tickets sold");
+
+    const makeAnnotations = d3Annotation.annotation()
+        .annotations(annotations);
+        
+    svg.append("g")
+        .call(makeAnnotations);
+
+    svg.selectAll(".annotation-note-label")
+        .style("font-size", "14px");
 
 }
 
@@ -3184,6 +3273,25 @@ async function drawAllTimeChart() {
     const margin = { top: 40, right: 40, bottom: 200, left: 250 };
     const borderPadding = 10;
 
+    const annotations = [
+        {
+            note: {
+                label: "Taylor Swift wins the Revenue War by a landslide, with and without adjustment for inflation.",
+                align: "left",
+                wrap: 245,
+                padding: 10
+            },
+            connector: {
+                type: "line"
+            },
+            color: ["#FFFFFF"],
+            x: 290,
+            y: 70,
+            dy: 70,
+            dx: 75
+        }
+    ]
+
     const tooltip = d3.select("body")
         .append("div")
         .attr("class", "tooltip")
@@ -3351,6 +3459,16 @@ async function drawAllTimeChart() {
         .text(d => d)
         .style("fill", "white")
         .style("font-size", "10px");
+
+    const makeAnnotations = d3Annotation.annotation()
+        .annotations(annotations);
+        
+    svg.append("g")
+        .call(makeAnnotations);
+
+    svg.selectAll(".annotation-note-label")
+        .style("font-size", "14px");
+
 }
 
 drawAllTimeChart();
@@ -3384,13 +3502,30 @@ document.getElementById("submit-guess").addEventListener("click", () => {
 });
 
 async function drawGreedyArtistsChart() {
-    const dataset = await d3.csv("datasets/Concert_Dataset_2.csv");
+    const dataset = await d3.csv("datasets/Concert_Dataset_3.csv");
     const container = document.getElementById("greedy_artist_chart");
     container.innerHTML = "";
     const width = 1000;
     const height = 500;
     const margin = { top: 40, right: 40, bottom: 200, left: 150 };
     const borderPadding = 10;
+
+        const annotations = [
+        {
+            note: {
+                label: "These averages use adjusted US dollars. Today, it would have cost you about $221 to see The Rolling Stones!",
+                align: "middle",
+                wrap: 1000,
+                padding: 10,
+                lineType: "none"
+            },
+            color: ["#FFFFFF"],
+            x:  545,
+            y: 3,
+            dy: 0,
+            dx: 0
+        }
+    ]
 
     const tooltip = d3.select("body")
         .append("div")
@@ -3580,6 +3715,16 @@ async function drawGreedyArtistsChart() {
         .style("fill", "white")
         .style("font-size", "14px")
         .text("average cost per ticket (usd)");
+
+    const makeAnnotations = d3Annotation.annotation()
+        .disable(["connector"])
+        .annotations(annotations);
+        
+    svg.append("g")
+        .call(makeAnnotations);
+
+    svg.selectAll(".annotation-note-label")
+        .style("font-size", "14px");
 }
 
 drawGreedyArtistsChart();

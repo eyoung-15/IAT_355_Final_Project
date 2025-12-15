@@ -136,6 +136,10 @@ p {
     background: url("../images/vis_backgrounds.svg") center/cover no-repeat;
 }
 
+.slide10{
+    background: url("../images/large-text-bg.svg")
+}
+
 .slide2 .whitetext {
     margin-left: 9rem;
     margin-top: 10rem;
@@ -280,6 +284,25 @@ p {
 .slide9 h1 {
     margin-left: 9rem;
     margin-top: 6rem;
+}
+
+.slide10 .whitetext {
+    margin-left: 9rem;
+    margin-top: 6rem;
+}
+
+.slide10 h1 {
+    margin-left: 4rem;
+    margin-top: 20rem;
+    width: 475px;
+}
+
+.slide10 p{
+    
+    margin-left: 4rem;
+    margin-top: -11rem;
+    width: 450px;
+    text-align: left;
 }
 
 .slide3 h1 {
@@ -533,6 +556,20 @@ button:hover {
     .slide2 h1 {
         margin-left: 5rem;
         margin-top: 0rem;
+    }
+
+    .slide10 .whitetext{
+        margin-left: 5rem;
+        margin-top: 5rem;
+    }
+
+    .slide10 h1{
+        margin-left: 5rem;
+        margin-top: 0rem;
+    }
+
+    .slide10 p{
+        margin-left: 5rem;
     }
 
 }
