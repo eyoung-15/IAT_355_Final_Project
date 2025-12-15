@@ -593,4 +593,14 @@ button:hover {
         margin-left: 0rem;
     }
 
+    #greedy_artist_chart {
+        margin-left: 0rem;
+
+    }
+
+    .slide9 h1 {
+        margin-left: 9rem;
+        margin-top: 1rem;
+    }
+
 }

@@ -37,6 +37,8 @@ function get_device_type() {
 }
 
 
+
+
 async function drawEightiesChart() {
     const dataset = await d3.csv("datasets/Concert_Dataset.csv");
     let { screen_width, device_type, params } = get_device_type();
@@ -3576,8 +3578,9 @@ async function drawGreedyArtistsChart() {
     const dataset = await d3.csv("datasets/Concert_Dataset_3.csv");
     const container = document.getElementById("greedy_artist_chart");
     container.innerHTML = "";
-    const width = 1000;
-    const height = 500;
+    let { screen_width, device_type, params } = get_device_type();
+    const height = params.height;
+    const width = params.width;
     const margin = { top: 40, right: 40, bottom: 200, left: 150 };
     const borderPadding = 10;
 
@@ -3667,8 +3670,9 @@ async function drawGreedyArtistsChart() {
 
     const svg = d3.select(container)
         .append("svg")
-        .attr("width", width)
-        .attr("height", height)
+        .attr("width", params.width)
+        .attr("height", params.height)
+        .attr("viewBox", `0 0 ${params.width} ${params.height}`)
         .style("font-family", "Inter, sans-serif");
 
 
@@ -3737,23 +3741,27 @@ async function drawGreedyArtistsChart() {
     const xAxis = svg.append("g")
         .attr("transform", `translate(0, ${height - margin.bottom})`)
         .call(d3.axisBottom(xScale));
+    if (device_type === "xl") {
+        xAxis.selectAll("text")
+            .text("")
+            .each(function (d) {
+                const text = d3.select(this);
+                const lines = wrapText(d.toLowerCase(), 18);
+                lines.forEach((line, i) => {
+                    text.append("tspan")
+                        .text(line)
+                        .attr("x", -20)
+                        .attr("dy", i === 0 ? -20 : 10)
+                        .style("fill", "#FFFF")
+                        .style("font-size", "14px");
+                });
+            })
+            .attr("transform", "rotate(-90)")
+            .attr("text-anchor", "end");
 
-    xAxis.selectAll("text")
-        .text("")
-        .each(function (d) {
-            const text = d3.select(this);
-            const lines = wrapText(d.toLowerCase(), 18);
-            lines.forEach((line, i) => {
-                text.append("tspan")
-                    .text(line)
-                    .attr("x", -20)
-                    .attr("dy", i === 0 ? -20 : 10)
-                    .style("fill", "#FFFF")
-                    .style("font-size", "14px");
-            });
-        })
-        .attr("transform", "rotate(-90)")
-        .attr("text-anchor", "end");
+    } else {
+        xAxis.selectAll("text").remove();
+    }
 
     const tickInterval = 20;
     const maxY = Math.ceil(d3.max(df, d => d.price) / tickInterval) * tickInterval;
@@ -3822,4 +3830,5 @@ window.addEventListener("resize", () => {
     draw2020sadjustedChart();
     draw2020sticketsChart();
 
+    drawGreedyArtistsChart();
 });
