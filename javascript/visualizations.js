@@ -478,16 +478,16 @@ async function drawEightiesadjustedChart() {
         .style("fill", "white")
         .style("font-size", "14px")
         .text("inflation adjusted gross income (2024 usd)");
+    if (device_type !== "xs") {
+        const makeAnnotations = d3Annotation.annotation()
+            .annotations(annotations);
 
-    const makeAnnotations = d3Annotation.annotation()
-        .annotations(annotations);
+        svg.append("g")
+            .call(makeAnnotations);
 
-    svg.append("g")
-        .call(makeAnnotations);
-
-    svg.selectAll(".annotation-note-label")
-        .style("font-size", "14px");
-
+        svg.selectAll(".annotation-note-label")
+            .style("font-size", "14px");
+    }
 }
 
 document.getElementById("show80sadjusted").addEventListener("click", () => {
@@ -717,15 +717,16 @@ async function drawEightiesticketsChart() {
         .style("fill", "white")
         .style("font-size", "14px")
         .text("tickets sold");
+    if (device_type !== "xs") {
+        const makeAnnotations = d3Annotation.annotation()
+            .annotations(annotations);
 
-    const makeAnnotations = d3Annotation.annotation()
-        .annotations(annotations);
+        svg.append("g")
+            .call(makeAnnotations);
 
-    svg.append("g")
-        .call(makeAnnotations);
-
-    svg.selectAll(".annotation-note-label")
-        .style("font-size", "14px");
+        svg.selectAll(".annotation-note-label")
+            .style("font-size", "14px");
+    }
 
 }
 
@@ -1391,15 +1392,16 @@ async function drawNinetiesticketsChart() {
         .style("fill", "white")
         .style("font-size", "14px")
         .text("tickets sold");
+    if (device_type !== "xs") {
+        const makeAnnotations = d3Annotation.annotation()
+            .annotations(annotations);
 
-    const makeAnnotations = d3Annotation.annotation()
-        .annotations(annotations);
+        svg.append("g")
+            .call(makeAnnotations);
 
-    svg.append("g")
-        .call(makeAnnotations);
-
-    svg.selectAll(".annotation-note-label")
-        .style("font-size", "14px");
+        svg.selectAll(".annotation-note-label")
+            .style("font-size", "14px");
+    }
 
 }
 
@@ -3794,16 +3796,17 @@ async function drawGreedyArtistsChart() {
         .style("fill", "white")
         .style("font-size", "14px")
         .text("average cost per ticket (usd)");
+    if (device_type !== "xs") {
+        const makeAnnotations = d3Annotation.annotation()
+            .disable(["connector"])
+            .annotations(annotations);
 
-    const makeAnnotations = d3Annotation.annotation()
-        .disable(["connector"])
-        .annotations(annotations);
+        svg.append("g")
+            .call(makeAnnotations);
 
-    svg.append("g")
-        .call(makeAnnotations);
-
-    svg.selectAll(".annotation-note-label")
-        .style("font-size", "14px");
+        svg.selectAll(".annotation-note-label")
+            .style("font-size", "14px");
+    }
 }
 
 drawGreedyArtistsChart();

@@ -603,4 +603,9 @@ button:hover {
         margin-top: 1rem;
     }
 
+    .buttons-container {
+        padding-top: 3rem;
+        padding-left: 0rem;
+    }
+
 }
