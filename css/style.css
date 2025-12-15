@@ -137,7 +137,7 @@ p {
 }
 
 .slide10 {
-    background: url("../images/large-text-bg.svg")
+    background: url("../images/large-text-bg.svg") center/cover no-repeat;
 }
 
 .slide2 .whitetext {
@@ -288,22 +288,23 @@ p {
 
 .slide10 .whitetext {
     margin-left: 9rem;
-    margin-top: 6rem;
+    margin-top: 10rem;
 }
 
 .slide10 h1 {
     margin-left: 4rem;
     margin-top: 20rem;
-    width: 475px;
 }
 
 .slide10 p {
-
+    margin-bottom: 15rem;
+    /* width: 35rem; */
+    max-width: 35rem;
     margin-left: 4rem;
-    margin-top: -11rem;
-    width: 450px;
-    text-align: left;
+    margin-right: 0;
 }
+
+
 
 .slide3 h1 {
     margin-top: 4rem;
@@ -570,6 +571,8 @@ button:hover {
 
     .slide10 p {
         margin-left: 5rem;
+        margin-top: 0;
+        margin-bottom: 0;
     }
 
     #eighties-chart,
