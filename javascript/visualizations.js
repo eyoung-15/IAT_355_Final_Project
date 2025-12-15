@@ -274,7 +274,7 @@ async function drawEightiesadjustedChart() {
                 type: "line"
             },
             color: ["#FFFFFF"],
-            x:  645,
+            x: 645,
             y: 200,
             dy: -50,
             dx: 50
@@ -472,7 +472,7 @@ async function drawEightiesadjustedChart() {
 
     const makeAnnotations = d3Annotation.annotation()
         .annotations(annotations);
-        
+
     svg.append("g")
         .call(makeAnnotations);
 
@@ -511,7 +511,7 @@ async function drawEightiesticketsChart() {
                 type: "line"
             },
             color: ["#FFFFFF"],
-            x:  210,
+            x: 210,
             y: 80,
             dy: 0,
             dx: 130
@@ -708,7 +708,7 @@ async function drawEightiesticketsChart() {
 
     const makeAnnotations = d3Annotation.annotation()
         .annotations(annotations);
-        
+
     svg.append("g")
         .call(makeAnnotations);
 
@@ -1163,20 +1163,20 @@ async function drawNinetiesticketsChart() {
     const margin = { top: 40, right: 40, bottom: 200, left: 150 };
     const borderPadding = 10;
 
-        const annotations = [
+    const annotations = [
         {
             note: {
                 label: "Garth Brooks jumps from 10th place, selling the third most tickets to any concert tour in the 90s.",
                 align: "left",
                 wrap: 260,
                 padding: 0,
-                
+
             },
             connector: {
                 type: "line"
             },
             color: ["#FFFFFF"],
-            x:  360,
+            x: 360,
             y: 130,
             dy: -30,
             dx: 50
@@ -1374,7 +1374,7 @@ async function drawNinetiesticketsChart() {
 
     const makeAnnotations = d3Annotation.annotation()
         .annotations(annotations);
-        
+
     svg.append("g")
         .call(makeAnnotations);
 
@@ -3462,7 +3462,7 @@ async function drawAllTimeChart() {
 
     const makeAnnotations = d3Annotation.annotation()
         .annotations(annotations);
-        
+
     svg.append("g")
         .call(makeAnnotations);
 
@@ -3477,7 +3477,7 @@ drawAllTimeChart();
 
 let currentGuess = null;
 async function loadArtistDropdown() {
-    const dataset = await d3.csv("datasets/Concert_Dataset_2.csv");
+    const dataset = await d3.csv("datasets/Concert_Dataset_3.csv");
     const artists = [...new Set(dataset.map(d => d["Artist_Name "].trim()))];
 
     const select = document.getElementById("artist-guess");
@@ -3498,7 +3498,7 @@ document.getElementById("submit-guess").addEventListener("click", () => {
     localStorage.setItem("artist_guess", guess);
     drawGreedyArtistsChart();
 
-    goToSlide(slides.length - 1);
+    goToSlide(slides.length - 2);
 });
 
 async function drawGreedyArtistsChart() {
@@ -3510,7 +3510,7 @@ async function drawGreedyArtistsChart() {
     const margin = { top: 40, right: 40, bottom: 200, left: 150 };
     const borderPadding = 10;
 
-        const annotations = [
+    const annotations = [
         {
             note: {
                 label: "These averages use adjusted US dollars. Today, it would have cost you about $221 to see The Rolling Stones!",
@@ -3520,7 +3520,7 @@ async function drawGreedyArtistsChart() {
                 lineType: "none"
             },
             color: ["#FFFFFF"],
-            x:  545,
+            x: 545,
             y: 3,
             dy: 0,
             dx: 0
@@ -3719,7 +3719,7 @@ async function drawGreedyArtistsChart() {
     const makeAnnotations = d3Annotation.annotation()
         .disable(["connector"])
         .annotations(annotations);
-        
+
     svg.append("g")
         .call(makeAnnotations);
 
