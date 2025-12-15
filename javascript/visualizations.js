@@ -184,9 +184,9 @@ async function drawEightiesChart() {
                 text.append("tspan")
                     .text(line)
                     .attr("x", -20)
-                    .attr("dy", i === 0 ? -20 : 10)
+                    .attr("dy", i === 0 ? -20 : 13)
                     .style("fill", "white")
-                    .style("font-size", "10px")
+                    .style("font-size", "13px")
                     .style("font-weight", "600");
             });
 
@@ -196,9 +196,9 @@ async function drawEightiesChart() {
                 text.append("tspan")
                     .text(line)
                     .attr("x", -20)
-                    .attr("dy", tourLines.length === 0 && i === 0 ? 0 : 10)
+                    .attr("dy", tourLines.length === 0 && i === 0 ? 0 : 13)
                     .style("fill", "#CA6CDC")
-                    .style("font-size", "10px");
+                    .style("font-size", "13px");
             });
         })
         .attr("transform", "rotate(-90)")
@@ -420,9 +420,9 @@ async function drawEightiesadjustedChart() {
                 text.append("tspan")
                     .text(line)
                     .attr("x", -20)
-                    .attr("dy", i === 0 ? -20 : 10)
+                    .attr("dy", i === 0 ? -20 : 13)
                     .style("fill", "white")
-                    .style("font-size", "10px")
+                    .style("font-size", "13px")
                     .style("font-weight", "600");
             });
 
@@ -432,9 +432,9 @@ async function drawEightiesadjustedChart() {
                 text.append("tspan")
                     .text(line)
                     .attr("x", -20)
-                    .attr("dy", tourLines.length === 0 && i === 0 ? 0 : 10)
+                    .attr("dy", tourLines.length === 0 && i === 0 ? 0 : 13)
                     .style("fill", "#CA6CDC")
-                    .style("font-size", "10px");
+                    .style("font-size", "13px");
             });
         })
         .attr("transform", "rotate(-90)")
@@ -656,9 +656,9 @@ async function drawEightiesticketsChart() {
                 text.append("tspan")
                     .text(line)
                     .attr("x", -20)
-                    .attr("dy", i === 0 ? -20 : 10)
+                    .attr("dy", i === 0 ? -20 : 13)
                     .style("fill", "white")
-                    .style("font-size", "10px")
+                    .style("font-size", "13px")
                     .style("font-weight", "600");
             });
 
@@ -668,9 +668,9 @@ async function drawEightiesticketsChart() {
                 text.append("tspan")
                     .text(line)
                     .attr("x", -20)
-                    .attr("dy", tourLines.length === 0 && i === 0 ? 0 : 10)
+                    .attr("dy", tourLines.length === 0 && i === 0 ? 0 : 13)
                     .style("fill", "#CA6CDC")
-                    .style("font-size", "10px");
+                    .style("font-size", "13px");
             });
         })
         .attr("transform", "rotate(-90)")
@@ -880,9 +880,9 @@ async function drawNinetiesChart() {
                 text.append("tspan")
                     .text(line)
                     .attr("x", -20)
-                    .attr("dy", i === 0 ? -20 : 10)
+                    .attr("dy", i === 0 ? -20 : 13)
                     .style("fill", "white")
-                    .style("font-size", "10px")
+                    .style("font-size", "13px")
                     .style("font-weight", "600");
             });
 
@@ -892,9 +892,9 @@ async function drawNinetiesChart() {
                 text.append("tspan")
                     .text(line)
                     .attr("x", -20)
-                    .attr("dy", tourLines.length === 0 && i === 0 ? 0 : 10)
+                    .attr("dy", tourLines.length === 0 && i === 0 ? 0 : 13)
                     .style("fill", "#CA6CDC")
-                    .style("font-size", "10px");
+                    .style("font-size", "13px");
             });
         })
         .attr("transform", "rotate(-90)")
@@ -1094,9 +1094,9 @@ async function drawNinetiesadjustedChart() {
                 text.append("tspan")
                     .text(line)
                     .attr("x", -20)
-                    .attr("dy", i === 0 ? -20 : 10)
+                    .attr("dy", i === 0 ? -20 : 13)
                     .style("fill", "white")
-                    .style("font-size", "10px")
+                    .style("font-size", "13px")
                     .style("font-weight", "600");
             });
 
@@ -1106,9 +1106,9 @@ async function drawNinetiesadjustedChart() {
                 text.append("tspan")
                     .text(line)
                     .attr("x", -20)
-                    .attr("dy", tourLines.length === 0 && i === 0 ? 0 : 10)
+                    .attr("dy", tourLines.length === 0 && i === 0 ? 0 : 13)
                     .style("fill", "#CA6CDC")
-                    .style("font-size", "10px");
+                    .style("font-size", "13px");
             });
         })
         .attr("transform", "rotate(-90)")
@@ -1322,9 +1322,9 @@ async function drawNinetiesticketsChart() {
                 text.append("tspan")
                     .text(line)
                     .attr("x", -20)
-                    .attr("dy", i === 0 ? -20 : 10)
+                    .attr("dy", i === 0 ? -20 : 13)
                     .style("fill", "white")
-                    .style("font-size", "10px")
+                    .style("font-size", "13px")
                     .style("font-weight", "600");
             });
 
@@ -1334,9 +1334,9 @@ async function drawNinetiesticketsChart() {
                 text.append("tspan")
                     .text(line)
                     .attr("x", -20)
-                    .attr("dy", tourLines.length === 0 && i === 0 ? 0 : 10)
+                    .attr("dy", tourLines.length === 0 && i === 0 ? 0 : 13)
                     .style("fill", "#CA6CDC")
-                    .style("font-size", "10px");
+                    .style("font-size", "13px");
             });
         })
         .attr("transform", "rotate(-90)")
@@ -1541,9 +1541,9 @@ async function drawY2kChart() {
                 text.append("tspan")
                     .text(line)
                     .attr("x", -20)
-                    .attr("dy", i === 0 ? -20 : 10)
+                    .attr("dy", i === 0 ? -20 : 13)
                     .style("fill", "white")
-                    .style("font-size", "10px")
+                    .style("font-size", "13px")
                     .style("font-weight", "600");
             });
 
@@ -1553,9 +1553,9 @@ async function drawY2kChart() {
                 text.append("tspan")
                     .text(line)
                     .attr("x", -20)
-                    .attr("dy", tourLines.length === 0 && i === 0 ? 0 : 10)
+                    .attr("dy", tourLines.length === 0 && i === 0 ? 0 : 13)
                     .style("fill", "#CA6CDC")
-                    .style("font-size", "10px");
+                    .style("font-size", "13px");
             });
         })
         .attr("transform", "rotate(-90)")
@@ -1751,9 +1751,9 @@ async function drawY2kadjustedChart() {
                 text.append("tspan")
                     .text(line)
                     .attr("x", -20)
-                    .attr("dy", i === 0 ? -20 : 10)
+                    .attr("dy", i === 0 ? -20 : 13)
                     .style("fill", "white")
-                    .style("font-size", "10px")
+                    .style("font-size", "13px")
                     .style("font-weight", "600");
             });
 
@@ -1763,9 +1763,9 @@ async function drawY2kadjustedChart() {
                 text.append("tspan")
                     .text(line)
                     .attr("x", -20)
-                    .attr("dy", tourLines.length === 0 && i === 0 ? 0 : 10)
+                    .attr("dy", tourLines.length === 0 && i === 0 ? 0 : 13)
                     .style("fill", "#CA6CDC")
-                    .style("font-size", "10px");
+                    .style("font-size", "13px");
             });
         })
         .attr("transform", "rotate(-90)")
@@ -1956,9 +1956,9 @@ async function drawY2kticketsChart() {
                 text.append("tspan")
                     .text(line)
                     .attr("x", -20)
-                    .attr("dy", i === 0 ? -20 : 10)
+                    .attr("dy", i === 0 ? -20 : 13)
                     .style("fill", "white")
-                    .style("font-size", "10px")
+                    .style("font-size", "13px")
                     .style("font-weight", "600");
             });
 
@@ -1968,9 +1968,9 @@ async function drawY2kticketsChart() {
                 text.append("tspan")
                     .text(line)
                     .attr("x", -20)
-                    .attr("dy", tourLines.length === 0 && i === 0 ? 0 : 10)
+                    .attr("dy", tourLines.length === 0 && i === 0 ? 0 : 13)
                     .style("fill", "#CA6CDC")
-                    .style("font-size", "10px");
+                    .style("font-size", "13px");
             });
         })
         .attr("transform", "rotate(-90)")
@@ -2165,9 +2165,9 @@ async function draw2010sChart() {
                 text.append("tspan")
                     .text(line)
                     .attr("x", -20)
-                    .attr("dy", i === 0 ? -20 : 10)
+                    .attr("dy", i === 0 ? -20 : 13)
                     .style("fill", "white")
-                    .style("font-size", "10px")
+                    .style("font-size", "13px")
                     .style("font-weight", "600");
             });
 
@@ -2177,9 +2177,9 @@ async function draw2010sChart() {
                 text.append("tspan")
                     .text(line)
                     .attr("x", -20)
-                    .attr("dy", tourLines.length === 0 && i === 0 ? 0 : 10)
+                    .attr("dy", tourLines.length === 0 && i === 0 ? 0 : 13)
                     .style("fill", "#CA6CDC")
-                    .style("font-size", "10px");
+                    .style("font-size", "13px");
             });
         })
         .attr("transform", "rotate(-90)")
@@ -2376,9 +2376,9 @@ async function draw2010sadjustedChart() {
                 text.append("tspan")
                     .text(line)
                     .attr("x", -20)
-                    .attr("dy", i === 0 ? -20 : 10)
+                    .attr("dy", i === 0 ? -20 : 13)
                     .style("fill", "white")
-                    .style("font-size", "10px")
+                    .style("font-size", "13px")
                     .style("font-weight", "600");
             });
 
@@ -2388,9 +2388,9 @@ async function draw2010sadjustedChart() {
                 text.append("tspan")
                     .text(line)
                     .attr("x", -20)
-                    .attr("dy", tourLines.length === 0 && i === 0 ? 0 : 10)
+                    .attr("dy", tourLines.length === 0 && i === 0 ? 0 : 13)
                     .style("fill", "#CA6CDC")
-                    .style("font-size", "10px");
+                    .style("font-size", "13px");
             });
         })
         .attr("transform", "rotate(-90)")
@@ -2581,9 +2581,9 @@ async function draw2010sticketsChart() {
                 text.append("tspan")
                     .text(line)
                     .attr("x", -20)
-                    .attr("dy", i === 0 ? -20 : 10)
+                    .attr("dy", i === 0 ? -20 : 13)
                     .style("fill", "white")
-                    .style("font-size", "10px")
+                    .style("font-size", "13px")
                     .style("font-weight", "600");
             });
 
@@ -2593,9 +2593,9 @@ async function draw2010sticketsChart() {
                 text.append("tspan")
                     .text(line)
                     .attr("x", -20)
-                    .attr("dy", tourLines.length === 0 && i === 0 ? 0 : 10)
+                    .attr("dy", tourLines.length === 0 && i === 0 ? 0 : 13)
                     .style("fill", "#CA6CDC")
-                    .style("font-size", "10px");
+                    .style("font-size", "13px");
             });
         })
         .attr("transform", "rotate(-90)")
@@ -2790,9 +2790,9 @@ async function draw2020sChart() {
                 text.append("tspan")
                     .text(line)
                     .attr("x", -20)
-                    .attr("dy", i === 0 ? -20 : 10)
+                    .attr("dy", i === 0 ? -20 : 13)
                     .style("fill", "white")
-                    .style("font-size", "10px")
+                    .style("font-size", "13px")
                     .style("font-weight", "600");
             });
 
@@ -2802,9 +2802,9 @@ async function draw2020sChart() {
                 text.append("tspan")
                     .text(line)
                     .attr("x", -20)
-                    .attr("dy", tourLines.length === 0 && i === 0 ? 0 : 10)
+                    .attr("dy", tourLines.length === 0 && i === 0 ? 0 : 13)
                     .style("fill", "#CA6CDC")
-                    .style("font-size", "10px");
+                    .style("font-size", "13px");
             });
         })
         .attr("transform", "rotate(-90)")
@@ -3000,9 +3000,9 @@ async function draw2020sadjustedChart() {
                 text.append("tspan")
                     .text(line)
                     .attr("x", -20)
-                    .attr("dy", i === 0 ? -20 : 10)
+                    .attr("dy", i === 0 ? -20 : 13)
                     .style("fill", "white")
-                    .style("font-size", "10px")
+                    .style("font-size", "13px")
                     .style("font-weight", "600");
             });
 
@@ -3012,9 +3012,9 @@ async function draw2020sadjustedChart() {
                 text.append("tspan")
                     .text(line)
                     .attr("x", -20)
-                    .attr("dy", tourLines.length === 0 && i === 0 ? 0 : 10)
+                    .attr("dy", tourLines.length === 0 && i === 0 ? 0 : 13)
                     .style("fill", "#CA6CDC")
-                    .style("font-size", "10px");
+                    .style("font-size", "13px");
             });
         })
         .attr("transform", "rotate(-90)")
@@ -3205,9 +3205,9 @@ async function draw2020sticketsChart() {
                 text.append("tspan")
                     .text(line)
                     .attr("x", -20)
-                    .attr("dy", i === 0 ? -20 : 10)
+                    .attr("dy", i === 0 ? -20 : 13)
                     .style("fill", "white")
-                    .style("font-size", "10px")
+                    .style("font-size", "13px")
                     .style("font-weight", "600");
             });
 
@@ -3217,9 +3217,9 @@ async function draw2020sticketsChart() {
                 text.append("tspan")
                     .text(line)
                     .attr("x", -20)
-                    .attr("dy", tourLines.length === 0 && i === 0 ? 0 : 10)
+                    .attr("dy", tourLines.length === 0 && i === 0 ? 0 : 13)
                     .style("fill", "#CA6CDC")
-                    .style("font-size", "10px");
+                    .style("font-size", "13px");
             });
         })
         .attr("transform", "rotate(-90)")
