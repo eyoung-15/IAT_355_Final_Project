@@ -447,7 +447,7 @@ async function drawEightiesticketsChart() {
             note: {
                 label: "Despite placing third for actual gross revenue, The Rolling Stones sold the most tickets for their Steel Wheels tour.",
                 align: "middle",
-                wrap: 245,
+                wrap: 300,
                 padding: 10,
                 lineType: "vertical"
             },
@@ -3413,6 +3413,23 @@ async function drawGreedyArtistsChart() {
     const margin = { top: 40, right: 40, bottom: 200, left: 150 };
     const borderPadding = 10;
 
+        const annotations = [
+        {
+            note: {
+                label: "These averages use adjusted US dollars. Today, it would have cost you about $221 to see The Rolling Stones!",
+                align: "middle",
+                wrap: 1000,
+                padding: 10,
+                lineType: "none"
+            },
+            color: ["#FFFFFF"],
+            x:  545,
+            y: 3,
+            dy: 0,
+            dx: 0
+        }
+    ]
+
     const tooltip = d3.select("body")
         .append("div")
         .attr("class", "tooltip")
@@ -3601,6 +3618,16 @@ async function drawGreedyArtistsChart() {
         .style("fill", "white")
         .style("font-size", "14px")
         .text("average cost per ticket (usd)");
+
+    const makeAnnotations = d3Annotation.annotation()
+        .disable(["connector"])
+        .annotations(annotations);
+        
+    svg.append("g")
+        .call(makeAnnotations);
+
+    svg.selectAll(".annotation-note-label")
+        .style("font-size", "14px");
 }
 
 drawGreedyArtistsChart();
