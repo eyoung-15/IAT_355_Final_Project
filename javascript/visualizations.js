@@ -1097,6 +1097,26 @@ async function drawNinetiesticketsChart() {
     const margin = { top: 40, right: 40, bottom: 200, left: 150 };
     const borderPadding = 10;
 
+        const annotations = [
+        {
+            note: {
+                label: "Garth Brooks jumps from last place, selling the third most tickets to any concert tour in the 90s.",
+                align: "left",
+                wrap: 260,
+                padding: 0,
+                
+            },
+            connector: {
+                type: "line"
+            },
+            color: ["#FFFFFF"],
+            x:  360,
+            y: 130,
+            dy: -30,
+            dx: 50
+        }
+    ]
+
     const tooltip = d3.select("body")
         .append("div")
         .attr("class", "tooltip")
@@ -1284,6 +1304,15 @@ async function drawNinetiesticketsChart() {
         .style("fill", "white")
         .style("font-size", "14px")
         .text("tickets sold");
+
+    const makeAnnotations = d3Annotation.annotation()
+        .annotations(annotations);
+        
+    svg.append("g")
+        .call(makeAnnotations);
+
+    svg.selectAll(".annotation-note-label")
+        .style("font-size", "14px");
 
 }
 
