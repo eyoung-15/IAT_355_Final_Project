@@ -572,4 +572,22 @@ button:hover {
         margin-left: 5rem;
     }
 
+    #eighties-chart,
+    #eighties-chart-adjusted,
+    #eighties-chart-tickets,
+    #nineties-chart,
+    #nineties-chart-adjusted,
+    #nineties-chart-tickets,
+    #two-thousands-chart,
+    #two-thousands-chart-adjusted,
+    #two-thousands-chart-tickets,
+    #twenty-tens-chart,
+    #twenty-tens-chart-adjusted,
+    #twenty-tens-chart-tickets,
+    #twenty-twenties-chart,
+    #twenty-twenties-chart-adjusted,
+    #twenty-twenties-chart-tickets {
+        margin-left: 0rem;
+    }
+
 }
