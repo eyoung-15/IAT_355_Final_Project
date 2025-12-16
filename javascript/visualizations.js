@@ -2378,6 +2378,25 @@ async function draw2010sadjustedChart() {
     const margin = { top: 40, right: 40, bottom: 200, left: 150 };
     const borderPadding = 10;
 
+    const annotations = [
+        {
+            note: {
+                label: "Ed Sheeran and U2 swap places after adjusting for inflation.",
+                align: "left",
+                wrap: 270,
+                padding: 0,
+            },
+            connector: {
+                type: "line"
+            },
+            color: ["#FFFFFF"],
+            x: 300,
+            y: 150,
+            dy: -50,
+            dx: 50
+        }
+    ]
+
     const tooltip = d3.select("body")
         .append("div")
         .attr("class", "tooltip")
@@ -2571,6 +2590,17 @@ async function draw2010sadjustedChart() {
         .style("font-size", "14px")
         .text("inflation adjusted gross income (2024 usd)");
 
+    if (device_type !== "xs") {
+        const makeAnnotations = d3Annotation.annotation()
+            .annotations(annotations);
+
+        svg.append("g")
+            .call(makeAnnotations);
+
+        svg.selectAll(".annotation-note-label")
+            .style("font-size", "14px");
+    }
+
 }
 
 document.getElementById("show2010sadjusted").addEventListener("click", () => {
@@ -2588,6 +2618,25 @@ async function draw2010sticketsChart() {
     const width = params.width;
     const margin = { top: 40, right: 40, bottom: 200, left: 150 };
     const borderPadding = 10;
+
+    const annotations = [
+        {
+            note: {
+                label: "Coldplay makes it to third place, selling over five million tickets to their A Head Full of Dreams tour.",
+                align: "left",
+                wrap: 270,
+                padding: 0,
+            },
+            connector: {
+                type: "line"
+            },
+            color: ["#FFFFFF"],
+            x: 380,
+            y: 160,
+            dy: -50,
+            dx: 50
+        }
+    ]
 
     const tooltip = d3.select("body")
         .append("div")
@@ -2781,6 +2830,17 @@ async function draw2010sticketsChart() {
         .style("fill", "white")
         .style("font-size", "14px")
         .text("tickets sold");
+
+    if (device_type !== "xs") {
+        const makeAnnotations = d3Annotation.annotation()
+            .annotations(annotations);
+
+        svg.append("g")
+            .call(makeAnnotations);
+
+        svg.selectAll(".annotation-note-label")
+            .style("font-size", "14px");
+    }
 
 }
 
