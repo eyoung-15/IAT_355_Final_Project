@@ -971,6 +971,26 @@ async function drawNinetiesadjustedChart() {
     const margin = { top: 40, right: 40, bottom: 200, left: 150 };
     const borderPadding = 10;
 
+    const annotations = [
+        {
+            note: {
+                label: "U2's Zoo TV tour moves up two places thanks to adjustment for inflation.",
+                align: "left",
+                wrap: 200,
+                padding: 0,
+            },
+            connector: {
+                type: "line"
+            },
+            color: ["#FFFFFF"],
+            x: 520,
+            y: 200,
+            dy: -50,
+            dx: 50
+        }
+    ]
+
+
     const tooltip = d3.select("body")
         .append("div")
         .attr("class", "tooltip")
@@ -1161,6 +1181,17 @@ async function drawNinetiesadjustedChart() {
         .style("fill", "white")
         .style("font-size", "14px")
         .text("inflation adjusted gross income (2024 usd)");
+
+    if (device_type !== "xs") {
+        const makeAnnotations = d3Annotation.annotation()
+            .annotations(annotations);
+
+        svg.append("g")
+            .call(makeAnnotations);
+
+        svg.selectAll(".annotation-note-label")
+            .style("font-size", "14px");
+    }
 
 }
 
@@ -1639,6 +1670,26 @@ async function drawY2kadjustedChart() {
     const margin = { top: 40, right: 40, bottom: 200, left: 150 };
     const borderPadding = 10;
 
+    const annotations = [
+        {
+            note: {
+                label: "Another decade, another win: The Rolling Stones place first again in the 2000s.",
+                align: "left",
+                wrap: 220,
+                padding: 0,
+                lineType: "none"
+            },
+            connector: {
+                type: "line"
+            },
+            color: ["#FFFFFF"],
+            x: 220,
+            y: 165,
+            dy: -50,
+            dx: 50
+        }
+    ]
+
     const tooltip = d3.select("body")
         .append("div")
         .attr("class", "tooltip")
@@ -1833,6 +1884,18 @@ async function drawY2kadjustedChart() {
         .style("font-size", "14px")
         .text("inflation adjusted gross income (2024 usd)");
 
+    if (device_type !== "xs") {
+        const makeAnnotations = d3Annotation.annotation()
+            .disable(["connector"])
+            .annotations(annotations);
+
+        svg.append("g")
+            .call(makeAnnotations);
+
+        svg.selectAll(".annotation-note-label")
+            .style("font-size", "14px");
+    }
+
 }
 
 document.getElementById("show2000sadjusted").addEventListener("click", () => {
@@ -1850,6 +1913,26 @@ async function drawY2kticketsChart() {
     const width = params.width;
     const margin = { top: 40, right: 40, bottom: 200, left: 150 };
     const borderPadding = 10;
+
+    const annotations = [
+        {
+            note: {
+                label: "U2 is nearly tied with The Rolling Stones when counting by tickets sold rather than gross revenue.",
+                align: "middle",
+                wrap: 300,
+                padding: 10,
+                lineType: "vertical"
+            },
+            connector: {
+                type: "line"
+            },
+            color: ["#FFFFFF"],
+            x: 315,
+            y: 80,
+            dy: 0,
+            dx: 140
+        }
+    ]
 
     const tooltip = d3.select("body")
         .append("div")
@@ -2043,6 +2126,17 @@ async function drawY2kticketsChart() {
         .style("fill", "white")
         .style("font-size", "14px")
         .text("tickets sold");
+
+    if (device_type !== "xs") {
+        const makeAnnotations = d3Annotation.annotation()
+            .annotations(annotations);
+
+        svg.append("g")
+            .call(makeAnnotations);
+
+        svg.selectAll(".annotation-note-label")
+            .style("font-size", "14px");
+    }
 
 }
 
@@ -2284,6 +2378,25 @@ async function draw2010sadjustedChart() {
     const margin = { top: 40, right: 40, bottom: 200, left: 150 };
     const borderPadding = 10;
 
+    const annotations = [
+        {
+            note: {
+                label: "Ed Sheeran and U2 swap places after adjusting for inflation.",
+                align: "left",
+                wrap: 270,
+                padding: 0,
+            },
+            connector: {
+                type: "line"
+            },
+            color: ["#FFFFFF"],
+            x: 300,
+            y: 150,
+            dy: -50,
+            dx: 50
+        }
+    ]
+
     const tooltip = d3.select("body")
         .append("div")
         .attr("class", "tooltip")
@@ -2477,6 +2590,17 @@ async function draw2010sadjustedChart() {
         .style("font-size", "14px")
         .text("inflation adjusted gross income (2024 usd)");
 
+    if (device_type !== "xs") {
+        const makeAnnotations = d3Annotation.annotation()
+            .annotations(annotations);
+
+        svg.append("g")
+            .call(makeAnnotations);
+
+        svg.selectAll(".annotation-note-label")
+            .style("font-size", "14px");
+    }
+
 }
 
 document.getElementById("show2010sadjusted").addEventListener("click", () => {
@@ -2494,6 +2618,25 @@ async function draw2010sticketsChart() {
     const width = params.width;
     const margin = { top: 40, right: 40, bottom: 200, left: 150 };
     const borderPadding = 10;
+
+    const annotations = [
+        {
+            note: {
+                label: "Coldplay makes it to third place, selling over five million tickets to their A Head Full of Dreams tour.",
+                align: "left",
+                wrap: 270,
+                padding: 0,
+            },
+            connector: {
+                type: "line"
+            },
+            color: ["#FFFFFF"],
+            x: 380,
+            y: 160,
+            dy: -50,
+            dx: 50
+        }
+    ]
 
     const tooltip = d3.select("body")
         .append("div")
@@ -2687,6 +2830,17 @@ async function draw2010sticketsChart() {
         .style("fill", "white")
         .style("font-size", "14px")
         .text("tickets sold");
+
+    if (device_type !== "xs") {
+        const makeAnnotations = d3Annotation.annotation()
+            .annotations(annotations);
+
+        svg.append("g")
+            .call(makeAnnotations);
+
+        svg.selectAll(".annotation-note-label")
+            .style("font-size", "14px");
+    }
 
 }
 
@@ -2926,6 +3080,25 @@ async function draw2020sadjustedChart() {
     const margin = { top: 40, right: 40, bottom: 200, left: 150 };
     const borderPadding = 10;
 
+    const annotations = [
+        {
+            note: {
+                label: "Only two years apart, Harry Styles' Love on Tour swaps places with The Weeknd's After Hours Til Dawn tour after adjusting for inflation.",
+                align: "left",
+                wrap: 270,
+                padding: 0,
+            },
+            connector: {
+                type: "line"
+            },
+            color: ["#FFFFFF"],
+            x: 530,
+            y: 240,
+            dy: -50,
+            dx: 50
+        }
+    ]
+
     const tooltip = d3.select("body")
         .append("div")
         .attr("class", "tooltip")
@@ -3119,6 +3292,17 @@ async function draw2020sadjustedChart() {
         .style("font-size", "14px")
         .text("inflation adjusted gross income (2024 usd)");
 
+    if (device_type !== "xs") {
+        const makeAnnotations = d3Annotation.annotation()
+            .annotations(annotations);
+
+        svg.append("g")
+            .call(makeAnnotations);
+
+        svg.selectAll(".annotation-note-label")
+            .style("font-size", "14px");
+    }
+
 }
 
 document.getElementById("show2020sadjusted").addEventListener("click", () => {
@@ -3136,6 +3320,26 @@ async function draw2020sticketsChart() {
     const width = params.width;
     const margin = { top: 40, right: 40, bottom: 200, left: 150 };
     const borderPadding = 10;
+
+    const annotations = [
+        {
+            note: {
+                label: "Coldplay outperforms Taylor Swift for number of tickets sold to their Music of the Spheres Tour.",
+                align: "middle",
+                wrap: 270,
+                padding: 10,
+                lineType: "vertical"
+            },
+            connector: {
+                type: "line"
+            },
+            color: ["#FFFFFF"],
+            x: 210,
+            y: 80,
+            dy: 0,
+            dx: 130
+        }
+    ]
 
     const tooltip = d3.select("body")
         .append("div")
@@ -3329,6 +3533,17 @@ async function draw2020sticketsChart() {
         .style("fill", "white")
         .style("font-size", "14px")
         .text("tickets sold");
+
+    if (device_type !== "xs") {
+        const makeAnnotations = d3Annotation.annotation()
+            .annotations(annotations);
+
+        svg.append("g")
+            .call(makeAnnotations);
+
+        svg.selectAll(".annotation-note-label")
+            .style("font-size", "14px");
+    }
 
 }
 
@@ -3589,7 +3804,7 @@ async function drawGreedyArtistsChart() {
     const annotations = [
         {
             note: {
-                label: "These averages use adjusted US dollars. Today, it would have cost you about $221 to see The Rolling Stones!",
+                label: "These averages are adjusted for inflation in 2024 USD. Today, it would have cost you about $221 to see The Rolling Stones!",
                 align: "middle",
                 wrap: 1000,
                 padding: 10,
