@@ -3080,6 +3080,25 @@ async function draw2020sadjustedChart() {
     const margin = { top: 40, right: 40, bottom: 200, left: 150 };
     const borderPadding = 10;
 
+    const annotations = [
+        {
+            note: {
+                label: "Only two years apart, Harry Styles' Love on Tour swaps places with The Weeknd's After Hours Til Dawn tour after adjusting for inflation.",
+                align: "left",
+                wrap: 270,
+                padding: 0,
+            },
+            connector: {
+                type: "line"
+            },
+            color: ["#FFFFFF"],
+            x: 530,
+            y: 240,
+            dy: -50,
+            dx: 50
+        }
+    ]
+
     const tooltip = d3.select("body")
         .append("div")
         .attr("class", "tooltip")
@@ -3272,6 +3291,17 @@ async function draw2020sadjustedChart() {
         .style("fill", "white")
         .style("font-size", "14px")
         .text("inflation adjusted gross income (2024 usd)");
+
+    if (device_type !== "xs") {
+        const makeAnnotations = d3Annotation.annotation()
+            .annotations(annotations);
+
+        svg.append("g")
+            .call(makeAnnotations);
+
+        svg.selectAll(".annotation-note-label")
+            .style("font-size", "14px");
+    }
 
 }
 
