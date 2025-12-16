@@ -3589,7 +3589,7 @@ async function drawGreedyArtistsChart() {
     const annotations = [
         {
             note: {
-                label: "These averages use adjusted US dollars. Today, it would have cost you about $221 to see The Rolling Stones!",
+                label: "These averages are adjusted for inflation in 2024 USD. Today, it would have cost you about $221 to see The Rolling Stones!",
                 align: "middle",
                 wrap: 1000,
                 padding: 10,
