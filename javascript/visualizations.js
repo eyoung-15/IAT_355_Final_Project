@@ -1914,6 +1914,26 @@ async function drawY2kticketsChart() {
     const margin = { top: 40, right: 40, bottom: 200, left: 150 };
     const borderPadding = 10;
 
+    const annotations = [
+        {
+            note: {
+                label: "U2 is nearly tied with The Rolling Stones when counting by tickets sold rather than gross revenue.",
+                align: "middle",
+                wrap: 300,
+                padding: 10,
+                lineType: "vertical"
+            },
+            connector: {
+                type: "line"
+            },
+            color: ["#FFFFFF"],
+            x: 315,
+            y: 80,
+            dy: 0,
+            dx: 140
+        }
+    ]
+
     const tooltip = d3.select("body")
         .append("div")
         .attr("class", "tooltip")
@@ -2106,6 +2126,17 @@ async function drawY2kticketsChart() {
         .style("fill", "white")
         .style("font-size", "14px")
         .text("tickets sold");
+
+    if (device_type !== "xs") {
+        const makeAnnotations = d3Annotation.annotation()
+            .annotations(annotations);
+
+        svg.append("g")
+            .call(makeAnnotations);
+
+        svg.selectAll(".annotation-note-label")
+            .style("font-size", "14px");
+    }
 
 }
 
