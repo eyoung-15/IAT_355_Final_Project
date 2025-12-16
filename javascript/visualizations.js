@@ -3291,6 +3291,26 @@ async function draw2020sticketsChart() {
     const margin = { top: 40, right: 40, bottom: 200, left: 150 };
     const borderPadding = 10;
 
+    const annotations = [
+        {
+            note: {
+                label: "Coldplay outperforms Taylor Swift for number of tickets sold to their Music of the Spheres Tour.",
+                align: "middle",
+                wrap: 270,
+                padding: 10,
+                lineType: "vertical"
+            },
+            connector: {
+                type: "line"
+            },
+            color: ["#FFFFFF"],
+            x: 210,
+            y: 80,
+            dy: 0,
+            dx: 130
+        }
+    ]
+
     const tooltip = d3.select("body")
         .append("div")
         .attr("class", "tooltip")
@@ -3483,6 +3503,17 @@ async function draw2020sticketsChart() {
         .style("fill", "white")
         .style("font-size", "14px")
         .text("tickets sold");
+
+    if (device_type !== "xs") {
+        const makeAnnotations = d3Annotation.annotation()
+            .annotations(annotations);
+
+        svg.append("g")
+            .call(makeAnnotations);
+
+        svg.selectAll(".annotation-note-label")
+            .style("font-size", "14px");
+    }
 
 }
 
