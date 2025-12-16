@@ -1670,6 +1670,26 @@ async function drawY2kadjustedChart() {
     const margin = { top: 40, right: 40, bottom: 200, left: 150 };
     const borderPadding = 10;
 
+    const annotations = [
+        {
+            note: {
+                label: "Another decade, another win: The Rolling Stones place first again in the 2000s.",
+                align: "left",
+                wrap: 220,
+                padding: 0,
+                lineType: "none"
+            },
+            connector: {
+                type: "line"
+            },
+            color: ["#FFFFFF"],
+            x: 220,
+            y: 165,
+            dy: -50,
+            dx: 50
+        }
+    ]
+
     const tooltip = d3.select("body")
         .append("div")
         .attr("class", "tooltip")
@@ -1863,6 +1883,18 @@ async function drawY2kadjustedChart() {
         .style("fill", "white")
         .style("font-size", "14px")
         .text("inflation adjusted gross income (2024 usd)");
+
+    if (device_type !== "xs") {
+        const makeAnnotations = d3Annotation.annotation()
+            .disable(["connector"])
+            .annotations(annotations);
+
+        svg.append("g")
+            .call(makeAnnotations);
+
+        svg.selectAll(".annotation-note-label")
+            .style("font-size", "14px");
+    }
 
 }
 
