@@ -971,6 +971,26 @@ async function drawNinetiesadjustedChart() {
     const margin = { top: 40, right: 40, bottom: 200, left: 150 };
     const borderPadding = 10;
 
+    const annotations = [
+        {
+            note: {
+                label: "U2's Zoo TV tour moves up two places thanks to adjustment for inflation.",
+                align: "left",
+                wrap: 200,
+                padding: 0,
+            },
+            connector: {
+                type: "line"
+            },
+            color: ["#FFFFFF"],
+            x: 520,
+            y: 200,
+            dy: -50,
+            dx: 50
+        }
+    ]
+
+
     const tooltip = d3.select("body")
         .append("div")
         .attr("class", "tooltip")
@@ -1161,6 +1181,17 @@ async function drawNinetiesadjustedChart() {
         .style("fill", "white")
         .style("font-size", "14px")
         .text("inflation adjusted gross income (2024 usd)");
+
+    if (device_type !== "xs") {
+        const makeAnnotations = d3Annotation.annotation()
+            .annotations(annotations);
+
+        svg.append("g")
+            .call(makeAnnotations);
+
+        svg.selectAll(".annotation-note-label")
+            .style("font-size", "14px");
+    }
 
 }
 
